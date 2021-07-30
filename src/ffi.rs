@@ -108,11 +108,20 @@ pub fn last_error() -> Result<()> {
 }
 
 pub fn device_config(dev_id: usize) -> Result<()> {
-    let cuda_error = cuda_runtime_sys::cudaSetDevice(dev_id as raw::c_int);
+    let cuda_error = unsafe {cuda_runtime_sys::cudaSetDevice(dev_id as raw::c_int) };
     if cuda_error == cuda_runtime_sys::cudaError::cudaSuccess {
         Ok(())
     } else {
         Err ( Error { raw: cuda_error } )
     }
 
+}
+
+pub fn device_synchronize() -> Result<()> {
+    let cuda_error = unsafe { cuda_runtime_sys::cudaDeviceSynchronize() };
+    if cuda_error == cuda_runtime_sys::cudaError::cudaSuccess {
+        Ok(())
+    } else {
+        Err ( Error { raw: cuda_error } )
+    }
 }

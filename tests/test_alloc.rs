@@ -1,11 +1,12 @@
-use cuda_runtime_sys::*;
-use std::mem;
+use curs;
+use curs::array::Array;
 
 #[test]
-fn test_malloc_cuda() {
-    let host_slice = [10f32;100];
-    unsafe {
-        let device_slice: *mut f32 = ::libc::malloc(mem::size_of::<f32>()) as *mut f32;
-        cudaMalloc(device_slice as *mut *mut ::libc::c_void, (host_slice.len() * mem::size_of::<f32>()) as u64);
-    }
+fn test_alloc_array_on_cuda() {
+    curs::ffi::device_config(0 as usize).unwrap();
+
+    let array = Array::<f32>::zeros(&vec![10,10]).unwrap();
+    array.fill(10f32).unwrap();
+    let _host_array = array.as_vec().unwrap();
+    let _host_slice = array.as_slice().unwrap();
 }
