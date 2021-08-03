@@ -35,6 +35,17 @@ COMPARE(less, <)
 COMPARE(greaterEqual, >=)
 COMPARE(lessEqual, <=)
 
+/**
+ * @def 
+ * Macro to call compare kernel on host
+ * @fn
+ * Macro to call compare kernel on device
+ * @param (comareArrayA) Pointer to the beginning of the array to be compared
+ * @param (comareArrayB) Pointer to the beginning of the array to be compared
+ * @param (resArray) Pointer to an array to record the result of the comparison.
+ * @param (size) Number of elements in the array
+ * @detail 
+ */
 #define IMLP_COMPARE_FN(FUNCTION, KERNEL, TYPE)                                          \
     void FUNCTION(TYPE *compareArrayA, TYPE *compareArrayB, TYPE *resArray, int size) {  \
       dim3 blockDim(BLOCKDIM);                                                           \
@@ -54,6 +65,9 @@ IMLP_COMPARE_FN(_lessEqualInt, lessEqual, int)
 IMLP_COMPARE_FN(_greaterEqualFloat, greaterEqual, float)
 IMLP_COMPARE_FN(_greaterEqualInt, greaterEqual, int)
 
+/** 
+ * C inter face
+ */
 extern "C" {
   void equalFloat(float *compareArrayA, float *compareArrayB, float *resArray, int size) {
     _equalFloat(compareArrayA, compareArrayB, resArray, size);
