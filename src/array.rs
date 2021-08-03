@@ -1,7 +1,7 @@
 //! This file defines the array of curs and the structures 
 //! associated with the attributes that are members of the array. 
 
-use crate::{DataType, Dim, Order, Num};
+use crate::{dtype::DataType, dim::Dim, Order, Num};
 use crate::ffi;
 use crate::compare::{
     impl_equal_float, impl_equal_int,
