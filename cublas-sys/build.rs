@@ -11,6 +11,7 @@ fn main() {
 
     println!("cargo:rustc-link-lib=dylib=cudart");
     println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rustc-link-lib=dylib=cublas");
 
     let bindings = bindgen::Builder::default()
         .ctypes_prefix("::libc")
@@ -20,18 +21,18 @@ fn main() {
         .header("wrapper.h")
         .rustified_non_exhaustive_enum("cublas[A-Za-z]+_t")
         // .rustified_non_exhaustive_enum("cuda.*")
-        // .default_alias_style(bindgen::AliasVariation::TypeAlias)
-        // .rustfmt_bindings(true)
-        // .allowlist_type("^cublas.*")
-        // .allowlist_type("cublas.*")
+        .default_alias_style(bindgen::AliasVariation::TypeAlias)
+        .rustfmt_bindings(true)
+        .allowlist_type("^cublas.*")
+        .allowlist_type("cublas.*")
         .allowlist_function("^cublas.*")
-        // .allowlist_type("[Cc][Uu].*")
+        .allowlist_type("[Cc][Uu].*")
         .allowlist_var("CUBLAS.*")
-        // .derive_default(true)
-        // .derive_eq(true)
-        // .derive_hash(true)
-        // .derive_ord(true)
-        // .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+        .derive_default(true)
+        .derive_eq(true)
+        .derive_hash(true)
+        .derive_ord(true)
+        .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate()
         .expect("Unable to generate bindings");
 

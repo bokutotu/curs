@@ -7,7 +7,7 @@ pub const CUBLAS_VER_BUILD: u32 = 43;
 pub const CUBLAS_VERSION: u32 = 11502;
 #[repr(C)]
 #[repr(align(8))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone, PartialOrd, PartialEq)]
 pub struct float2 {
     pub x: f32,
     pub y: f32,
@@ -37,7 +37,7 @@ fn bindgen_test_layout_float2() {
 }
 #[repr(C)]
 #[repr(align(16))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone, PartialOrd, PartialEq)]
 pub struct double2 {
     pub x: f64,
     pub y: f64,
@@ -75,6 +75,5900 @@ fn bindgen_test_layout_double2() {
         )
     );
 }
+#[doc = "                                                                              *"]
+#[doc = "                                                                              *"]
+#[doc = "                                                                              *"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct dim3 {
+    pub x: ::libc::c_uint,
+    pub y: ::libc::c_uint,
+    pub z: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_dim3() {
+    assert_eq!(
+        ::std::mem::size_of::<dim3>(),
+        12usize,
+        concat!("Size of: ", stringify!(dim3))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<dim3>(),
+        4usize,
+        concat!("Alignment of ", stringify!(dim3))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<dim3>())).x as *const _ as usize },
+        0usize,
+        concat!("Offset of field: ", stringify!(dim3), "::", stringify!(x))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<dim3>())).y as *const _ as usize },
+        4usize,
+        concat!("Offset of field: ", stringify!(dim3), "::", stringify!(y))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<dim3>())).z as *const _ as usize },
+        8usize,
+        concat!("Offset of field: ", stringify!(dim3), "::", stringify!(z))
+    );
+}
+#[doc = " The API call returned with no errors. In the case of query calls, this"]
+#[doc = " also means that the operation being queried is complete (see"]
+#[doc = " ::cudaEventQuery() and ::cudaStreamQuery())."]
+pub const cudaError_cudaSuccess: cudaError = 0;
+#[doc = " This indicates that one or more of the parameters passed to the API call"]
+#[doc = " is not within an acceptable range of values."]
+pub const cudaError_cudaErrorInvalidValue: cudaError = 1;
+#[doc = " The API call failed because it was unable to allocate enough memory to"]
+#[doc = " perform the requested operation."]
+pub const cudaError_cudaErrorMemoryAllocation: cudaError = 2;
+#[doc = " The API call failed because the CUDA driver and runtime could not be"]
+#[doc = " initialized."]
+pub const cudaError_cudaErrorInitializationError: cudaError = 3;
+#[doc = " This indicates that a CUDA Runtime API call cannot be executed because"]
+#[doc = " it is being called during process shut down, at a point in time after"]
+#[doc = " CUDA driver has been unloaded."]
+pub const cudaError_cudaErrorCudartUnloading: cudaError = 4;
+#[doc = " This indicates profiler is not initialized for this run. This can"]
+#[doc = " happen when the application is running with external profiling tools"]
+#[doc = " like visual profiler."]
+pub const cudaError_cudaErrorProfilerDisabled: cudaError = 5;
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 5.0. It is no longer an error"]
+#[doc = " to attempt to enable/disable the profiling via ::cudaProfilerStart or"]
+#[doc = " ::cudaProfilerStop without initialization."]
+pub const cudaError_cudaErrorProfilerNotInitialized: cudaError = 6;
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 5.0. It is no longer an error"]
+#[doc = " to call cudaProfilerStart() when profiling is already enabled."]
+pub const cudaError_cudaErrorProfilerAlreadyStarted: cudaError = 7;
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 5.0. It is no longer an error"]
+#[doc = " to call cudaProfilerStop() when profiling is already disabled."]
+pub const cudaError_cudaErrorProfilerAlreadyStopped: cudaError = 8;
+#[doc = " This indicates that a kernel launch is requesting resources that can"]
+#[doc = " never be satisfied by the current device. Requesting more shared memory"]
+#[doc = " per block than the device supports will trigger this error, as will"]
+#[doc = " requesting too many threads or blocks. See ::cudaDeviceProp for more"]
+#[doc = " device limitations."]
+pub const cudaError_cudaErrorInvalidConfiguration: cudaError = 9;
+#[doc = " This indicates that one or more of the pitch-related parameters passed"]
+#[doc = " to the API call is not within the acceptable range for pitch."]
+pub const cudaError_cudaErrorInvalidPitchValue: cudaError = 12;
+#[doc = " This indicates that the symbol name/identifier passed to the API call"]
+#[doc = " is not a valid name or identifier."]
+pub const cudaError_cudaErrorInvalidSymbol: cudaError = 13;
+#[doc = " This indicates that at least one host pointer passed to the API call is"]
+#[doc = " not a valid host pointer."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 10.1."]
+pub const cudaError_cudaErrorInvalidHostPointer: cudaError = 16;
+#[doc = " This indicates that at least one device pointer passed to the API call is"]
+#[doc = " not a valid device pointer."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 10.1."]
+pub const cudaError_cudaErrorInvalidDevicePointer: cudaError = 17;
+#[doc = " This indicates that the texture passed to the API call is not a valid"]
+#[doc = " texture."]
+pub const cudaError_cudaErrorInvalidTexture: cudaError = 18;
+#[doc = " This indicates that the texture binding is not valid. This occurs if you"]
+#[doc = " call ::cudaGetTextureAlignmentOffset() with an unbound texture."]
+pub const cudaError_cudaErrorInvalidTextureBinding: cudaError = 19;
+#[doc = " This indicates that the channel descriptor passed to the API call is not"]
+#[doc = " valid. This occurs if the format is not one of the formats specified by"]
+#[doc = " ::cudaChannelFormatKind, or if one of the dimensions is invalid."]
+pub const cudaError_cudaErrorInvalidChannelDescriptor: cudaError = 20;
+#[doc = " This indicates that the direction of the memcpy passed to the API call is"]
+#[doc = " not one of the types specified by ::cudaMemcpyKind."]
+pub const cudaError_cudaErrorInvalidMemcpyDirection: cudaError = 21;
+#[doc = " This indicated that the user has taken the address of a constant variable,"]
+#[doc = " which was forbidden up until the CUDA 3.1 release."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 3.1. Variables in constant"]
+#[doc = " memory may now have their address taken by the runtime via"]
+#[doc = " ::cudaGetSymbolAddress()."]
+pub const cudaError_cudaErrorAddressOfConstant: cudaError = 22;
+#[doc = " This indicated that a texture fetch was not able to be performed."]
+#[doc = " This was previously used for device emulation of texture operations."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 3.1. Device emulation mode was"]
+#[doc = " removed with the CUDA 3.1 release."]
+pub const cudaError_cudaErrorTextureFetchFailed: cudaError = 23;
+#[doc = " This indicated that a texture was not bound for access."]
+#[doc = " This was previously used for device emulation of texture operations."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 3.1. Device emulation mode was"]
+#[doc = " removed with the CUDA 3.1 release."]
+pub const cudaError_cudaErrorTextureNotBound: cudaError = 24;
+#[doc = " This indicated that a synchronization operation had failed."]
+#[doc = " This was previously used for some device emulation functions."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 3.1. Device emulation mode was"]
+#[doc = " removed with the CUDA 3.1 release."]
+pub const cudaError_cudaErrorSynchronizationError: cudaError = 25;
+#[doc = " This indicates that a non-float texture was being accessed with linear"]
+#[doc = " filtering. This is not supported by CUDA."]
+pub const cudaError_cudaErrorInvalidFilterSetting: cudaError = 26;
+#[doc = " This indicates that an attempt was made to read a non-float texture as a"]
+#[doc = " normalized float. This is not supported by CUDA."]
+pub const cudaError_cudaErrorInvalidNormSetting: cudaError = 27;
+#[doc = " Mixing of device and device emulation code was not allowed."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 3.1. Device emulation mode was"]
+#[doc = " removed with the CUDA 3.1 release."]
+pub const cudaError_cudaErrorMixedDeviceExecution: cudaError = 28;
+#[doc = " This indicates that the API call is not yet implemented. Production"]
+#[doc = " releases of CUDA will never return this error."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 4.1."]
+pub const cudaError_cudaErrorNotYetImplemented: cudaError = 31;
+#[doc = " This indicated that an emulated device pointer exceeded the 32-bit address"]
+#[doc = " range."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 3.1. Device emulation mode was"]
+#[doc = " removed with the CUDA 3.1 release."]
+pub const cudaError_cudaErrorMemoryValueTooLarge: cudaError = 32;
+#[doc = " This indicates that the CUDA driver that the application has loaded is a"]
+#[doc = " stub library. Applications that run with the stub rather than a real"]
+#[doc = " driver loaded will result in CUDA API returning this error."]
+pub const cudaError_cudaErrorStubLibrary: cudaError = 34;
+#[doc = " This indicates that the installed NVIDIA CUDA driver is older than the"]
+#[doc = " CUDA runtime library. This is not a supported configuration. Users should"]
+#[doc = " install an updated NVIDIA display driver to allow the application to run."]
+pub const cudaError_cudaErrorInsufficientDriver: cudaError = 35;
+#[doc = " This indicates that the API call requires a newer CUDA driver than the one"]
+#[doc = " currently installed. Users should install an updated NVIDIA CUDA driver"]
+#[doc = " to allow the API call to succeed."]
+pub const cudaError_cudaErrorCallRequiresNewerDriver: cudaError = 36;
+#[doc = " This indicates that the surface passed to the API call is not a valid"]
+#[doc = " surface."]
+pub const cudaError_cudaErrorInvalidSurface: cudaError = 37;
+#[doc = " This indicates that multiple global or constant variables (across separate"]
+#[doc = " CUDA source files in the application) share the same string name."]
+pub const cudaError_cudaErrorDuplicateVariableName: cudaError = 43;
+#[doc = " This indicates that multiple textures (across separate CUDA source"]
+#[doc = " files in the application) share the same string name."]
+pub const cudaError_cudaErrorDuplicateTextureName: cudaError = 44;
+#[doc = " This indicates that multiple surfaces (across separate CUDA source"]
+#[doc = " files in the application) share the same string name."]
+pub const cudaError_cudaErrorDuplicateSurfaceName: cudaError = 45;
+#[doc = " This indicates that all CUDA devices are busy or unavailable at the current"]
+#[doc = " time. Devices are often busy/unavailable due to use of"]
+#[doc = " ::cudaComputeModeExclusive, ::cudaComputeModeProhibited or when long"]
+#[doc = " running CUDA kernels have filled up the GPU and are blocking new work"]
+#[doc = " from starting. They can also be unavailable due to memory constraints"]
+#[doc = " on a device that already has active CUDA work being performed."]
+pub const cudaError_cudaErrorDevicesUnavailable: cudaError = 46;
+#[doc = " This indicates that the current context is not compatible with this"]
+#[doc = " the CUDA Runtime. This can only occur if you are using CUDA"]
+#[doc = " Runtime/Driver interoperability and have created an existing Driver"]
+#[doc = " context using the driver API. The Driver context may be incompatible"]
+#[doc = " either because the Driver context was created using an older version"]
+#[doc = " of the API, because the Runtime API call expects a primary driver"]
+#[doc = " context and the Driver context is not primary, or because the Driver"]
+#[doc = " context has been destroyed. Please see \\ref CUDART_DRIVER \"Interactions"]
+#[doc = " with the CUDA Driver API\" for more information."]
+pub const cudaError_cudaErrorIncompatibleDriverContext: cudaError = 49;
+#[doc = " The device function being invoked (usually via ::cudaLaunchKernel()) was not"]
+#[doc = " previously configured via the ::cudaConfigureCall() function."]
+pub const cudaError_cudaErrorMissingConfiguration: cudaError = 52;
+#[doc = " This indicated that a previous kernel launch failed. This was previously"]
+#[doc = " used for device emulation of kernel launches."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 3.1. Device emulation mode was"]
+#[doc = " removed with the CUDA 3.1 release."]
+pub const cudaError_cudaErrorPriorLaunchFailure: cudaError = 53;
+#[doc = " This error indicates that a device runtime grid launch did not occur"]
+#[doc = " because the depth of the child grid would exceed the maximum supported"]
+#[doc = " number of nested grid launches."]
+pub const cudaError_cudaErrorLaunchMaxDepthExceeded: cudaError = 65;
+#[doc = " This error indicates that a grid launch did not occur because the kernel"]
+#[doc = " uses file-scoped textures which are unsupported by the device runtime."]
+#[doc = " Kernels launched via the device runtime only support textures created with"]
+#[doc = " the Texture Object API's."]
+pub const cudaError_cudaErrorLaunchFileScopedTex: cudaError = 66;
+#[doc = " This error indicates that a grid launch did not occur because the kernel"]
+#[doc = " uses file-scoped surfaces which are unsupported by the device runtime."]
+#[doc = " Kernels launched via the device runtime only support surfaces created with"]
+#[doc = " the Surface Object API's."]
+pub const cudaError_cudaErrorLaunchFileScopedSurf: cudaError = 67;
+#[doc = " This error indicates that a call to ::cudaDeviceSynchronize made from"]
+#[doc = " the device runtime failed because the call was made at grid depth greater"]
+#[doc = " than than either the default (2 levels of grids) or user specified device"]
+#[doc = " limit ::cudaLimitDevRuntimeSyncDepth. To be able to synchronize on"]
+#[doc = " launched grids at a greater depth successfully, the maximum nested"]
+#[doc = " depth at which ::cudaDeviceSynchronize will be called must be specified"]
+#[doc = " with the ::cudaLimitDevRuntimeSyncDepth limit to the ::cudaDeviceSetLimit"]
+#[doc = " api before the host-side launch of a kernel using the device runtime."]
+#[doc = " Keep in mind that additional levels of sync depth require the runtime"]
+#[doc = " to reserve large amounts of device memory that cannot be used for"]
+#[doc = " user allocations."]
+pub const cudaError_cudaErrorSyncDepthExceeded: cudaError = 68;
+#[doc = " This error indicates that a device runtime grid launch failed because"]
+#[doc = " the launch would exceed the limit ::cudaLimitDevRuntimePendingLaunchCount."]
+#[doc = " For this launch to proceed successfully, ::cudaDeviceSetLimit must be"]
+#[doc = " called to set the ::cudaLimitDevRuntimePendingLaunchCount to be higher"]
+#[doc = " than the upper bound of outstanding launches that can be issued to the"]
+#[doc = " device runtime. Keep in mind that raising the limit of pending device"]
+#[doc = " runtime launches will require the runtime to reserve device memory that"]
+#[doc = " cannot be used for user allocations."]
+pub const cudaError_cudaErrorLaunchPendingCountExceeded: cudaError = 69;
+#[doc = " The requested device function does not exist or is not compiled for the"]
+#[doc = " proper device architecture."]
+pub const cudaError_cudaErrorInvalidDeviceFunction: cudaError = 98;
+#[doc = " This indicates that no CUDA-capable devices were detected by the installed"]
+#[doc = " CUDA driver."]
+pub const cudaError_cudaErrorNoDevice: cudaError = 100;
+#[doc = " This indicates that the device ordinal supplied by the user does not"]
+#[doc = " correspond to a valid CUDA device or that the action requested is"]
+#[doc = " invalid for the specified device."]
+pub const cudaError_cudaErrorInvalidDevice: cudaError = 101;
+#[doc = " This indicates that the device doesn't have a valid Grid License."]
+pub const cudaError_cudaErrorDeviceNotLicensed: cudaError = 102;
+#[doc = " By default, the CUDA runtime may perform a minimal set of self-tests,"]
+#[doc = " as well as CUDA driver tests, to establish the validity of both."]
+#[doc = " Introduced in CUDA 11.2, this error return indicates that at least one"]
+#[doc = " of these tests has failed and the validity of either the runtime"]
+#[doc = " or the driver could not be established."]
+pub const cudaError_cudaErrorSoftwareValidityNotEstablished: cudaError = 103;
+#[doc = " This indicates an internal startup failure in the CUDA runtime."]
+pub const cudaError_cudaErrorStartupFailure: cudaError = 127;
+#[doc = " This indicates that the device kernel image is invalid."]
+pub const cudaError_cudaErrorInvalidKernelImage: cudaError = 200;
+#[doc = " This most frequently indicates that there is no context bound to the"]
+#[doc = " current thread. This can also be returned if the context passed to an"]
+#[doc = " API call is not a valid handle (such as a context that has had"]
+#[doc = " ::cuCtxDestroy() invoked on it). This can also be returned if a user"]
+#[doc = " mixes different API versions (i.e. 3010 context with 3020 API calls)."]
+#[doc = " See ::cuCtxGetApiVersion() for more details."]
+pub const cudaError_cudaErrorDeviceUninitialized: cudaError = 201;
+#[doc = " This indicates that the buffer object could not be mapped."]
+pub const cudaError_cudaErrorMapBufferObjectFailed: cudaError = 205;
+#[doc = " This indicates that the buffer object could not be unmapped."]
+pub const cudaError_cudaErrorUnmapBufferObjectFailed: cudaError = 206;
+#[doc = " This indicates that the specified array is currently mapped and thus"]
+#[doc = " cannot be destroyed."]
+pub const cudaError_cudaErrorArrayIsMapped: cudaError = 207;
+#[doc = " This indicates that the resource is already mapped."]
+pub const cudaError_cudaErrorAlreadyMapped: cudaError = 208;
+#[doc = " This indicates that there is no kernel image available that is suitable"]
+#[doc = " for the device. This can occur when a user specifies code generation"]
+#[doc = " options for a particular CUDA source file that do not include the"]
+#[doc = " corresponding device configuration."]
+pub const cudaError_cudaErrorNoKernelImageForDevice: cudaError = 209;
+#[doc = " This indicates that a resource has already been acquired."]
+pub const cudaError_cudaErrorAlreadyAcquired: cudaError = 210;
+#[doc = " This indicates that a resource is not mapped."]
+pub const cudaError_cudaErrorNotMapped: cudaError = 211;
+#[doc = " This indicates that a mapped resource is not available for access as an"]
+#[doc = " array."]
+pub const cudaError_cudaErrorNotMappedAsArray: cudaError = 212;
+#[doc = " This indicates that a mapped resource is not available for access as a"]
+#[doc = " pointer."]
+pub const cudaError_cudaErrorNotMappedAsPointer: cudaError = 213;
+#[doc = " This indicates that an uncorrectable ECC error was detected during"]
+#[doc = " execution."]
+pub const cudaError_cudaErrorECCUncorrectable: cudaError = 214;
+#[doc = " This indicates that the ::cudaLimit passed to the API call is not"]
+#[doc = " supported by the active device."]
+pub const cudaError_cudaErrorUnsupportedLimit: cudaError = 215;
+#[doc = " This indicates that a call tried to access an exclusive-thread device that"]
+#[doc = " is already in use by a different thread."]
+pub const cudaError_cudaErrorDeviceAlreadyInUse: cudaError = 216;
+#[doc = " This error indicates that P2P access is not supported across the given"]
+#[doc = " devices."]
+pub const cudaError_cudaErrorPeerAccessUnsupported: cudaError = 217;
+#[doc = " A PTX compilation failed. The runtime may fall back to compiling PTX if"]
+#[doc = " an application does not contain a suitable binary for the current device."]
+pub const cudaError_cudaErrorInvalidPtx: cudaError = 218;
+#[doc = " This indicates an error with the OpenGL or DirectX context."]
+pub const cudaError_cudaErrorInvalidGraphicsContext: cudaError = 219;
+#[doc = " This indicates that an uncorrectable NVLink error was detected during the"]
+#[doc = " execution."]
+pub const cudaError_cudaErrorNvlinkUncorrectable: cudaError = 220;
+#[doc = " This indicates that the PTX JIT compiler library was not found. The JIT Compiler"]
+#[doc = " library is used for PTX compilation. The runtime may fall back to compiling PTX"]
+#[doc = " if an application does not contain a suitable binary for the current device."]
+pub const cudaError_cudaErrorJitCompilerNotFound: cudaError = 221;
+#[doc = " This indicates that the provided PTX was compiled with an unsupported toolchain."]
+#[doc = " The most common reason for this, is the PTX was generated by a compiler newer"]
+#[doc = " than what is supported by the CUDA driver and PTX JIT compiler."]
+pub const cudaError_cudaErrorUnsupportedPtxVersion: cudaError = 222;
+#[doc = " This indicates that the JIT compilation was disabled. The JIT compilation compiles"]
+#[doc = " PTX. The runtime may fall back to compiling PTX if an application does not contain"]
+#[doc = " a suitable binary for the current device."]
+pub const cudaError_cudaErrorJitCompilationDisabled: cudaError = 223;
+#[doc = " This indicates that the provided execution affinity is not supported by the device."]
+pub const cudaError_cudaErrorUnsupportedExecAffinity: cudaError = 224;
+#[doc = " This indicates that the device kernel source is invalid."]
+pub const cudaError_cudaErrorInvalidSource: cudaError = 300;
+#[doc = " This indicates that the file specified was not found."]
+pub const cudaError_cudaErrorFileNotFound: cudaError = 301;
+#[doc = " This indicates that a link to a shared object failed to resolve."]
+pub const cudaError_cudaErrorSharedObjectSymbolNotFound: cudaError = 302;
+#[doc = " This indicates that initialization of a shared object failed."]
+pub const cudaError_cudaErrorSharedObjectInitFailed: cudaError = 303;
+#[doc = " This error indicates that an OS call failed."]
+pub const cudaError_cudaErrorOperatingSystem: cudaError = 304;
+#[doc = " This indicates that a resource handle passed to the API call was not"]
+#[doc = " valid. Resource handles are opaque types like ::cudaStream_t and"]
+#[doc = " ::cudaEvent_t."]
+pub const cudaError_cudaErrorInvalidResourceHandle: cudaError = 400;
+#[doc = " This indicates that a resource required by the API call is not in a"]
+#[doc = " valid state to perform the requested operation."]
+pub const cudaError_cudaErrorIllegalState: cudaError = 401;
+#[doc = " This indicates that a named symbol was not found. Examples of symbols"]
+#[doc = " are global/constant variable names, driver function names, texture names,"]
+#[doc = " and surface names."]
+pub const cudaError_cudaErrorSymbolNotFound: cudaError = 500;
+#[doc = " This indicates that asynchronous operations issued previously have not"]
+#[doc = " completed yet. This result is not actually an error, but must be indicated"]
+#[doc = " differently than ::cudaSuccess (which indicates completion). Calls that"]
+#[doc = " may return this value include ::cudaEventQuery() and ::cudaStreamQuery()."]
+pub const cudaError_cudaErrorNotReady: cudaError = 600;
+#[doc = " The device encountered a load or store instruction on an invalid memory address."]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorIllegalAddress: cudaError = 700;
+#[doc = " This indicates that a launch did not occur because it did not have"]
+#[doc = " appropriate resources. Although this error is similar to"]
+#[doc = " ::cudaErrorInvalidConfiguration, this error usually indicates that the"]
+#[doc = " user has attempted to pass too many arguments to the device kernel, or the"]
+#[doc = " kernel launch specifies too many threads for the kernel's register count."]
+pub const cudaError_cudaErrorLaunchOutOfResources: cudaError = 701;
+#[doc = " This indicates that the device kernel took too long to execute. This can"]
+#[doc = " only occur if timeouts are enabled - see the device property"]
+#[doc = " \\ref ::cudaDeviceProp::kernelExecTimeoutEnabled \"kernelExecTimeoutEnabled\""]
+#[doc = " for more information."]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorLaunchTimeout: cudaError = 702;
+#[doc = " This error indicates a kernel launch that uses an incompatible texturing"]
+#[doc = " mode."]
+pub const cudaError_cudaErrorLaunchIncompatibleTexturing: cudaError = 703;
+#[doc = " This error indicates that a call to ::cudaDeviceEnablePeerAccess() is"]
+#[doc = " trying to re-enable peer addressing on from a context which has already"]
+#[doc = " had peer addressing enabled."]
+pub const cudaError_cudaErrorPeerAccessAlreadyEnabled: cudaError = 704;
+#[doc = " This error indicates that ::cudaDeviceDisablePeerAccess() is trying to"]
+#[doc = " disable peer addressing which has not been enabled yet via"]
+#[doc = " ::cudaDeviceEnablePeerAccess()."]
+pub const cudaError_cudaErrorPeerAccessNotEnabled: cudaError = 705;
+#[doc = " This indicates that the user has called ::cudaSetValidDevices(),"]
+#[doc = " ::cudaSetDeviceFlags(), ::cudaD3D9SetDirect3DDevice(),"]
+#[doc = " ::cudaD3D10SetDirect3DDevice, ::cudaD3D11SetDirect3DDevice(), or"]
+#[doc = " ::cudaVDPAUSetVDPAUDevice() after initializing the CUDA runtime by"]
+#[doc = " calling non-device management operations (allocating memory and"]
+#[doc = " launching kernels are examples of non-device management operations)."]
+#[doc = " This error can also be returned if using runtime/driver"]
+#[doc = " interoperability and there is an existing ::CUcontext active on the"]
+#[doc = " host thread."]
+pub const cudaError_cudaErrorSetOnActiveProcess: cudaError = 708;
+#[doc = " This error indicates that the context current to the calling thread"]
+#[doc = " has been destroyed using ::cuCtxDestroy, or is a primary context which"]
+#[doc = " has not yet been initialized."]
+pub const cudaError_cudaErrorContextIsDestroyed: cudaError = 709;
+#[doc = " An assert triggered in device code during kernel execution. The device"]
+#[doc = " cannot be used again. All existing allocations are invalid. To continue"]
+#[doc = " using CUDA, the process must be terminated and relaunched."]
+pub const cudaError_cudaErrorAssert: cudaError = 710;
+#[doc = " This error indicates that the hardware resources required to enable"]
+#[doc = " peer access have been exhausted for one or more of the devices"]
+#[doc = " passed to ::cudaEnablePeerAccess()."]
+pub const cudaError_cudaErrorTooManyPeers: cudaError = 711;
+#[doc = " This error indicates that the memory range passed to ::cudaHostRegister()"]
+#[doc = " has already been registered."]
+pub const cudaError_cudaErrorHostMemoryAlreadyRegistered: cudaError = 712;
+#[doc = " This error indicates that the pointer passed to ::cudaHostUnregister()"]
+#[doc = " does not correspond to any currently registered memory region."]
+pub const cudaError_cudaErrorHostMemoryNotRegistered: cudaError = 713;
+#[doc = " Device encountered an error in the call stack during kernel execution,"]
+#[doc = " possibly due to stack corruption or exceeding the stack size limit."]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorHardwareStackError: cudaError = 714;
+#[doc = " The device encountered an illegal instruction during kernel execution"]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorIllegalInstruction: cudaError = 715;
+#[doc = " The device encountered a load or store instruction"]
+#[doc = " on a memory address which is not aligned."]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorMisalignedAddress: cudaError = 716;
+#[doc = " While executing a kernel, the device encountered an instruction"]
+#[doc = " which can only operate on memory locations in certain address spaces"]
+#[doc = " (global, shared, or local), but was supplied a memory address not"]
+#[doc = " belonging to an allowed address space."]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorInvalidAddressSpace: cudaError = 717;
+#[doc = " The device encountered an invalid program counter."]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorInvalidPc: cudaError = 718;
+#[doc = " An exception occurred on the device while executing a kernel. Common"]
+#[doc = " causes include dereferencing an invalid device pointer and accessing"]
+#[doc = " out of bounds shared memory. Less common cases can be system specific - more"]
+#[doc = " information about these cases can be found in the system specific user guide."]
+#[doc = " This leaves the process in an inconsistent state and any further CUDA work"]
+#[doc = " will return the same error. To continue using CUDA, the process must be terminated"]
+#[doc = " and relaunched."]
+pub const cudaError_cudaErrorLaunchFailure: cudaError = 719;
+#[doc = " This error indicates that the number of blocks launched per grid for a kernel that was"]
+#[doc = " launched via either ::cudaLaunchCooperativeKernel or ::cudaLaunchCooperativeKernelMultiDevice"]
+#[doc = " exceeds the maximum number of blocks as allowed by ::cudaOccupancyMaxActiveBlocksPerMultiprocessor"]
+#[doc = " or ::cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags times the number of multiprocessors"]
+#[doc = " as specified by the device attribute ::cudaDevAttrMultiProcessorCount."]
+pub const cudaError_cudaErrorCooperativeLaunchTooLarge: cudaError = 720;
+#[doc = " This error indicates the attempted operation is not permitted."]
+pub const cudaError_cudaErrorNotPermitted: cudaError = 800;
+#[doc = " This error indicates the attempted operation is not supported"]
+#[doc = " on the current system or device."]
+pub const cudaError_cudaErrorNotSupported: cudaError = 801;
+#[doc = " This error indicates that the system is not yet ready to start any CUDA"]
+#[doc = " work.  To continue using CUDA, verify the system configuration is in a"]
+#[doc = " valid state and all required driver daemons are actively running."]
+#[doc = " More information about this error can be found in the system specific"]
+#[doc = " user guide."]
+pub const cudaError_cudaErrorSystemNotReady: cudaError = 802;
+#[doc = " This error indicates that there is a mismatch between the versions of"]
+#[doc = " the display driver and the CUDA driver. Refer to the compatibility documentation"]
+#[doc = " for supported versions."]
+pub const cudaError_cudaErrorSystemDriverMismatch: cudaError = 803;
+#[doc = " This error indicates that the system was upgraded to run with forward compatibility"]
+#[doc = " but the visible hardware detected by CUDA does not support this configuration."]
+#[doc = " Refer to the compatibility documentation for the supported hardware matrix or ensure"]
+#[doc = " that only supported hardware is visible during initialization via the CUDA_VISIBLE_DEVICES"]
+#[doc = " environment variable."]
+pub const cudaError_cudaErrorCompatNotSupportedOnDevice: cudaError = 804;
+#[doc = " This error indicates that the MPS client failed to connect to the MPS control daemon or the MPS server."]
+pub const cudaError_cudaErrorMpsConnectionFailed: cudaError = 805;
+#[doc = " This error indicates that the remote procedural call between the MPS server and the MPS client failed."]
+pub const cudaError_cudaErrorMpsRpcFailure: cudaError = 806;
+#[doc = " This error indicates that the MPS server is not ready to accept new MPS client requests."]
+#[doc = " This error can be returned when the MPS server is in the process of recovering from a fatal failure."]
+pub const cudaError_cudaErrorMpsServerNotReady: cudaError = 807;
+#[doc = " This error indicates that the hardware resources required to create MPS client have been exhausted."]
+pub const cudaError_cudaErrorMpsMaxClientsReached: cudaError = 808;
+#[doc = " This error indicates the the hardware resources required to device connections have been exhausted."]
+pub const cudaError_cudaErrorMpsMaxConnectionsReached: cudaError = 809;
+#[doc = " The operation is not permitted when the stream is capturing."]
+pub const cudaError_cudaErrorStreamCaptureUnsupported: cudaError = 900;
+#[doc = " The current capture sequence on the stream has been invalidated due to"]
+#[doc = " a previous error."]
+pub const cudaError_cudaErrorStreamCaptureInvalidated: cudaError = 901;
+#[doc = " The operation would have resulted in a merge of two independent capture"]
+#[doc = " sequences."]
+pub const cudaError_cudaErrorStreamCaptureMerge: cudaError = 902;
+#[doc = " The capture was not initiated in this stream."]
+pub const cudaError_cudaErrorStreamCaptureUnmatched: cudaError = 903;
+#[doc = " The capture sequence contains a fork that was not joined to the primary"]
+#[doc = " stream."]
+pub const cudaError_cudaErrorStreamCaptureUnjoined: cudaError = 904;
+#[doc = " A dependency would have been created which crosses the capture sequence"]
+#[doc = " boundary. Only implicit in-stream ordering dependencies are allowed to"]
+#[doc = " cross the boundary."]
+pub const cudaError_cudaErrorStreamCaptureIsolation: cudaError = 905;
+#[doc = " The operation would have resulted in a disallowed implicit dependency on"]
+#[doc = " a current capture sequence from cudaStreamLegacy."]
+pub const cudaError_cudaErrorStreamCaptureImplicit: cudaError = 906;
+#[doc = " The operation is not permitted on an event which was last recorded in a"]
+#[doc = " capturing stream."]
+pub const cudaError_cudaErrorCapturedEvent: cudaError = 907;
+#[doc = " A stream capture sequence not initiated with the ::cudaStreamCaptureModeRelaxed"]
+#[doc = " argument to ::cudaStreamBeginCapture was passed to ::cudaStreamEndCapture in a"]
+#[doc = " different thread."]
+pub const cudaError_cudaErrorStreamCaptureWrongThread: cudaError = 908;
+#[doc = " This indicates that the wait operation has timed out."]
+pub const cudaError_cudaErrorTimeout: cudaError = 909;
+#[doc = " This error indicates that the graph update was not performed because it included"]
+#[doc = " changes which violated constraints specific to instantiated graph update."]
+pub const cudaError_cudaErrorGraphExecUpdateFailure: cudaError = 910;
+#[doc = " This indicates that an unknown internal error has occurred."]
+pub const cudaError_cudaErrorUnknown: cudaError = 999;
+#[doc = " Any unhandled CUDA driver error is added to this value and returned via"]
+#[doc = " the runtime. Production releases of CUDA should not return such errors."]
+#[doc = " \\deprecated"]
+#[doc = " This error return is deprecated as of CUDA 4.1."]
+pub const cudaError_cudaErrorApiFailureBase: cudaError = 10000;
+#[doc = " CUDA error types"]
+pub type cudaError = ::libc::c_uint;
+#[doc = "< Signed channel format"]
+pub const cudaChannelFormatKind_cudaChannelFormatKindSigned: cudaChannelFormatKind = 0;
+#[doc = "< Unsigned channel format"]
+pub const cudaChannelFormatKind_cudaChannelFormatKindUnsigned: cudaChannelFormatKind = 1;
+#[doc = "< Float channel format"]
+pub const cudaChannelFormatKind_cudaChannelFormatKindFloat: cudaChannelFormatKind = 2;
+#[doc = "< No channel format"]
+pub const cudaChannelFormatKind_cudaChannelFormatKindNone: cudaChannelFormatKind = 3;
+pub const cudaChannelFormatKind_cudaChannelFormatKindNV12: cudaChannelFormatKind = 4;
+#[doc = " Channel format kind"]
+pub type cudaChannelFormatKind = ::libc::c_uint;
+#[doc = " CUDA Channel format descriptor"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaChannelFormatDesc {
+    #[doc = "< x"]
+    pub x: ::libc::c_int,
+    #[doc = "< y"]
+    pub y: ::libc::c_int,
+    #[doc = "< z"]
+    pub z: ::libc::c_int,
+    #[doc = "< w"]
+    pub w: ::libc::c_int,
+    #[doc = "< Channel format kind"]
+    pub f: cudaChannelFormatKind,
+}
+#[test]
+fn bindgen_test_layout_cudaChannelFormatDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaChannelFormatDesc>(),
+        20usize,
+        concat!("Size of: ", stringify!(cudaChannelFormatDesc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaChannelFormatDesc>(),
+        4usize,
+        concat!("Alignment of ", stringify!(cudaChannelFormatDesc))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaChannelFormatDesc>())).x as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaChannelFormatDesc),
+            "::",
+            stringify!(x)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaChannelFormatDesc>())).y as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaChannelFormatDesc),
+            "::",
+            stringify!(y)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaChannelFormatDesc>())).z as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaChannelFormatDesc),
+            "::",
+            stringify!(z)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaChannelFormatDesc>())).w as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaChannelFormatDesc),
+            "::",
+            stringify!(w)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaChannelFormatDesc>())).f as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaChannelFormatDesc),
+            "::",
+            stringify!(f)
+        )
+    );
+}
+impl Default for cudaChannelFormatDesc {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct cudaArray {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA array"]
+pub type cudaArray_t = *mut cudaArray;
+#[doc = " CUDA array (as source copy argument)"]
+pub type cudaArray_const_t = *const cudaArray;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct cudaMipmappedArray {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA mipmapped array"]
+pub type cudaMipmappedArray_t = *mut cudaMipmappedArray;
+#[doc = " CUDA mipmapped array (as source argument)"]
+pub type cudaMipmappedArray_const_t = *const cudaMipmappedArray;
+#[doc = " Sparse CUDA array and CUDA mipmapped array properties"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaArraySparseProperties {
+    pub tileExtent: cudaArraySparseProperties__bindgen_ty_1,
+    #[doc = "< First mip level at which the mip tail begins"]
+    pub miptailFirstLevel: ::libc::c_uint,
+    #[doc = "< Total size of the mip tail."]
+    pub miptailSize: ::libc::c_ulonglong,
+    #[doc = "< Flags will either be zero or ::cudaArraySparsePropertiesSingleMipTail"]
+    pub flags: ::libc::c_uint,
+    pub reserved: [::libc::c_uint; 4usize],
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaArraySparseProperties__bindgen_ty_1 {
+    #[doc = "< Tile width in elements"]
+    pub width: ::libc::c_uint,
+    #[doc = "< Tile height in elements"]
+    pub height: ::libc::c_uint,
+    #[doc = "< Tile depth in elements"]
+    pub depth: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_cudaArraySparseProperties__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaArraySparseProperties__bindgen_ty_1>(),
+        12usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaArraySparseProperties__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaArraySparseProperties__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaArraySparseProperties__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaArraySparseProperties__bindgen_ty_1>())).width as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties__bindgen_ty_1),
+            "::",
+            stringify!(width)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaArraySparseProperties__bindgen_ty_1>())).height as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties__bindgen_ty_1),
+            "::",
+            stringify!(height)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaArraySparseProperties__bindgen_ty_1>())).depth as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties__bindgen_ty_1),
+            "::",
+            stringify!(depth)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_cudaArraySparseProperties() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaArraySparseProperties>(),
+        48usize,
+        concat!("Size of: ", stringify!(cudaArraySparseProperties))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaArraySparseProperties>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaArraySparseProperties))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaArraySparseProperties>())).tileExtent as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties),
+            "::",
+            stringify!(tileExtent)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaArraySparseProperties>())).miptailFirstLevel as *const _
+                as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties),
+            "::",
+            stringify!(miptailFirstLevel)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaArraySparseProperties>())).miptailSize as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties),
+            "::",
+            stringify!(miptailSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaArraySparseProperties>())).flags as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaArraySparseProperties>())).reserved as *const _ as usize
+        },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaArraySparseProperties),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+#[doc = "< Unregistered memory"]
+pub const cudaMemoryType_cudaMemoryTypeUnregistered: cudaMemoryType = 0;
+#[doc = "< Host memory"]
+pub const cudaMemoryType_cudaMemoryTypeHost: cudaMemoryType = 1;
+#[doc = "< Device memory"]
+pub const cudaMemoryType_cudaMemoryTypeDevice: cudaMemoryType = 2;
+#[doc = "< Managed memory"]
+pub const cudaMemoryType_cudaMemoryTypeManaged: cudaMemoryType = 3;
+#[doc = " CUDA memory types"]
+pub type cudaMemoryType = ::libc::c_uint;
+#[doc = "< Host   -> Host"]
+pub const cudaMemcpyKind_cudaMemcpyHostToHost: cudaMemcpyKind = 0;
+#[doc = "< Host   -> Device"]
+pub const cudaMemcpyKind_cudaMemcpyHostToDevice: cudaMemcpyKind = 1;
+#[doc = "< Device -> Host"]
+pub const cudaMemcpyKind_cudaMemcpyDeviceToHost: cudaMemcpyKind = 2;
+#[doc = "< Device -> Device"]
+pub const cudaMemcpyKind_cudaMemcpyDeviceToDevice: cudaMemcpyKind = 3;
+#[doc = "< Direction of the transfer is inferred from the pointer values. Requires unified virtual addressing"]
+pub const cudaMemcpyKind_cudaMemcpyDefault: cudaMemcpyKind = 4;
+#[doc = " CUDA memory copy types"]
+pub type cudaMemcpyKind = ::libc::c_uint;
+#[doc = " CUDA Pitched memory pointer"]
+#[doc = ""]
+#[doc = " \\sa ::make_cudaPitchedPtr"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaPitchedPtr {
+    #[doc = "< Pointer to allocated memory"]
+    pub ptr: *mut ::libc::c_void,
+    #[doc = "< Pitch of allocated memory in bytes"]
+    pub pitch: usize,
+    #[doc = "< Logical width of allocation in elements"]
+    pub xsize: usize,
+    #[doc = "< Logical height of allocation in elements"]
+    pub ysize: usize,
+}
+#[test]
+fn bindgen_test_layout_cudaPitchedPtr() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaPitchedPtr>(),
+        32usize,
+        concat!("Size of: ", stringify!(cudaPitchedPtr))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaPitchedPtr>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaPitchedPtr))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPitchedPtr>())).ptr as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPitchedPtr),
+            "::",
+            stringify!(ptr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPitchedPtr>())).pitch as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPitchedPtr),
+            "::",
+            stringify!(pitch)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPitchedPtr>())).xsize as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPitchedPtr),
+            "::",
+            stringify!(xsize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPitchedPtr>())).ysize as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPitchedPtr),
+            "::",
+            stringify!(ysize)
+        )
+    );
+}
+impl Default for cudaPitchedPtr {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA extent"]
+#[doc = ""]
+#[doc = " \\sa ::make_cudaExtent"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExtent {
+    #[doc = "< Width in elements when referring to array memory, in bytes when referring to linear memory"]
+    pub width: usize,
+    #[doc = "< Height in elements"]
+    pub height: usize,
+    #[doc = "< Depth in elements"]
+    pub depth: usize,
+}
+#[test]
+fn bindgen_test_layout_cudaExtent() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExtent>(),
+        24usize,
+        concat!("Size of: ", stringify!(cudaExtent))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExtent>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaExtent))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaExtent>())).width as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExtent),
+            "::",
+            stringify!(width)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaExtent>())).height as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExtent),
+            "::",
+            stringify!(height)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaExtent>())).depth as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExtent),
+            "::",
+            stringify!(depth)
+        )
+    );
+}
+#[doc = " CUDA 3D position"]
+#[doc = ""]
+#[doc = " \\sa ::make_cudaPos"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaPos {
+    #[doc = "< x"]
+    pub x: usize,
+    #[doc = "< y"]
+    pub y: usize,
+    #[doc = "< z"]
+    pub z: usize,
+}
+#[test]
+fn bindgen_test_layout_cudaPos() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaPos>(),
+        24usize,
+        concat!("Size of: ", stringify!(cudaPos))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaPos>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaPos))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPos>())).x as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPos),
+            "::",
+            stringify!(x)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPos>())).y as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPos),
+            "::",
+            stringify!(y)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPos>())).z as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPos),
+            "::",
+            stringify!(z)
+        )
+    );
+}
+#[doc = " CUDA 3D memory copying parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemcpy3DParms {
+    #[doc = "< Source memory address"]
+    pub srcArray: cudaArray_t,
+    #[doc = "< Source position offset"]
+    pub srcPos: cudaPos,
+    #[doc = "< Pitched source memory address"]
+    pub srcPtr: cudaPitchedPtr,
+    #[doc = "< Destination memory address"]
+    pub dstArray: cudaArray_t,
+    #[doc = "< Destination position offset"]
+    pub dstPos: cudaPos,
+    #[doc = "< Pitched destination memory address"]
+    pub dstPtr: cudaPitchedPtr,
+    #[doc = "< Requested memory copy size"]
+    pub extent: cudaExtent,
+    #[doc = "< Type of transfer"]
+    pub kind: cudaMemcpyKind,
+}
+#[test]
+fn bindgen_test_layout_cudaMemcpy3DParms() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemcpy3DParms>(),
+        160usize,
+        concat!("Size of: ", stringify!(cudaMemcpy3DParms))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemcpy3DParms>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaMemcpy3DParms))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).srcArray as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(srcArray)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).srcPos as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(srcPos)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).srcPtr as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(srcPtr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).dstArray as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(dstArray)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).dstPos as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(dstPos)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).dstPtr as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(dstPtr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).extent as *const _ as usize },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(extent)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DParms>())).kind as *const _ as usize },
+        152usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DParms),
+            "::",
+            stringify!(kind)
+        )
+    );
+}
+impl Default for cudaMemcpy3DParms {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA 3D cross-device memory copying parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemcpy3DPeerParms {
+    #[doc = "< Source memory address"]
+    pub srcArray: cudaArray_t,
+    #[doc = "< Source position offset"]
+    pub srcPos: cudaPos,
+    #[doc = "< Pitched source memory address"]
+    pub srcPtr: cudaPitchedPtr,
+    #[doc = "< Source device"]
+    pub srcDevice: ::libc::c_int,
+    #[doc = "< Destination memory address"]
+    pub dstArray: cudaArray_t,
+    #[doc = "< Destination position offset"]
+    pub dstPos: cudaPos,
+    #[doc = "< Pitched destination memory address"]
+    pub dstPtr: cudaPitchedPtr,
+    #[doc = "< Destination device"]
+    pub dstDevice: ::libc::c_int,
+    #[doc = "< Requested memory copy size"]
+    pub extent: cudaExtent,
+}
+#[test]
+fn bindgen_test_layout_cudaMemcpy3DPeerParms() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemcpy3DPeerParms>(),
+        168usize,
+        concat!("Size of: ", stringify!(cudaMemcpy3DPeerParms))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemcpy3DPeerParms>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaMemcpy3DPeerParms))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).srcArray as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(srcArray)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).srcPos as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(srcPos)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).srcPtr as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(srcPtr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).srcDevice as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(srcDevice)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).dstArray as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(dstArray)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).dstPos as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(dstPos)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).dstPtr as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(dstPtr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).dstDevice as *const _ as usize },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(dstDevice)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemcpy3DPeerParms>())).extent as *const _ as usize },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemcpy3DPeerParms),
+            "::",
+            stringify!(extent)
+        )
+    );
+}
+impl Default for cudaMemcpy3DPeerParms {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA Memset node parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemsetParams {
+    #[doc = "< Destination device pointer"]
+    pub dst: *mut ::libc::c_void,
+    #[doc = "< Pitch of destination device pointer. Unused if height is 1"]
+    pub pitch: usize,
+    #[doc = "< Value to be set"]
+    pub value: ::libc::c_uint,
+    #[doc = "< Size of each element in bytes. Must be 1, 2, or 4."]
+    pub elementSize: ::libc::c_uint,
+    #[doc = "< Width of the row in elements"]
+    pub width: usize,
+    #[doc = "< Number of rows"]
+    pub height: usize,
+}
+#[test]
+fn bindgen_test_layout_cudaMemsetParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemsetParams>(),
+        40usize,
+        concat!("Size of: ", stringify!(cudaMemsetParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemsetParams>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaMemsetParams))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemsetParams>())).dst as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemsetParams),
+            "::",
+            stringify!(dst)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemsetParams>())).pitch as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemsetParams),
+            "::",
+            stringify!(pitch)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemsetParams>())).value as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemsetParams),
+            "::",
+            stringify!(value)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemsetParams>())).elementSize as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemsetParams),
+            "::",
+            stringify!(elementSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemsetParams>())).width as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemsetParams),
+            "::",
+            stringify!(width)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemsetParams>())).height as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemsetParams),
+            "::",
+            stringify!(height)
+        )
+    );
+}
+impl Default for cudaMemsetParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = "< Normal cache persistence."]
+pub const cudaAccessProperty_cudaAccessPropertyNormal: cudaAccessProperty = 0;
+#[doc = "< Streaming access is less likely to persit from cache."]
+pub const cudaAccessProperty_cudaAccessPropertyStreaming: cudaAccessProperty = 1;
+#[doc = "< Persisting access is more likely to persist in cache."]
+pub const cudaAccessProperty_cudaAccessPropertyPersisting: cudaAccessProperty = 2;
+#[doc = " Specifies performance hint with ::cudaAccessPolicyWindow for hitProp and missProp members."]
+pub type cudaAccessProperty = ::libc::c_uint;
+#[doc = " Specifies an access policy for a window, a contiguous extent of memory"]
+#[doc = " beginning at base_ptr and ending at base_ptr + num_bytes."]
+#[doc = " Partition into many segments and assign segments such that."]
+#[doc = " sum of \"hit segments\" / window == approx. ratio."]
+#[doc = " sum of \"miss segments\" / window == approx 1-ratio."]
+#[doc = " Segments and ratio specifications are fitted to the capabilities of"]
+#[doc = " the architecture."]
+#[doc = " Accesses in a hit segment apply the hitProp access policy."]
+#[doc = " Accesses in a miss segment apply the missProp access policy."]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
+pub struct cudaAccessPolicyWindow {
+    #[doc = "< Starting address of the access policy window. CUDA driver may align it."]
+    pub base_ptr: *mut ::libc::c_void,
+    #[doc = "< Size in bytes of the window policy. CUDA driver may restrict the maximum size and alignment."]
+    pub num_bytes: usize,
+    #[doc = "< hitRatio specifies percentage of lines assigned hitProp, rest are assigned missProp."]
+    pub hitRatio: f32,
+    #[doc = "< ::CUaccessProperty set for hit."]
+    pub hitProp: cudaAccessProperty,
+    #[doc = "< ::CUaccessProperty set for miss. Must be either NORMAL or STREAMING."]
+    pub missProp: cudaAccessProperty,
+}
+#[test]
+fn bindgen_test_layout_cudaAccessPolicyWindow() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaAccessPolicyWindow>(),
+        32usize,
+        concat!("Size of: ", stringify!(cudaAccessPolicyWindow))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaAccessPolicyWindow>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaAccessPolicyWindow))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaAccessPolicyWindow>())).base_ptr as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaAccessPolicyWindow),
+            "::",
+            stringify!(base_ptr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaAccessPolicyWindow>())).num_bytes as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaAccessPolicyWindow),
+            "::",
+            stringify!(num_bytes)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaAccessPolicyWindow>())).hitRatio as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaAccessPolicyWindow),
+            "::",
+            stringify!(hitRatio)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaAccessPolicyWindow>())).hitProp as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaAccessPolicyWindow),
+            "::",
+            stringify!(hitProp)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaAccessPolicyWindow>())).missProp as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaAccessPolicyWindow),
+            "::",
+            stringify!(missProp)
+        )
+    );
+}
+impl Default for cudaAccessPolicyWindow {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA host function"]
+#[doc = " \\param userData Argument value passed to the function"]
+pub type cudaHostFn_t = ::std::option::Option<unsafe extern "C" fn(userData: *mut ::libc::c_void)>;
+#[doc = " CUDA host node parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaHostNodeParams {
+    #[doc = "< The function to call when the node executes"]
+    pub fn_: cudaHostFn_t,
+    #[doc = "< Argument to pass to the function"]
+    pub userData: *mut ::libc::c_void,
+}
+#[test]
+fn bindgen_test_layout_cudaHostNodeParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaHostNodeParams>(),
+        16usize,
+        concat!("Size of: ", stringify!(cudaHostNodeParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaHostNodeParams>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaHostNodeParams))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaHostNodeParams>())).fn_ as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaHostNodeParams),
+            "::",
+            stringify!(fn_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaHostNodeParams>())).userData as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaHostNodeParams),
+            "::",
+            stringify!(userData)
+        )
+    );
+}
+impl Default for cudaHostNodeParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = "< Stream is not capturing"]
+pub const cudaStreamCaptureStatus_cudaStreamCaptureStatusNone: cudaStreamCaptureStatus = 0;
+#[doc = "< Stream is actively capturing"]
+pub const cudaStreamCaptureStatus_cudaStreamCaptureStatusActive: cudaStreamCaptureStatus = 1;
+#[doc = "< Stream is part of a capture sequence that"]
+#[doc = "has been invalidated, but not terminated"]
+pub const cudaStreamCaptureStatus_cudaStreamCaptureStatusInvalidated: cudaStreamCaptureStatus = 2;
+#[doc = " Possible stream capture statuses returned by ::cudaStreamIsCapturing"]
+pub type cudaStreamCaptureStatus = ::libc::c_uint;
+pub const cudaStreamCaptureMode_cudaStreamCaptureModeGlobal: cudaStreamCaptureMode = 0;
+pub const cudaStreamCaptureMode_cudaStreamCaptureModeThreadLocal: cudaStreamCaptureMode = 1;
+pub const cudaStreamCaptureMode_cudaStreamCaptureModeRelaxed: cudaStreamCaptureMode = 2;
+#[doc = " Possible modes for stream capture thread interactions. For more details see"]
+#[doc = " ::cudaStreamBeginCapture and ::cudaThreadExchangeStreamCaptureMode"]
+pub type cudaStreamCaptureMode = ::libc::c_uint;
+pub const cudaSynchronizationPolicy_cudaSyncPolicyAuto: cudaSynchronizationPolicy = 1;
+pub const cudaSynchronizationPolicy_cudaSyncPolicySpin: cudaSynchronizationPolicy = 2;
+pub const cudaSynchronizationPolicy_cudaSyncPolicyYield: cudaSynchronizationPolicy = 3;
+pub const cudaSynchronizationPolicy_cudaSyncPolicyBlockingSync: cudaSynchronizationPolicy = 4;
+pub type cudaSynchronizationPolicy = ::libc::c_uint;
+#[doc = "< Identifier for ::cudaStreamAttrValue::accessPolicyWindow."]
+pub const cudaStreamAttrID_cudaStreamAttributeAccessPolicyWindow: cudaStreamAttrID = 1;
+#[doc = "< ::cudaSynchronizationPolicy for work queued up in this stream"]
+pub const cudaStreamAttrID_cudaStreamAttributeSynchronizationPolicy: cudaStreamAttrID = 3;
+#[doc = " Stream Attributes"]
+pub type cudaStreamAttrID = ::libc::c_uint;
+#[doc = " Stream attributes union used with ::cudaStreamSetAttribute/::cudaStreamGetAttribute"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union cudaStreamAttrValue {
+    pub accessPolicyWindow: cudaAccessPolicyWindow,
+    pub syncPolicy: cudaSynchronizationPolicy,
+}
+#[test]
+fn bindgen_test_layout_cudaStreamAttrValue() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaStreamAttrValue>(),
+        32usize,
+        concat!("Size of: ", stringify!(cudaStreamAttrValue))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaStreamAttrValue>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaStreamAttrValue))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaStreamAttrValue>())).accessPolicyWindow as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaStreamAttrValue),
+            "::",
+            stringify!(accessPolicyWindow)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaStreamAttrValue>())).syncPolicy as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaStreamAttrValue),
+            "::",
+            stringify!(syncPolicy)
+        )
+    );
+}
+impl Default for cudaStreamAttrValue {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = "< Add new nodes to the dependency set"]
+pub const cudaStreamUpdateCaptureDependenciesFlags_cudaStreamAddCaptureDependencies:
+    cudaStreamUpdateCaptureDependenciesFlags = 0;
+#[doc = "< Replace the dependency set with the new nodes"]
+pub const cudaStreamUpdateCaptureDependenciesFlags_cudaStreamSetCaptureDependencies:
+    cudaStreamUpdateCaptureDependenciesFlags = 1;
+#[doc = " Flags for ::cudaStreamUpdateCaptureDependencies"]
+pub type cudaStreamUpdateCaptureDependenciesFlags = ::libc::c_uint;
+#[doc = "< Indicates the destructor execution is not synchronized by any CUDA handle."]
+pub const cudaUserObjectFlags_cudaUserObjectNoDestructorSync: cudaUserObjectFlags = 1;
+#[doc = " Flags for user objects for graphs"]
+pub type cudaUserObjectFlags = ::libc::c_uint;
+#[doc = "< Transfer references from the caller rather than creating new references."]
+pub const cudaUserObjectRetainFlags_cudaGraphUserObjectMove: cudaUserObjectRetainFlags = 1;
+#[doc = " Flags for retaining user object references for graphs"]
+pub type cudaUserObjectRetainFlags = ::libc::c_uint;
+#[doc = " CUDA graphics interop resource"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct cudaGraphicsResource {
+    _unused: [u8; 0],
+}
+#[doc = "< Default"]
+pub const cudaGraphicsRegisterFlags_cudaGraphicsRegisterFlagsNone: cudaGraphicsRegisterFlags = 0;
+#[doc = "< CUDA will not write to this resource"]
+pub const cudaGraphicsRegisterFlags_cudaGraphicsRegisterFlagsReadOnly: cudaGraphicsRegisterFlags =
+    1;
+#[doc = "< CUDA will only write to and will not read from this resource"]
+pub const cudaGraphicsRegisterFlags_cudaGraphicsRegisterFlagsWriteDiscard:
+    cudaGraphicsRegisterFlags = 2;
+#[doc = "< CUDA will bind this resource to a surface reference"]
+pub const cudaGraphicsRegisterFlags_cudaGraphicsRegisterFlagsSurfaceLoadStore:
+    cudaGraphicsRegisterFlags = 4;
+#[doc = "< CUDA will perform texture gather operations on this resource"]
+pub const cudaGraphicsRegisterFlags_cudaGraphicsRegisterFlagsTextureGather:
+    cudaGraphicsRegisterFlags = 8;
+#[doc = " CUDA graphics interop register flags"]
+pub type cudaGraphicsRegisterFlags = ::libc::c_uint;
+#[doc = "< Default; Assume resource can be read/written"]
+pub const cudaGraphicsMapFlags_cudaGraphicsMapFlagsNone: cudaGraphicsMapFlags = 0;
+#[doc = "< CUDA will not write to this resource"]
+pub const cudaGraphicsMapFlags_cudaGraphicsMapFlagsReadOnly: cudaGraphicsMapFlags = 1;
+#[doc = "< CUDA will only write to and will not read from this resource"]
+pub const cudaGraphicsMapFlags_cudaGraphicsMapFlagsWriteDiscard: cudaGraphicsMapFlags = 2;
+#[doc = " CUDA graphics interop map flags"]
+pub type cudaGraphicsMapFlags = ::libc::c_uint;
+#[doc = "< Positive X face of cubemap"]
+pub const cudaGraphicsCubeFace_cudaGraphicsCubeFacePositiveX: cudaGraphicsCubeFace = 0;
+#[doc = "< Negative X face of cubemap"]
+pub const cudaGraphicsCubeFace_cudaGraphicsCubeFaceNegativeX: cudaGraphicsCubeFace = 1;
+#[doc = "< Positive Y face of cubemap"]
+pub const cudaGraphicsCubeFace_cudaGraphicsCubeFacePositiveY: cudaGraphicsCubeFace = 2;
+#[doc = "< Negative Y face of cubemap"]
+pub const cudaGraphicsCubeFace_cudaGraphicsCubeFaceNegativeY: cudaGraphicsCubeFace = 3;
+#[doc = "< Positive Z face of cubemap"]
+pub const cudaGraphicsCubeFace_cudaGraphicsCubeFacePositiveZ: cudaGraphicsCubeFace = 4;
+#[doc = "< Negative Z face of cubemap"]
+pub const cudaGraphicsCubeFace_cudaGraphicsCubeFaceNegativeZ: cudaGraphicsCubeFace = 5;
+#[doc = " CUDA graphics interop array indices for cube maps"]
+pub type cudaGraphicsCubeFace = ::libc::c_uint;
+#[doc = "< Identifier for ::cudaKernelNodeAttrValue::accessPolicyWindow."]
+pub const cudaKernelNodeAttrID_cudaKernelNodeAttributeAccessPolicyWindow: cudaKernelNodeAttrID = 1;
+#[doc = "< Allows a kernel node to be cooperative (see ::cudaLaunchCooperativeKernel)."]
+pub const cudaKernelNodeAttrID_cudaKernelNodeAttributeCooperative: cudaKernelNodeAttrID = 2;
+#[doc = " Graph kernel node Attributes"]
+pub type cudaKernelNodeAttrID = ::libc::c_uint;
+#[doc = " Graph kernel node attributes union, used with ::cudaGraphKernelNodeSetAttribute/::cudaGraphKernelNodeGetAttribute"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union cudaKernelNodeAttrValue {
+    #[doc = "< Attribute ::CUaccessPolicyWindow."]
+    pub accessPolicyWindow: cudaAccessPolicyWindow,
+    pub cooperative: ::libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_cudaKernelNodeAttrValue() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaKernelNodeAttrValue>(),
+        32usize,
+        concat!("Size of: ", stringify!(cudaKernelNodeAttrValue))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaKernelNodeAttrValue>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaKernelNodeAttrValue))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaKernelNodeAttrValue>())).accessPolicyWindow as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeAttrValue),
+            "::",
+            stringify!(accessPolicyWindow)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaKernelNodeAttrValue>())).cooperative as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeAttrValue),
+            "::",
+            stringify!(cooperative)
+        )
+    );
+}
+impl Default for cudaKernelNodeAttrValue {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = "< Array resource"]
+pub const cudaResourceType_cudaResourceTypeArray: cudaResourceType = 0;
+#[doc = "< Mipmapped array resource"]
+pub const cudaResourceType_cudaResourceTypeMipmappedArray: cudaResourceType = 1;
+#[doc = "< Linear resource"]
+pub const cudaResourceType_cudaResourceTypeLinear: cudaResourceType = 2;
+#[doc = "< Pitch 2D resource"]
+pub const cudaResourceType_cudaResourceTypePitch2D: cudaResourceType = 3;
+#[doc = " CUDA resource types"]
+pub type cudaResourceType = ::libc::c_uint;
+#[doc = "< No resource view format (use underlying resource format)"]
+pub const cudaResourceViewFormat_cudaResViewFormatNone: cudaResourceViewFormat = 0;
+#[doc = "< 1 channel unsigned 8-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedChar1: cudaResourceViewFormat = 1;
+#[doc = "< 2 channel unsigned 8-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedChar2: cudaResourceViewFormat = 2;
+#[doc = "< 4 channel unsigned 8-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedChar4: cudaResourceViewFormat = 3;
+#[doc = "< 1 channel signed 8-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedChar1: cudaResourceViewFormat = 4;
+#[doc = "< 2 channel signed 8-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedChar2: cudaResourceViewFormat = 5;
+#[doc = "< 4 channel signed 8-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedChar4: cudaResourceViewFormat = 6;
+#[doc = "< 1 channel unsigned 16-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedShort1: cudaResourceViewFormat = 7;
+#[doc = "< 2 channel unsigned 16-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedShort2: cudaResourceViewFormat = 8;
+#[doc = "< 4 channel unsigned 16-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedShort4: cudaResourceViewFormat = 9;
+#[doc = "< 1 channel signed 16-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedShort1: cudaResourceViewFormat = 10;
+#[doc = "< 2 channel signed 16-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedShort2: cudaResourceViewFormat = 11;
+#[doc = "< 4 channel signed 16-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedShort4: cudaResourceViewFormat = 12;
+#[doc = "< 1 channel unsigned 32-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedInt1: cudaResourceViewFormat = 13;
+#[doc = "< 2 channel unsigned 32-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedInt2: cudaResourceViewFormat = 14;
+#[doc = "< 4 channel unsigned 32-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedInt4: cudaResourceViewFormat = 15;
+#[doc = "< 1 channel signed 32-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedInt1: cudaResourceViewFormat = 16;
+#[doc = "< 2 channel signed 32-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedInt2: cudaResourceViewFormat = 17;
+#[doc = "< 4 channel signed 32-bit integers"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedInt4: cudaResourceViewFormat = 18;
+#[doc = "< 1 channel 16-bit floating point"]
+pub const cudaResourceViewFormat_cudaResViewFormatHalf1: cudaResourceViewFormat = 19;
+#[doc = "< 2 channel 16-bit floating point"]
+pub const cudaResourceViewFormat_cudaResViewFormatHalf2: cudaResourceViewFormat = 20;
+#[doc = "< 4 channel 16-bit floating point"]
+pub const cudaResourceViewFormat_cudaResViewFormatHalf4: cudaResourceViewFormat = 21;
+#[doc = "< 1 channel 32-bit floating point"]
+pub const cudaResourceViewFormat_cudaResViewFormatFloat1: cudaResourceViewFormat = 22;
+#[doc = "< 2 channel 32-bit floating point"]
+pub const cudaResourceViewFormat_cudaResViewFormatFloat2: cudaResourceViewFormat = 23;
+#[doc = "< 4 channel 32-bit floating point"]
+pub const cudaResourceViewFormat_cudaResViewFormatFloat4: cudaResourceViewFormat = 24;
+#[doc = "< Block compressed 1"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedBlockCompressed1: cudaResourceViewFormat =
+    25;
+#[doc = "< Block compressed 2"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedBlockCompressed2: cudaResourceViewFormat =
+    26;
+#[doc = "< Block compressed 3"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedBlockCompressed3: cudaResourceViewFormat =
+    27;
+#[doc = "< Block compressed 4 unsigned"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedBlockCompressed4: cudaResourceViewFormat =
+    28;
+#[doc = "< Block compressed 4 signed"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedBlockCompressed4: cudaResourceViewFormat =
+    29;
+#[doc = "< Block compressed 5 unsigned"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedBlockCompressed5: cudaResourceViewFormat =
+    30;
+#[doc = "< Block compressed 5 signed"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedBlockCompressed5: cudaResourceViewFormat =
+    31;
+#[doc = "< Block compressed 6 unsigned half-float"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedBlockCompressed6H:
+    cudaResourceViewFormat = 32;
+#[doc = "< Block compressed 6 signed half-float"]
+pub const cudaResourceViewFormat_cudaResViewFormatSignedBlockCompressed6H: cudaResourceViewFormat =
+    33;
+#[doc = "< Block compressed 7"]
+pub const cudaResourceViewFormat_cudaResViewFormatUnsignedBlockCompressed7: cudaResourceViewFormat =
+    34;
+#[doc = " CUDA texture resource view formats"]
+pub type cudaResourceViewFormat = ::libc::c_uint;
+#[doc = " CUDA resource descriptor"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct cudaResourceDesc {
+    #[doc = "< Resource type"]
+    pub resType: cudaResourceType,
+    pub res: cudaResourceDesc__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union cudaResourceDesc__bindgen_ty_1 {
+    pub array: cudaResourceDesc__bindgen_ty_1__bindgen_ty_1,
+    pub mipmap: cudaResourceDesc__bindgen_ty_1__bindgen_ty_2,
+    pub linear: cudaResourceDesc__bindgen_ty_1__bindgen_ty_3,
+    pub pitch2D: cudaResourceDesc__bindgen_ty_1__bindgen_ty_4,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaResourceDesc__bindgen_ty_1__bindgen_ty_1 {
+    #[doc = "< CUDA array"]
+    pub array: cudaArray_t,
+}
+#[test]
+fn bindgen_test_layout_cudaResourceDesc__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_1>())).array
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(array)
+        )
+    );
+}
+impl Default for cudaResourceDesc__bindgen_ty_1__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaResourceDesc__bindgen_ty_1__bindgen_ty_2 {
+    #[doc = "< CUDA mipmapped array"]
+    pub mipmap: cudaMipmappedArray_t,
+}
+#[test]
+fn bindgen_test_layout_cudaResourceDesc__bindgen_ty_1__bindgen_ty_2() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_2>())).mipmap
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(mipmap)
+        )
+    );
+}
+impl Default for cudaResourceDesc__bindgen_ty_1__bindgen_ty_2 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaResourceDesc__bindgen_ty_1__bindgen_ty_3 {
+    #[doc = "< Device pointer"]
+    pub devPtr: *mut ::libc::c_void,
+    #[doc = "< Channel descriptor"]
+    pub desc: cudaChannelFormatDesc,
+    #[doc = "< Size in bytes"]
+    pub sizeInBytes: usize,
+}
+#[test]
+fn bindgen_test_layout_cudaResourceDesc__bindgen_ty_1__bindgen_ty_3() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_3>(),
+        40usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_3>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_3>())).devPtr
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(devPtr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_3>())).desc
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(desc)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_3>())).sizeInBytes
+                as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(sizeInBytes)
+        )
+    );
+}
+impl Default for cudaResourceDesc__bindgen_ty_1__bindgen_ty_3 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaResourceDesc__bindgen_ty_1__bindgen_ty_4 {
+    #[doc = "< Device pointer"]
+    pub devPtr: *mut ::libc::c_void,
+    #[doc = "< Channel descriptor"]
+    pub desc: cudaChannelFormatDesc,
+    #[doc = "< Width of the array in elements"]
+    pub width: usize,
+    #[doc = "< Height of the array in elements"]
+    pub height: usize,
+    #[doc = "< Pitch between two rows in bytes"]
+    pub pitchInBytes: usize,
+}
+#[test]
+fn bindgen_test_layout_cudaResourceDesc__bindgen_ty_1__bindgen_ty_4() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_4>(),
+        56usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_4)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_4>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_4)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_4>())).devPtr
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(devPtr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_4>())).desc
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(desc)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_4>())).width
+                as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(width)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_4>())).height
+                as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(height)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1__bindgen_ty_4>())).pitchInBytes
+                as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(pitchInBytes)
+        )
+    );
+}
+impl Default for cudaResourceDesc__bindgen_ty_1__bindgen_ty_4 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaResourceDesc__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaResourceDesc__bindgen_ty_1>(),
+        56usize,
+        concat!("Size of: ", stringify!(cudaResourceDesc__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaResourceDesc__bindgen_ty_1>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaResourceDesc__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1>())).array as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1),
+            "::",
+            stringify!(array)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1>())).mipmap as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1),
+            "::",
+            stringify!(mipmap)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1>())).linear as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1),
+            "::",
+            stringify!(linear)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceDesc__bindgen_ty_1>())).pitch2D as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc__bindgen_ty_1),
+            "::",
+            stringify!(pitch2D)
+        )
+    );
+}
+impl Default for cudaResourceDesc__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaResourceDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaResourceDesc>(),
+        64usize,
+        concat!("Size of: ", stringify!(cudaResourceDesc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaResourceDesc>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaResourceDesc))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceDesc>())).resType as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc),
+            "::",
+            stringify!(resType)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceDesc>())).res as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceDesc),
+            "::",
+            stringify!(res)
+        )
+    );
+}
+impl Default for cudaResourceDesc {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA resource view descriptor"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaResourceViewDesc {
+    #[doc = "< Resource view format"]
+    pub format: cudaResourceViewFormat,
+    #[doc = "< Width of the resource view"]
+    pub width: usize,
+    #[doc = "< Height of the resource view"]
+    pub height: usize,
+    #[doc = "< Depth of the resource view"]
+    pub depth: usize,
+    #[doc = "< First defined mipmap level"]
+    pub firstMipmapLevel: ::libc::c_uint,
+    #[doc = "< Last defined mipmap level"]
+    pub lastMipmapLevel: ::libc::c_uint,
+    #[doc = "< First layer index"]
+    pub firstLayer: ::libc::c_uint,
+    #[doc = "< Last layer index"]
+    pub lastLayer: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_cudaResourceViewDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaResourceViewDesc>(),
+        48usize,
+        concat!("Size of: ", stringify!(cudaResourceViewDesc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaResourceViewDesc>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaResourceViewDesc))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceViewDesc>())).format as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(format)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceViewDesc>())).width as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(width)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceViewDesc>())).height as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(height)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceViewDesc>())).depth as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(depth)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceViewDesc>())).firstMipmapLevel as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(firstMipmapLevel)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaResourceViewDesc>())).lastMipmapLevel as *const _ as usize
+        },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(lastMipmapLevel)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceViewDesc>())).firstLayer as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(firstLayer)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaResourceViewDesc>())).lastLayer as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaResourceViewDesc),
+            "::",
+            stringify!(lastLayer)
+        )
+    );
+}
+impl Default for cudaResourceViewDesc {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA pointer attributes"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaPointerAttributes {
+    #[doc = " The type of memory - ::cudaMemoryTypeUnregistered, ::cudaMemoryTypeHost,"]
+    #[doc = " ::cudaMemoryTypeDevice or ::cudaMemoryTypeManaged."]
+    pub type_: cudaMemoryType,
+    #[doc = " The device against which the memory was allocated or registered."]
+    #[doc = " If the memory type is ::cudaMemoryTypeDevice then this identifies"]
+    #[doc = " the device on which the memory referred physically resides.  If"]
+    #[doc = " the memory type is ::cudaMemoryTypeHost or::cudaMemoryTypeManaged then"]
+    #[doc = " this identifies the device which was current when the memory was allocated"]
+    #[doc = " or registered (and if that device is deinitialized then this allocation"]
+    #[doc = " will vanish with that device's state)."]
+    pub device: ::libc::c_int,
+    #[doc = " The address which may be dereferenced on the current device to access"]
+    #[doc = " the memory or NULL if no such address exists."]
+    pub devicePointer: *mut ::libc::c_void,
+    #[doc = " The address which may be dereferenced on the host to access the"]
+    #[doc = " memory or NULL if no such address exists."]
+    #[doc = ""]
+    #[doc = " \\note CUDA doesn't check if unregistered memory is allocated so this field"]
+    #[doc = " may contain invalid pointer if an invalid pointer has been passed to CUDA."]
+    pub hostPointer: *mut ::libc::c_void,
+}
+#[test]
+fn bindgen_test_layout_cudaPointerAttributes() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaPointerAttributes>(),
+        24usize,
+        concat!("Size of: ", stringify!(cudaPointerAttributes))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaPointerAttributes>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaPointerAttributes))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPointerAttributes>())).type_ as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPointerAttributes),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaPointerAttributes>())).device as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPointerAttributes),
+            "::",
+            stringify!(device)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaPointerAttributes>())).devicePointer as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPointerAttributes),
+            "::",
+            stringify!(devicePointer)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaPointerAttributes>())).hostPointer as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaPointerAttributes),
+            "::",
+            stringify!(hostPointer)
+        )
+    );
+}
+impl Default for cudaPointerAttributes {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA function attributes"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaFuncAttributes {
+    #[doc = " The size in bytes of statically-allocated shared memory per block"]
+    #[doc = " required by this function. This does not include dynamically-allocated"]
+    #[doc = " shared memory requested by the user at runtime."]
+    pub sharedSizeBytes: usize,
+    #[doc = " The size in bytes of user-allocated constant memory required by this"]
+    #[doc = " function."]
+    pub constSizeBytes: usize,
+    #[doc = " The size in bytes of local memory used by each thread of this function."]
+    pub localSizeBytes: usize,
+    #[doc = " The maximum number of threads per block, beyond which a launch of the"]
+    #[doc = " function would fail. This number depends on both the function and the"]
+    #[doc = " device on which the function is currently loaded."]
+    pub maxThreadsPerBlock: ::libc::c_int,
+    #[doc = " The number of registers used by each thread of this function."]
+    pub numRegs: ::libc::c_int,
+    #[doc = " The PTX virtual architecture version for which the function was"]
+    #[doc = " compiled. This value is the major PTX version * 10 + the minor PTX"]
+    #[doc = " version, so a PTX version 1.3 function would return the value 13."]
+    pub ptxVersion: ::libc::c_int,
+    #[doc = " The binary architecture version for which the function was compiled."]
+    #[doc = " This value is the major binary version * 10 + the minor binary version,"]
+    #[doc = " so a binary version 1.3 function would return the value 13."]
+    pub binaryVersion: ::libc::c_int,
+    #[doc = " The attribute to indicate whether the function has been compiled with"]
+    #[doc = " user specified option \"-Xptxas --dlcm=ca\" set."]
+    pub cacheModeCA: ::libc::c_int,
+    #[doc = " The maximum size in bytes of dynamic shared memory per block for"]
+    #[doc = " this function. Any launch must have a dynamic shared memory size"]
+    #[doc = " smaller than this value."]
+    pub maxDynamicSharedSizeBytes: ::libc::c_int,
+    #[doc = " On devices where the L1 cache and shared memory use the same hardware resources,"]
+    #[doc = " this sets the shared memory carveout preference, in percent of the maximum shared memory."]
+    #[doc = " Refer to ::cudaDevAttrMaxSharedMemoryPerMultiprocessor."]
+    #[doc = " This is only a hint, and the driver can choose a different ratio if required to execute the function."]
+    #[doc = " See ::cudaFuncSetAttribute"]
+    pub preferredShmemCarveout: ::libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_cudaFuncAttributes() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaFuncAttributes>(),
+        56usize,
+        concat!("Size of: ", stringify!(cudaFuncAttributes))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaFuncAttributes>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaFuncAttributes))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaFuncAttributes>())).sharedSizeBytes as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(sharedSizeBytes)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaFuncAttributes>())).constSizeBytes as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(constSizeBytes)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaFuncAttributes>())).localSizeBytes as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(localSizeBytes)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaFuncAttributes>())).maxThreadsPerBlock as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(maxThreadsPerBlock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaFuncAttributes>())).numRegs as *const _ as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(numRegs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaFuncAttributes>())).ptxVersion as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(ptxVersion)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaFuncAttributes>())).binaryVersion as *const _ as usize
+        },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(binaryVersion)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaFuncAttributes>())).cacheModeCA as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(cacheModeCA)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaFuncAttributes>())).maxDynamicSharedSizeBytes as *const _
+                as usize
+        },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(maxDynamicSharedSizeBytes)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaFuncAttributes>())).preferredShmemCarveout as *const _
+                as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaFuncAttributes),
+            "::",
+            stringify!(preferredShmemCarveout)
+        )
+    );
+}
+#[doc = "< Maximum dynamic shared memory size"]
+pub const cudaFuncAttribute_cudaFuncAttributeMaxDynamicSharedMemorySize: cudaFuncAttribute = 8;
+#[doc = "< Preferred shared memory-L1 cache split"]
+pub const cudaFuncAttribute_cudaFuncAttributePreferredSharedMemoryCarveout: cudaFuncAttribute = 9;
+pub const cudaFuncAttribute_cudaFuncAttributeMax: cudaFuncAttribute = 10;
+#[doc = " CUDA function attributes that can be set using ::cudaFuncSetAttribute"]
+pub type cudaFuncAttribute = ::libc::c_uint;
+#[doc = "< Default function cache configuration, no preference"]
+pub const cudaFuncCache_cudaFuncCachePreferNone: cudaFuncCache = 0;
+#[doc = "< Prefer larger shared memory and smaller L1 cache"]
+pub const cudaFuncCache_cudaFuncCachePreferShared: cudaFuncCache = 1;
+#[doc = "< Prefer larger L1 cache and smaller shared memory"]
+pub const cudaFuncCache_cudaFuncCachePreferL1: cudaFuncCache = 2;
+#[doc = "< Prefer equal size L1 cache and shared memory"]
+pub const cudaFuncCache_cudaFuncCachePreferEqual: cudaFuncCache = 3;
+#[doc = " CUDA function cache configurations"]
+pub type cudaFuncCache = ::libc::c_uint;
+pub const cudaSharedMemConfig_cudaSharedMemBankSizeDefault: cudaSharedMemConfig = 0;
+pub const cudaSharedMemConfig_cudaSharedMemBankSizeFourByte: cudaSharedMemConfig = 1;
+pub const cudaSharedMemConfig_cudaSharedMemBankSizeEightByte: cudaSharedMemConfig = 2;
+#[doc = " CUDA shared memory configuration"]
+pub type cudaSharedMemConfig = ::libc::c_uint;
+#[doc = "< No preference for shared memory or L1 (default)"]
+pub const cudaSharedCarveout_cudaSharedmemCarveoutDefault: cudaSharedCarveout = -1;
+#[doc = "< Prefer maximum available shared memory, minimum L1 cache"]
+pub const cudaSharedCarveout_cudaSharedmemCarveoutMaxShared: cudaSharedCarveout = 100;
+#[doc = "< Prefer maximum available L1 cache, minimum shared memory"]
+pub const cudaSharedCarveout_cudaSharedmemCarveoutMaxL1: cudaSharedCarveout = 0;
+#[doc = " Shared memory carveout configurations. These may be passed to cudaFuncSetAttribute"]
+pub type cudaSharedCarveout = ::libc::c_int;
+#[doc = "< Default compute mode (Multiple threads can use ::cudaSetDevice() with this device)"]
+pub const cudaComputeMode_cudaComputeModeDefault: cudaComputeMode = 0;
+#[doc = "< Compute-exclusive-thread mode (Only one thread in one process will be able to use ::cudaSetDevice() with this device)"]
+pub const cudaComputeMode_cudaComputeModeExclusive: cudaComputeMode = 1;
+#[doc = "< Compute-prohibited mode (No threads can use ::cudaSetDevice() with this device)"]
+pub const cudaComputeMode_cudaComputeModeProhibited: cudaComputeMode = 2;
+#[doc = "< Compute-exclusive-process mode (Many threads in one process will be able to use ::cudaSetDevice() with this device)"]
+pub const cudaComputeMode_cudaComputeModeExclusiveProcess: cudaComputeMode = 3;
+#[doc = " CUDA device compute modes"]
+pub type cudaComputeMode = ::libc::c_uint;
+#[doc = "< GPU thread stack size"]
+pub const cudaLimit_cudaLimitStackSize: cudaLimit = 0;
+#[doc = "< GPU printf FIFO size"]
+pub const cudaLimit_cudaLimitPrintfFifoSize: cudaLimit = 1;
+#[doc = "< GPU malloc heap size"]
+pub const cudaLimit_cudaLimitMallocHeapSize: cudaLimit = 2;
+#[doc = "< GPU device runtime synchronize depth"]
+pub const cudaLimit_cudaLimitDevRuntimeSyncDepth: cudaLimit = 3;
+#[doc = "< GPU device runtime pending launch count"]
+pub const cudaLimit_cudaLimitDevRuntimePendingLaunchCount: cudaLimit = 4;
+#[doc = "< A value between 0 and 128 that indicates the maximum fetch granularity of L2 (in Bytes). This is a hint"]
+pub const cudaLimit_cudaLimitMaxL2FetchGranularity: cudaLimit = 5;
+#[doc = "< A size in bytes for L2 persisting lines cache size"]
+pub const cudaLimit_cudaLimitPersistingL2CacheSize: cudaLimit = 6;
+#[doc = " CUDA Limits"]
+pub type cudaLimit = ::libc::c_uint;
+#[doc = "< Data will mostly be read and only occassionally be written to"]
+pub const cudaMemoryAdvise_cudaMemAdviseSetReadMostly: cudaMemoryAdvise = 1;
+#[doc = "< Undo the effect of ::cudaMemAdviseSetReadMostly"]
+pub const cudaMemoryAdvise_cudaMemAdviseUnsetReadMostly: cudaMemoryAdvise = 2;
+#[doc = "< Set the preferred location for the data as the specified device"]
+pub const cudaMemoryAdvise_cudaMemAdviseSetPreferredLocation: cudaMemoryAdvise = 3;
+#[doc = "< Clear the preferred location for the data"]
+pub const cudaMemoryAdvise_cudaMemAdviseUnsetPreferredLocation: cudaMemoryAdvise = 4;
+#[doc = "< Data will be accessed by the specified device, so prevent page faults as much as possible"]
+pub const cudaMemoryAdvise_cudaMemAdviseSetAccessedBy: cudaMemoryAdvise = 5;
+#[doc = "< Let the Unified Memory subsystem decide on the page faulting policy for the specified device"]
+pub const cudaMemoryAdvise_cudaMemAdviseUnsetAccessedBy: cudaMemoryAdvise = 6;
+#[doc = " CUDA Memory Advise values"]
+pub type cudaMemoryAdvise = ::libc::c_uint;
+#[doc = "< Whether the range will mostly be read and only occassionally be written to"]
+pub const cudaMemRangeAttribute_cudaMemRangeAttributeReadMostly: cudaMemRangeAttribute = 1;
+#[doc = "< The preferred location of the range"]
+pub const cudaMemRangeAttribute_cudaMemRangeAttributePreferredLocation: cudaMemRangeAttribute = 2;
+#[doc = "< Memory range has ::cudaMemAdviseSetAccessedBy set for specified device"]
+pub const cudaMemRangeAttribute_cudaMemRangeAttributeAccessedBy: cudaMemRangeAttribute = 3;
+#[doc = "< The last location to which the range was prefetched"]
+pub const cudaMemRangeAttribute_cudaMemRangeAttributeLastPrefetchLocation: cudaMemRangeAttribute =
+    4;
+#[doc = " CUDA range attributes"]
+pub type cudaMemRangeAttribute = ::libc::c_uint;
+#[doc = "< Output mode Key-Value pair format."]
+pub const cudaOutputMode_cudaKeyValuePair: cudaOutputMode = 0;
+#[doc = "< Output mode Comma separated values format."]
+pub const cudaOutputMode_cudaCSV: cudaOutputMode = 1;
+#[doc = " CUDA Profiler Output modes"]
+pub type cudaOutputMode = ::libc::c_uint;
+#[doc = "< ::cudaDeviceFlushGPUDirectRDMAWrites() and its CUDA Driver API counterpart are supported on the device."]
+pub const cudaFlushGPUDirectRDMAWritesOptions_cudaFlushGPUDirectRDMAWritesOptionHost:
+    cudaFlushGPUDirectRDMAWritesOptions = 1;
+#[doc = "< The ::CU_STREAM_WAIT_VALUE_FLUSH flag and the ::CU_STREAM_MEM_OP_FLUSH_REMOTE_WRITES MemOp are supported on the CUDA device."]
+pub const cudaFlushGPUDirectRDMAWritesOptions_cudaFlushGPUDirectRDMAWritesOptionMemOps:
+    cudaFlushGPUDirectRDMAWritesOptions = 2;
+#[doc = " CUDA GPUDirect RDMA flush writes APIs supported on the device"]
+pub type cudaFlushGPUDirectRDMAWritesOptions = ::libc::c_uint;
+#[doc = "< The device does not natively support ordering of GPUDirect RDMA writes. ::cudaFlushGPUDirectRDMAWrites() can be leveraged if supported."]
+pub const cudaGPUDirectRDMAWritesOrdering_cudaGPUDirectRDMAWritesOrderingNone:
+    cudaGPUDirectRDMAWritesOrdering = 0;
+#[doc = "< Natively, the device can consistently consume GPUDirect RDMA writes, although other CUDA devices may not."]
+pub const cudaGPUDirectRDMAWritesOrdering_cudaGPUDirectRDMAWritesOrderingOwner:
+    cudaGPUDirectRDMAWritesOrdering = 100;
+#[doc = "< Any CUDA device in the system can consistently consume GPUDirect RDMA writes to this device."]
+pub const cudaGPUDirectRDMAWritesOrdering_cudaGPUDirectRDMAWritesOrderingAllDevices:
+    cudaGPUDirectRDMAWritesOrdering = 200;
+#[doc = " CUDA GPUDirect RDMA flush writes ordering features of the device"]
+pub type cudaGPUDirectRDMAWritesOrdering = ::libc::c_uint;
+#[doc = "< Blocks until remote writes are visible to the CUDA device context owning the data."]
+pub const cudaFlushGPUDirectRDMAWritesScope_cudaFlushGPUDirectRDMAWritesToOwner:
+    cudaFlushGPUDirectRDMAWritesScope = 100;
+#[doc = "< Blocks until remote writes are visible to all CUDA device contexts."]
+pub const cudaFlushGPUDirectRDMAWritesScope_cudaFlushGPUDirectRDMAWritesToAllDevices:
+    cudaFlushGPUDirectRDMAWritesScope = 200;
+#[doc = " CUDA GPUDirect RDMA flush writes scopes"]
+pub type cudaFlushGPUDirectRDMAWritesScope = ::libc::c_uint;
+#[doc = "< Sets the target for ::cudaDeviceFlushGPUDirectRDMAWrites() to the currently active CUDA device context."]
+pub const cudaFlushGPUDirectRDMAWritesTarget_cudaFlushGPUDirectRDMAWritesTargetCurrentDevice:
+    cudaFlushGPUDirectRDMAWritesTarget = 0;
+#[doc = " CUDA GPUDirect RDMA flush writes targets"]
+pub type cudaFlushGPUDirectRDMAWritesTarget = ::libc::c_uint;
+#[doc = "< Maximum number of threads per block"]
+pub const cudaDeviceAttr_cudaDevAttrMaxThreadsPerBlock: cudaDeviceAttr = 1;
+#[doc = "< Maximum block dimension X"]
+pub const cudaDeviceAttr_cudaDevAttrMaxBlockDimX: cudaDeviceAttr = 2;
+#[doc = "< Maximum block dimension Y"]
+pub const cudaDeviceAttr_cudaDevAttrMaxBlockDimY: cudaDeviceAttr = 3;
+#[doc = "< Maximum block dimension Z"]
+pub const cudaDeviceAttr_cudaDevAttrMaxBlockDimZ: cudaDeviceAttr = 4;
+#[doc = "< Maximum grid dimension X"]
+pub const cudaDeviceAttr_cudaDevAttrMaxGridDimX: cudaDeviceAttr = 5;
+#[doc = "< Maximum grid dimension Y"]
+pub const cudaDeviceAttr_cudaDevAttrMaxGridDimY: cudaDeviceAttr = 6;
+#[doc = "< Maximum grid dimension Z"]
+pub const cudaDeviceAttr_cudaDevAttrMaxGridDimZ: cudaDeviceAttr = 7;
+#[doc = "< Maximum shared memory available per block in bytes"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSharedMemoryPerBlock: cudaDeviceAttr = 8;
+#[doc = "< Memory available on device for __constant__ variables in a CUDA C kernel in bytes"]
+pub const cudaDeviceAttr_cudaDevAttrTotalConstantMemory: cudaDeviceAttr = 9;
+#[doc = "< Warp size in threads"]
+pub const cudaDeviceAttr_cudaDevAttrWarpSize: cudaDeviceAttr = 10;
+#[doc = "< Maximum pitch in bytes allowed by memory copies"]
+pub const cudaDeviceAttr_cudaDevAttrMaxPitch: cudaDeviceAttr = 11;
+#[doc = "< Maximum number of 32-bit registers available per block"]
+pub const cudaDeviceAttr_cudaDevAttrMaxRegistersPerBlock: cudaDeviceAttr = 12;
+#[doc = "< Peak clock frequency in kilohertz"]
+pub const cudaDeviceAttr_cudaDevAttrClockRate: cudaDeviceAttr = 13;
+#[doc = "< Alignment requirement for textures"]
+pub const cudaDeviceAttr_cudaDevAttrTextureAlignment: cudaDeviceAttr = 14;
+#[doc = "< Device can possibly copy memory and execute a kernel concurrently"]
+pub const cudaDeviceAttr_cudaDevAttrGpuOverlap: cudaDeviceAttr = 15;
+#[doc = "< Number of multiprocessors on device"]
+pub const cudaDeviceAttr_cudaDevAttrMultiProcessorCount: cudaDeviceAttr = 16;
+#[doc = "< Specifies whether there is a run time limit on kernels"]
+pub const cudaDeviceAttr_cudaDevAttrKernelExecTimeout: cudaDeviceAttr = 17;
+#[doc = "< Device is integrated with host memory"]
+pub const cudaDeviceAttr_cudaDevAttrIntegrated: cudaDeviceAttr = 18;
+#[doc = "< Device can map host memory into CUDA address space"]
+pub const cudaDeviceAttr_cudaDevAttrCanMapHostMemory: cudaDeviceAttr = 19;
+#[doc = "< Compute mode (See ::cudaComputeMode for details)"]
+pub const cudaDeviceAttr_cudaDevAttrComputeMode: cudaDeviceAttr = 20;
+#[doc = "< Maximum 1D texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture1DWidth: cudaDeviceAttr = 21;
+#[doc = "< Maximum 2D texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DWidth: cudaDeviceAttr = 22;
+#[doc = "< Maximum 2D texture height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DHeight: cudaDeviceAttr = 23;
+#[doc = "< Maximum 3D texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture3DWidth: cudaDeviceAttr = 24;
+#[doc = "< Maximum 3D texture height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture3DHeight: cudaDeviceAttr = 25;
+#[doc = "< Maximum 3D texture depth"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture3DDepth: cudaDeviceAttr = 26;
+#[doc = "< Maximum 2D layered texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DLayeredWidth: cudaDeviceAttr = 27;
+#[doc = "< Maximum 2D layered texture height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DLayeredHeight: cudaDeviceAttr = 28;
+#[doc = "< Maximum layers in a 2D layered texture"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DLayeredLayers: cudaDeviceAttr = 29;
+#[doc = "< Alignment requirement for surfaces"]
+pub const cudaDeviceAttr_cudaDevAttrSurfaceAlignment: cudaDeviceAttr = 30;
+#[doc = "< Device can possibly execute multiple kernels concurrently"]
+pub const cudaDeviceAttr_cudaDevAttrConcurrentKernels: cudaDeviceAttr = 31;
+#[doc = "< Device has ECC support enabled"]
+pub const cudaDeviceAttr_cudaDevAttrEccEnabled: cudaDeviceAttr = 32;
+#[doc = "< PCI bus ID of the device"]
+pub const cudaDeviceAttr_cudaDevAttrPciBusId: cudaDeviceAttr = 33;
+#[doc = "< PCI device ID of the device"]
+pub const cudaDeviceAttr_cudaDevAttrPciDeviceId: cudaDeviceAttr = 34;
+#[doc = "< Device is using TCC driver model"]
+pub const cudaDeviceAttr_cudaDevAttrTccDriver: cudaDeviceAttr = 35;
+#[doc = "< Peak memory clock frequency in kilohertz"]
+pub const cudaDeviceAttr_cudaDevAttrMemoryClockRate: cudaDeviceAttr = 36;
+#[doc = "< Global memory bus width in bits"]
+pub const cudaDeviceAttr_cudaDevAttrGlobalMemoryBusWidth: cudaDeviceAttr = 37;
+#[doc = "< Size of L2 cache in bytes"]
+pub const cudaDeviceAttr_cudaDevAttrL2CacheSize: cudaDeviceAttr = 38;
+#[doc = "< Maximum resident threads per multiprocessor"]
+pub const cudaDeviceAttr_cudaDevAttrMaxThreadsPerMultiProcessor: cudaDeviceAttr = 39;
+#[doc = "< Number of asynchronous engines"]
+pub const cudaDeviceAttr_cudaDevAttrAsyncEngineCount: cudaDeviceAttr = 40;
+#[doc = "< Device shares a unified address space with the host"]
+pub const cudaDeviceAttr_cudaDevAttrUnifiedAddressing: cudaDeviceAttr = 41;
+#[doc = "< Maximum 1D layered texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture1DLayeredWidth: cudaDeviceAttr = 42;
+#[doc = "< Maximum layers in a 1D layered texture"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture1DLayeredLayers: cudaDeviceAttr = 43;
+#[doc = "< Maximum 2D texture width if cudaArrayTextureGather is set"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DGatherWidth: cudaDeviceAttr = 45;
+#[doc = "< Maximum 2D texture height if cudaArrayTextureGather is set"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DGatherHeight: cudaDeviceAttr = 46;
+#[doc = "< Alternate maximum 3D texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture3DWidthAlt: cudaDeviceAttr = 47;
+#[doc = "< Alternate maximum 3D texture height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture3DHeightAlt: cudaDeviceAttr = 48;
+#[doc = "< Alternate maximum 3D texture depth"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture3DDepthAlt: cudaDeviceAttr = 49;
+#[doc = "< PCI domain ID of the device"]
+pub const cudaDeviceAttr_cudaDevAttrPciDomainId: cudaDeviceAttr = 50;
+#[doc = "< Pitch alignment requirement for textures"]
+pub const cudaDeviceAttr_cudaDevAttrTexturePitchAlignment: cudaDeviceAttr = 51;
+#[doc = "< Maximum cubemap texture width/height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTextureCubemapWidth: cudaDeviceAttr = 52;
+#[doc = "< Maximum cubemap layered texture width/height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTextureCubemapLayeredWidth: cudaDeviceAttr = 53;
+#[doc = "< Maximum layers in a cubemap layered texture"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTextureCubemapLayeredLayers: cudaDeviceAttr = 54;
+#[doc = "< Maximum 1D surface width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface1DWidth: cudaDeviceAttr = 55;
+#[doc = "< Maximum 2D surface width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface2DWidth: cudaDeviceAttr = 56;
+#[doc = "< Maximum 2D surface height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface2DHeight: cudaDeviceAttr = 57;
+#[doc = "< Maximum 3D surface width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface3DWidth: cudaDeviceAttr = 58;
+#[doc = "< Maximum 3D surface height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface3DHeight: cudaDeviceAttr = 59;
+#[doc = "< Maximum 3D surface depth"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface3DDepth: cudaDeviceAttr = 60;
+#[doc = "< Maximum 1D layered surface width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface1DLayeredWidth: cudaDeviceAttr = 61;
+#[doc = "< Maximum layers in a 1D layered surface"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface1DLayeredLayers: cudaDeviceAttr = 62;
+#[doc = "< Maximum 2D layered surface width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface2DLayeredWidth: cudaDeviceAttr = 63;
+#[doc = "< Maximum 2D layered surface height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface2DLayeredHeight: cudaDeviceAttr = 64;
+#[doc = "< Maximum layers in a 2D layered surface"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurface2DLayeredLayers: cudaDeviceAttr = 65;
+#[doc = "< Maximum cubemap surface width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurfaceCubemapWidth: cudaDeviceAttr = 66;
+#[doc = "< Maximum cubemap layered surface width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurfaceCubemapLayeredWidth: cudaDeviceAttr = 67;
+#[doc = "< Maximum layers in a cubemap layered surface"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSurfaceCubemapLayeredLayers: cudaDeviceAttr = 68;
+#[doc = "< Maximum 1D linear texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture1DLinearWidth: cudaDeviceAttr = 69;
+#[doc = "< Maximum 2D linear texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DLinearWidth: cudaDeviceAttr = 70;
+#[doc = "< Maximum 2D linear texture height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DLinearHeight: cudaDeviceAttr = 71;
+#[doc = "< Maximum 2D linear texture pitch in bytes"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DLinearPitch: cudaDeviceAttr = 72;
+#[doc = "< Maximum mipmapped 2D texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DMipmappedWidth: cudaDeviceAttr = 73;
+#[doc = "< Maximum mipmapped 2D texture height"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture2DMipmappedHeight: cudaDeviceAttr = 74;
+#[doc = "< Major compute capability version number"]
+pub const cudaDeviceAttr_cudaDevAttrComputeCapabilityMajor: cudaDeviceAttr = 75;
+#[doc = "< Minor compute capability version number"]
+pub const cudaDeviceAttr_cudaDevAttrComputeCapabilityMinor: cudaDeviceAttr = 76;
+#[doc = "< Maximum mipmapped 1D texture width"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTexture1DMipmappedWidth: cudaDeviceAttr = 77;
+#[doc = "< Device supports stream priorities"]
+pub const cudaDeviceAttr_cudaDevAttrStreamPrioritiesSupported: cudaDeviceAttr = 78;
+#[doc = "< Device supports caching globals in L1"]
+pub const cudaDeviceAttr_cudaDevAttrGlobalL1CacheSupported: cudaDeviceAttr = 79;
+#[doc = "< Device supports caching locals in L1"]
+pub const cudaDeviceAttr_cudaDevAttrLocalL1CacheSupported: cudaDeviceAttr = 80;
+#[doc = "< Maximum shared memory available per multiprocessor in bytes"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSharedMemoryPerMultiprocessor: cudaDeviceAttr = 81;
+#[doc = "< Maximum number of 32-bit registers available per multiprocessor"]
+pub const cudaDeviceAttr_cudaDevAttrMaxRegistersPerMultiprocessor: cudaDeviceAttr = 82;
+#[doc = "< Device can allocate managed memory on this system"]
+pub const cudaDeviceAttr_cudaDevAttrManagedMemory: cudaDeviceAttr = 83;
+#[doc = "< Device is on a multi-GPU board"]
+pub const cudaDeviceAttr_cudaDevAttrIsMultiGpuBoard: cudaDeviceAttr = 84;
+#[doc = "< Unique identifier for a group of devices on the same multi-GPU board"]
+pub const cudaDeviceAttr_cudaDevAttrMultiGpuBoardGroupID: cudaDeviceAttr = 85;
+#[doc = "< Link between the device and the host supports native atomic operations"]
+pub const cudaDeviceAttr_cudaDevAttrHostNativeAtomicSupported: cudaDeviceAttr = 86;
+#[doc = "< Ratio of single precision performance (in floating-point operations per second) to double precision performance"]
+pub const cudaDeviceAttr_cudaDevAttrSingleToDoublePrecisionPerfRatio: cudaDeviceAttr = 87;
+#[doc = "< Device supports coherently accessing pageable memory without calling cudaHostRegister on it"]
+pub const cudaDeviceAttr_cudaDevAttrPageableMemoryAccess: cudaDeviceAttr = 88;
+#[doc = "< Device can coherently access managed memory concurrently with the CPU"]
+pub const cudaDeviceAttr_cudaDevAttrConcurrentManagedAccess: cudaDeviceAttr = 89;
+#[doc = "< Device supports Compute Preemption"]
+pub const cudaDeviceAttr_cudaDevAttrComputePreemptionSupported: cudaDeviceAttr = 90;
+#[doc = "< Device can access host registered memory at the same virtual address as the CPU"]
+pub const cudaDeviceAttr_cudaDevAttrCanUseHostPointerForRegisteredMem: cudaDeviceAttr = 91;
+pub const cudaDeviceAttr_cudaDevAttrReserved92: cudaDeviceAttr = 92;
+pub const cudaDeviceAttr_cudaDevAttrReserved93: cudaDeviceAttr = 93;
+pub const cudaDeviceAttr_cudaDevAttrReserved94: cudaDeviceAttr = 94;
+#[doc = "< Device supports launching cooperative kernels via ::cudaLaunchCooperativeKernel"]
+pub const cudaDeviceAttr_cudaDevAttrCooperativeLaunch: cudaDeviceAttr = 95;
+#[doc = "< Deprecated, cudaLaunchCooperativeKernelMultiDevice is deprecated."]
+pub const cudaDeviceAttr_cudaDevAttrCooperativeMultiDeviceLaunch: cudaDeviceAttr = 96;
+#[doc = "< The maximum optin shared memory per block. This value may vary by chip. See ::cudaFuncSetAttribute"]
+pub const cudaDeviceAttr_cudaDevAttrMaxSharedMemoryPerBlockOptin: cudaDeviceAttr = 97;
+#[doc = "< Device supports flushing of outstanding remote writes."]
+pub const cudaDeviceAttr_cudaDevAttrCanFlushRemoteWrites: cudaDeviceAttr = 98;
+#[doc = "< Device supports host memory registration via ::cudaHostRegister."]
+pub const cudaDeviceAttr_cudaDevAttrHostRegisterSupported: cudaDeviceAttr = 99;
+#[doc = "< Device accesses pageable memory via the host's page tables."]
+pub const cudaDeviceAttr_cudaDevAttrPageableMemoryAccessUsesHostPageTables: cudaDeviceAttr = 100;
+#[doc = "< Host can directly access managed memory on the device without migration."]
+pub const cudaDeviceAttr_cudaDevAttrDirectManagedMemAccessFromHost: cudaDeviceAttr = 101;
+#[doc = "< Maximum number of blocks per multiprocessor"]
+pub const cudaDeviceAttr_cudaDevAttrMaxBlocksPerMultiprocessor: cudaDeviceAttr = 106;
+#[doc = "< Maximum L2 persisting lines capacity setting in bytes."]
+pub const cudaDeviceAttr_cudaDevAttrMaxPersistingL2CacheSize: cudaDeviceAttr = 108;
+#[doc = "< Maximum value of cudaAccessPolicyWindow::num_bytes."]
+pub const cudaDeviceAttr_cudaDevAttrMaxAccessPolicyWindowSize: cudaDeviceAttr = 109;
+#[doc = "< Shared memory reserved by CUDA driver per block in bytes"]
+pub const cudaDeviceAttr_cudaDevAttrReservedSharedMemoryPerBlock: cudaDeviceAttr = 111;
+#[doc = "< Device supports sparse CUDA arrays and sparse CUDA mipmapped arrays"]
+pub const cudaDeviceAttr_cudaDevAttrSparseCudaArraySupported: cudaDeviceAttr = 112;
+#[doc = "< Device supports using the ::cudaHostRegister flag cudaHostRegisterReadOnly to register memory that must be mapped as read-only to the GPU"]
+pub const cudaDeviceAttr_cudaDevAttrHostRegisterReadOnlySupported: cudaDeviceAttr = 113;
+#[doc = "< External timeline semaphore interop is supported on the device"]
+pub const cudaDeviceAttr_cudaDevAttrMaxTimelineSemaphoreInteropSupported: cudaDeviceAttr = 114;
+#[doc = "< Device supports using the ::cudaMallocAsync and ::cudaMemPool family of APIs"]
+pub const cudaDeviceAttr_cudaDevAttrMemoryPoolsSupported: cudaDeviceAttr = 115;
+#[doc = "< Device supports GPUDirect RDMA APIs, like nvidia_p2p_get_pages (see https://docs.nvidia.com/cuda/gpudirect-rdma for more information)"]
+pub const cudaDeviceAttr_cudaDevAttrGPUDirectRDMASupported: cudaDeviceAttr = 116;
+#[doc = "< The returned attribute shall be interpreted as a bitmask, where the individual bits are listed in the ::cudaFlushGPUDirectRDMAWritesOptions enum"]
+pub const cudaDeviceAttr_cudaDevAttrGPUDirectRDMAFlushWritesOptions: cudaDeviceAttr = 117;
+#[doc = "< GPUDirect RDMA writes to the device do not need to be flushed for consumers within the scope indicated by the returned attribute. See ::cudaGPUDirectRDMAWritesOrdering for the numerical values returned here."]
+pub const cudaDeviceAttr_cudaDevAttrGPUDirectRDMAWritesOrdering: cudaDeviceAttr = 118;
+#[doc = "< Handle types supported with mempool based IPC"]
+pub const cudaDeviceAttr_cudaDevAttrMemoryPoolSupportedHandleTypes: cudaDeviceAttr = 119;
+pub const cudaDeviceAttr_cudaDevAttrMax: cudaDeviceAttr = 120;
+#[doc = " CUDA device attributes"]
+pub type cudaDeviceAttr = ::libc::c_uint;
+#[doc = " (value type = int)"]
+#[doc = " Allow cuMemAllocAsync to use memory asynchronously freed"]
+#[doc = " in another streams as long as a stream ordering dependency"]
+#[doc = " of the allocating stream on the free action exists."]
+#[doc = " Cuda events and null stream interactions can create the required"]
+#[doc = " stream ordered dependencies. (default enabled)"]
+pub const cudaMemPoolAttr_cudaMemPoolReuseFollowEventDependencies: cudaMemPoolAttr = 1;
+#[doc = " (value type = int)"]
+#[doc = " Allow reuse of already completed frees when there is no dependency"]
+#[doc = " between the free and allocation. (default enabled)"]
+pub const cudaMemPoolAttr_cudaMemPoolReuseAllowOpportunistic: cudaMemPoolAttr = 2;
+#[doc = " (value type = int)"]
+#[doc = " Allow cuMemAllocAsync to insert new stream dependencies"]
+#[doc = " in order to establish the stream ordering required to reuse"]
+#[doc = " a piece of memory released by cuFreeAsync (default enabled)."]
+pub const cudaMemPoolAttr_cudaMemPoolReuseAllowInternalDependencies: cudaMemPoolAttr = 3;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " Amount of reserved memory in bytes to hold onto before trying"]
+#[doc = " to release memory back to the OS. When more than the release"]
+#[doc = " threshold bytes of memory are held by the memory pool, the"]
+#[doc = " allocator will try to release memory back to the OS on the"]
+#[doc = " next call to stream, event or context synchronize. (default 0)"]
+pub const cudaMemPoolAttr_cudaMemPoolAttrReleaseThreshold: cudaMemPoolAttr = 4;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " Amount of backing memory currently allocated for the mempool."]
+pub const cudaMemPoolAttr_cudaMemPoolAttrReservedMemCurrent: cudaMemPoolAttr = 5;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " High watermark of backing memory allocated for the mempool since the"]
+#[doc = " last time it was reset. High watermark can only be reset to zero."]
+pub const cudaMemPoolAttr_cudaMemPoolAttrReservedMemHigh: cudaMemPoolAttr = 6;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " Amount of memory from the pool that is currently in use by the application."]
+pub const cudaMemPoolAttr_cudaMemPoolAttrUsedMemCurrent: cudaMemPoolAttr = 7;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " High watermark of the amount of memory from the pool that was in use by the application since"]
+#[doc = " the last time it was reset. High watermark can only be reset to zero."]
+pub const cudaMemPoolAttr_cudaMemPoolAttrUsedMemHigh: cudaMemPoolAttr = 8;
+#[doc = " CUDA memory pool attributes"]
+pub type cudaMemPoolAttr = ::libc::c_uint;
+pub const cudaMemLocationType_cudaMemLocationTypeInvalid: cudaMemLocationType = 0;
+#[doc = "< Location is a device location, thus id is a device ordinal"]
+pub const cudaMemLocationType_cudaMemLocationTypeDevice: cudaMemLocationType = 1;
+#[doc = " Specifies the type of location"]
+pub type cudaMemLocationType = ::libc::c_uint;
+#[doc = " Specifies a memory location."]
+#[doc = ""]
+#[doc = " To specify a gpu, set type = ::cudaMemLocationTypeDevice and set id = the gpu's device ordinal."]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemLocation {
+    #[doc = "< Specifies the location type, which modifies the meaning of id."]
+    pub type_: cudaMemLocationType,
+    #[doc = "< identifier for a given this location's ::CUmemLocationType."]
+    pub id: ::libc::c_int,
+}
+#[test]
+fn bindgen_test_layout_cudaMemLocation() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemLocation>(),
+        8usize,
+        concat!("Size of: ", stringify!(cudaMemLocation))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemLocation>(),
+        4usize,
+        concat!("Alignment of ", stringify!(cudaMemLocation))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemLocation>())).type_ as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemLocation),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemLocation>())).id as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemLocation),
+            "::",
+            stringify!(id)
+        )
+    );
+}
+impl Default for cudaMemLocation {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = "< Default, make the address range not accessible"]
+pub const cudaMemAccessFlags_cudaMemAccessFlagsProtNone: cudaMemAccessFlags = 0;
+#[doc = "< Make the address range read accessible"]
+pub const cudaMemAccessFlags_cudaMemAccessFlagsProtRead: cudaMemAccessFlags = 1;
+#[doc = "< Make the address range read-write accessible"]
+pub const cudaMemAccessFlags_cudaMemAccessFlagsProtReadWrite: cudaMemAccessFlags = 3;
+#[doc = " Specifies the memory protection flags for mapping."]
+pub type cudaMemAccessFlags = ::libc::c_uint;
+#[doc = " Memory access descriptor"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemAccessDesc {
+    #[doc = "< Location on which the request is to change it's accessibility"]
+    pub location: cudaMemLocation,
+    #[doc = "< ::CUmemProt accessibility flags to set on the request"]
+    pub flags: cudaMemAccessFlags,
+}
+#[test]
+fn bindgen_test_layout_cudaMemAccessDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemAccessDesc>(),
+        12usize,
+        concat!("Size of: ", stringify!(cudaMemAccessDesc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemAccessDesc>(),
+        4usize,
+        concat!("Alignment of ", stringify!(cudaMemAccessDesc))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemAccessDesc>())).location as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemAccessDesc),
+            "::",
+            stringify!(location)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemAccessDesc>())).flags as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemAccessDesc),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+impl Default for cudaMemAccessDesc {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+pub const cudaMemAllocationType_cudaMemAllocationTypeInvalid: cudaMemAllocationType = 0;
+#[doc = " This allocation type is 'pinned', i.e. cannot migrate from its current"]
+#[doc = " location while the application is actively using it"]
+pub const cudaMemAllocationType_cudaMemAllocationTypePinned: cudaMemAllocationType = 1;
+#[doc = " This allocation type is 'pinned', i.e. cannot migrate from its current"]
+#[doc = " location while the application is actively using it"]
+pub const cudaMemAllocationType_cudaMemAllocationTypeMax: cudaMemAllocationType = 2147483647;
+#[doc = " Defines the allocation types available"]
+pub type cudaMemAllocationType = ::libc::c_uint;
+#[doc = "< Does not allow any export mechanism. >"]
+pub const cudaMemAllocationHandleType_cudaMemHandleTypeNone: cudaMemAllocationHandleType = 0;
+#[doc = "< Allows a file descriptor to be used for exporting. Permitted only on POSIX systems. (int)"]
+pub const cudaMemAllocationHandleType_cudaMemHandleTypePosixFileDescriptor:
+    cudaMemAllocationHandleType = 1;
+#[doc = "< Allows a Win32 NT handle to be used for exporting. (HANDLE)"]
+pub const cudaMemAllocationHandleType_cudaMemHandleTypeWin32: cudaMemAllocationHandleType = 2;
+#[doc = "< Allows a Win32 KMT handle to be used for exporting. (D3DKMT_HANDLE)"]
+pub const cudaMemAllocationHandleType_cudaMemHandleTypeWin32Kmt: cudaMemAllocationHandleType = 4;
+#[doc = " Flags for specifying particular handle types"]
+pub type cudaMemAllocationHandleType = ::libc::c_uint;
+#[doc = " Specifies the properties of allocations made from the pool."]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemPoolProps {
+    #[doc = "< Allocation type. Currently must be specified as cudaMemAllocationTypePinned"]
+    pub allocType: cudaMemAllocationType,
+    #[doc = "< Handle types that will be supported by allocations from the pool."]
+    pub handleTypes: cudaMemAllocationHandleType,
+    #[doc = "< Location allocations should reside."]
+    pub location: cudaMemLocation,
+    #[doc = " Windows-specific LPSECURITYATTRIBUTES required when"]
+    #[doc = " ::cudaMemHandleTypeWin32 is specified.  This security attribute defines"]
+    #[doc = " the scope of which exported allocations may be tranferred to other"]
+    #[doc = " processes.  In all other cases, this field is required to be zero."]
+    pub win32SecurityAttributes: *mut ::libc::c_void,
+    #[doc = "< reserved for future use, must be 0"]
+    pub reserved: [::libc::c_uchar; 64usize],
+}
+#[test]
+fn bindgen_test_layout_cudaMemPoolProps() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemPoolProps>(),
+        88usize,
+        concat!("Size of: ", stringify!(cudaMemPoolProps))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemPoolProps>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaMemPoolProps))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemPoolProps>())).allocType as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemPoolProps),
+            "::",
+            stringify!(allocType)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemPoolProps>())).handleTypes as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemPoolProps),
+            "::",
+            stringify!(handleTypes)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemPoolProps>())).location as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemPoolProps),
+            "::",
+            stringify!(location)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaMemPoolProps>())).win32SecurityAttributes as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemPoolProps),
+            "::",
+            stringify!(win32SecurityAttributes)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemPoolProps>())).reserved as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemPoolProps),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaMemPoolProps {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " Opaque data for exporting a pool allocation"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemPoolPtrExportData {
+    pub reserved: [::libc::c_uchar; 64usize],
+}
+#[test]
+fn bindgen_test_layout_cudaMemPoolPtrExportData() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemPoolPtrExportData>(),
+        64usize,
+        concat!("Size of: ", stringify!(cudaMemPoolPtrExportData))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemPoolPtrExportData>(),
+        1usize,
+        concat!("Alignment of ", stringify!(cudaMemPoolPtrExportData))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaMemPoolPtrExportData>())).reserved as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemPoolPtrExportData),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaMemPoolPtrExportData {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " Memory allocation node parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaMemAllocNodeParams {
+    #[doc = "< in: array of memory access descriptors. Used to describe peer GPU access"]
+    pub poolProps: cudaMemPoolProps,
+    #[doc = "< in: number of memory access descriptors.  Must not exceed the number of GPUs."]
+    pub accessDescs: *const cudaMemAccessDesc,
+    #[doc = "< in: Number of `accessDescs`s"]
+    pub accessDescCount: usize,
+    #[doc = "< in: size in bytes of the requested allocation"]
+    pub bytesize: usize,
+    #[doc = "< out: address of the allocation returned by CUDA"]
+    pub dptr: *mut ::libc::c_void,
+}
+#[test]
+fn bindgen_test_layout_cudaMemAllocNodeParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaMemAllocNodeParams>(),
+        120usize,
+        concat!("Size of: ", stringify!(cudaMemAllocNodeParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaMemAllocNodeParams>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaMemAllocNodeParams))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaMemAllocNodeParams>())).poolProps as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemAllocNodeParams),
+            "::",
+            stringify!(poolProps)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaMemAllocNodeParams>())).accessDescs as *const _ as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemAllocNodeParams),
+            "::",
+            stringify!(accessDescs)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaMemAllocNodeParams>())).accessDescCount as *const _ as usize
+        },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemAllocNodeParams),
+            "::",
+            stringify!(accessDescCount)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemAllocNodeParams>())).bytesize as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemAllocNodeParams),
+            "::",
+            stringify!(bytesize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaMemAllocNodeParams>())).dptr as *const _ as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaMemAllocNodeParams),
+            "::",
+            stringify!(dptr)
+        )
+    );
+}
+impl Default for cudaMemAllocNodeParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " Amount of memory, in bytes, currently associated with graphs."]
+pub const cudaGraphMemAttributeType_cudaGraphMemAttrUsedMemCurrent: cudaGraphMemAttributeType = 1;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " High watermark of memory, in bytes, associated with graphs since the"]
+#[doc = " last time it was reset.  High watermark can only be reset to zero."]
+pub const cudaGraphMemAttributeType_cudaGraphMemAttrUsedMemHigh: cudaGraphMemAttributeType = 2;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " Amount of memory, in bytes, currently allocated for use by"]
+#[doc = " the CUDA graphs asynchronous allocator."]
+pub const cudaGraphMemAttributeType_cudaGraphMemAttrReservedMemCurrent: cudaGraphMemAttributeType =
+    3;
+#[doc = " (value type = cuuint64_t)"]
+#[doc = " High watermark of memory, in bytes, currently allocated for use by"]
+#[doc = " the CUDA graphs asynchronous allocator."]
+pub const cudaGraphMemAttributeType_cudaGraphMemAttrReservedMemHigh: cudaGraphMemAttributeType = 4;
+#[doc = " Graph memory attributes"]
+pub type cudaGraphMemAttributeType = ::libc::c_uint;
+#[doc = "< A relative value indicating the performance of the link between two devices"]
+pub const cudaDeviceP2PAttr_cudaDevP2PAttrPerformanceRank: cudaDeviceP2PAttr = 1;
+#[doc = "< Peer access is enabled"]
+pub const cudaDeviceP2PAttr_cudaDevP2PAttrAccessSupported: cudaDeviceP2PAttr = 2;
+#[doc = "< Native atomic operation over the link supported"]
+pub const cudaDeviceP2PAttr_cudaDevP2PAttrNativeAtomicSupported: cudaDeviceP2PAttr = 3;
+#[doc = "< Accessing CUDA arrays over the link supported"]
+pub const cudaDeviceP2PAttr_cudaDevP2PAttrCudaArrayAccessSupported: cudaDeviceP2PAttr = 4;
+#[doc = " CUDA device P2P attributes"]
+pub type cudaDeviceP2PAttr = ::libc::c_uint;
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct CUuuid_st {
+    pub bytes: [::libc::c_char; 16usize],
+}
+#[test]
+fn bindgen_test_layout_CUuuid_st() {
+    assert_eq!(
+        ::std::mem::size_of::<CUuuid_st>(),
+        16usize,
+        concat!("Size of: ", stringify!(CUuuid_st))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<CUuuid_st>(),
+        1usize,
+        concat!("Alignment of ", stringify!(CUuuid_st))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<CUuuid_st>())).bytes as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(CUuuid_st),
+            "::",
+            stringify!(bytes)
+        )
+    );
+}
+pub type CUuuid = CUuuid_st;
+pub type cudaUUID_t = CUuuid_st;
+#[doc = " CUDA device properties"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaDeviceProp {
+    #[doc = "< ASCII string identifying device"]
+    pub name: [::libc::c_char; 256usize],
+    #[doc = "< 16-byte unique identifier"]
+    pub uuid: cudaUUID_t,
+    #[doc = "< 8-byte locally unique identifier. Value is undefined on TCC and non-Windows platforms"]
+    pub luid: [::libc::c_char; 8usize],
+    #[doc = "< LUID device node mask. Value is undefined on TCC and non-Windows platforms"]
+    pub luidDeviceNodeMask: ::libc::c_uint,
+    #[doc = "< Global memory available on device in bytes"]
+    pub totalGlobalMem: usize,
+    #[doc = "< Shared memory available per block in bytes"]
+    pub sharedMemPerBlock: usize,
+    #[doc = "< 32-bit registers available per block"]
+    pub regsPerBlock: ::libc::c_int,
+    #[doc = "< Warp size in threads"]
+    pub warpSize: ::libc::c_int,
+    #[doc = "< Maximum pitch in bytes allowed by memory copies"]
+    pub memPitch: usize,
+    #[doc = "< Maximum number of threads per block"]
+    pub maxThreadsPerBlock: ::libc::c_int,
+    #[doc = "< Maximum size of each dimension of a block"]
+    pub maxThreadsDim: [::libc::c_int; 3usize],
+    #[doc = "< Maximum size of each dimension of a grid"]
+    pub maxGridSize: [::libc::c_int; 3usize],
+    #[doc = "< Clock frequency in kilohertz"]
+    pub clockRate: ::libc::c_int,
+    #[doc = "< Constant memory available on device in bytes"]
+    pub totalConstMem: usize,
+    #[doc = "< Major compute capability"]
+    pub major: ::libc::c_int,
+    #[doc = "< Minor compute capability"]
+    pub minor: ::libc::c_int,
+    #[doc = "< Alignment requirement for textures"]
+    pub textureAlignment: usize,
+    #[doc = "< Pitch alignment requirement for texture references bound to pitched memory"]
+    pub texturePitchAlignment: usize,
+    #[doc = "< Device can concurrently copy memory and execute a kernel. Deprecated. Use instead asyncEngineCount."]
+    pub deviceOverlap: ::libc::c_int,
+    #[doc = "< Number of multiprocessors on device"]
+    pub multiProcessorCount: ::libc::c_int,
+    #[doc = "< Specified whether there is a run time limit on kernels"]
+    pub kernelExecTimeoutEnabled: ::libc::c_int,
+    #[doc = "< Device is integrated as opposed to discrete"]
+    pub integrated: ::libc::c_int,
+    #[doc = "< Device can map host memory with cudaHostAlloc/cudaHostGetDevicePointer"]
+    pub canMapHostMemory: ::libc::c_int,
+    #[doc = "< Compute mode (See ::cudaComputeMode)"]
+    pub computeMode: ::libc::c_int,
+    #[doc = "< Maximum 1D texture size"]
+    pub maxTexture1D: ::libc::c_int,
+    #[doc = "< Maximum 1D mipmapped texture size"]
+    pub maxTexture1DMipmap: ::libc::c_int,
+    #[doc = "< Deprecated, do not use. Use cudaDeviceGetTexture1DLinearMaxWidth() or cuDeviceGetTexture1DLinearMaxWidth() instead."]
+    pub maxTexture1DLinear: ::libc::c_int,
+    #[doc = "< Maximum 2D texture dimensions"]
+    pub maxTexture2D: [::libc::c_int; 2usize],
+    #[doc = "< Maximum 2D mipmapped texture dimensions"]
+    pub maxTexture2DMipmap: [::libc::c_int; 2usize],
+    #[doc = "< Maximum dimensions (width, height, pitch) for 2D textures bound to pitched memory"]
+    pub maxTexture2DLinear: [::libc::c_int; 3usize],
+    #[doc = "< Maximum 2D texture dimensions if texture gather operations have to be performed"]
+    pub maxTexture2DGather: [::libc::c_int; 2usize],
+    #[doc = "< Maximum 3D texture dimensions"]
+    pub maxTexture3D: [::libc::c_int; 3usize],
+    #[doc = "< Maximum alternate 3D texture dimensions"]
+    pub maxTexture3DAlt: [::libc::c_int; 3usize],
+    #[doc = "< Maximum Cubemap texture dimensions"]
+    pub maxTextureCubemap: ::libc::c_int,
+    #[doc = "< Maximum 1D layered texture dimensions"]
+    pub maxTexture1DLayered: [::libc::c_int; 2usize],
+    #[doc = "< Maximum 2D layered texture dimensions"]
+    pub maxTexture2DLayered: [::libc::c_int; 3usize],
+    #[doc = "< Maximum Cubemap layered texture dimensions"]
+    pub maxTextureCubemapLayered: [::libc::c_int; 2usize],
+    #[doc = "< Maximum 1D surface size"]
+    pub maxSurface1D: ::libc::c_int,
+    #[doc = "< Maximum 2D surface dimensions"]
+    pub maxSurface2D: [::libc::c_int; 2usize],
+    #[doc = "< Maximum 3D surface dimensions"]
+    pub maxSurface3D: [::libc::c_int; 3usize],
+    #[doc = "< Maximum 1D layered surface dimensions"]
+    pub maxSurface1DLayered: [::libc::c_int; 2usize],
+    #[doc = "< Maximum 2D layered surface dimensions"]
+    pub maxSurface2DLayered: [::libc::c_int; 3usize],
+    #[doc = "< Maximum Cubemap surface dimensions"]
+    pub maxSurfaceCubemap: ::libc::c_int,
+    #[doc = "< Maximum Cubemap layered surface dimensions"]
+    pub maxSurfaceCubemapLayered: [::libc::c_int; 2usize],
+    #[doc = "< Alignment requirements for surfaces"]
+    pub surfaceAlignment: usize,
+    #[doc = "< Device can possibly execute multiple kernels concurrently"]
+    pub concurrentKernels: ::libc::c_int,
+    #[doc = "< Device has ECC support enabled"]
+    pub ECCEnabled: ::libc::c_int,
+    #[doc = "< PCI bus ID of the device"]
+    pub pciBusID: ::libc::c_int,
+    #[doc = "< PCI device ID of the device"]
+    pub pciDeviceID: ::libc::c_int,
+    #[doc = "< PCI domain ID of the device"]
+    pub pciDomainID: ::libc::c_int,
+    #[doc = "< 1 if device is a Tesla device using TCC driver, 0 otherwise"]
+    pub tccDriver: ::libc::c_int,
+    #[doc = "< Number of asynchronous engines"]
+    pub asyncEngineCount: ::libc::c_int,
+    #[doc = "< Device shares a unified address space with the host"]
+    pub unifiedAddressing: ::libc::c_int,
+    #[doc = "< Peak memory clock frequency in kilohertz"]
+    pub memoryClockRate: ::libc::c_int,
+    #[doc = "< Global memory bus width in bits"]
+    pub memoryBusWidth: ::libc::c_int,
+    #[doc = "< Size of L2 cache in bytes"]
+    pub l2CacheSize: ::libc::c_int,
+    #[doc = "< Device's maximum l2 persisting lines capacity setting in bytes"]
+    pub persistingL2CacheMaxSize: ::libc::c_int,
+    #[doc = "< Maximum resident threads per multiprocessor"]
+    pub maxThreadsPerMultiProcessor: ::libc::c_int,
+    #[doc = "< Device supports stream priorities"]
+    pub streamPrioritiesSupported: ::libc::c_int,
+    #[doc = "< Device supports caching globals in L1"]
+    pub globalL1CacheSupported: ::libc::c_int,
+    #[doc = "< Device supports caching locals in L1"]
+    pub localL1CacheSupported: ::libc::c_int,
+    #[doc = "< Shared memory available per multiprocessor in bytes"]
+    pub sharedMemPerMultiprocessor: usize,
+    #[doc = "< 32-bit registers available per multiprocessor"]
+    pub regsPerMultiprocessor: ::libc::c_int,
+    #[doc = "< Device supports allocating managed memory on this system"]
+    pub managedMemory: ::libc::c_int,
+    #[doc = "< Device is on a multi-GPU board"]
+    pub isMultiGpuBoard: ::libc::c_int,
+    #[doc = "< Unique identifier for a group of devices on the same multi-GPU board"]
+    pub multiGpuBoardGroupID: ::libc::c_int,
+    #[doc = "< Link between the device and the host supports native atomic operations"]
+    pub hostNativeAtomicSupported: ::libc::c_int,
+    #[doc = "< Ratio of single precision performance (in floating-point operations per second) to double precision performance"]
+    pub singleToDoublePrecisionPerfRatio: ::libc::c_int,
+    #[doc = "< Device supports coherently accessing pageable memory without calling cudaHostRegister on it"]
+    pub pageableMemoryAccess: ::libc::c_int,
+    #[doc = "< Device can coherently access managed memory concurrently with the CPU"]
+    pub concurrentManagedAccess: ::libc::c_int,
+    #[doc = "< Device supports Compute Preemption"]
+    pub computePreemptionSupported: ::libc::c_int,
+    #[doc = "< Device can access host registered memory at the same virtual address as the CPU"]
+    pub canUseHostPointerForRegisteredMem: ::libc::c_int,
+    #[doc = "< Device supports launching cooperative kernels via ::cudaLaunchCooperativeKernel"]
+    pub cooperativeLaunch: ::libc::c_int,
+    #[doc = "< Deprecated, cudaLaunchCooperativeKernelMultiDevice is deprecated."]
+    pub cooperativeMultiDeviceLaunch: ::libc::c_int,
+    #[doc = "< Per device maximum shared memory per block usable by special opt in"]
+    pub sharedMemPerBlockOptin: usize,
+    #[doc = "< Device accesses pageable memory via the host's page tables"]
+    pub pageableMemoryAccessUsesHostPageTables: ::libc::c_int,
+    #[doc = "< Host can directly access managed memory on the device without migration."]
+    pub directManagedMemAccessFromHost: ::libc::c_int,
+    #[doc = "< Maximum number of resident blocks per multiprocessor"]
+    pub maxBlocksPerMultiProcessor: ::libc::c_int,
+    #[doc = "< The maximum value of ::cudaAccessPolicyWindow::num_bytes."]
+    pub accessPolicyMaxWindowSize: ::libc::c_int,
+    #[doc = "< Shared memory reserved by CUDA driver per block in bytes"]
+    pub reservedSharedMemPerBlock: usize,
+}
+#[test]
+fn bindgen_test_layout_cudaDeviceProp() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaDeviceProp>(),
+        728usize,
+        concat!("Size of: ", stringify!(cudaDeviceProp))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaDeviceProp>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaDeviceProp))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).name as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).uuid as *const _ as usize },
+        256usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(uuid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).luid as *const _ as usize },
+        272usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(luid)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).luidDeviceNodeMask as *const _ as usize
+        },
+        280usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(luidDeviceNodeMask)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).totalGlobalMem as *const _ as usize },
+        288usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(totalGlobalMem)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).sharedMemPerBlock as *const _ as usize
+        },
+        296usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(sharedMemPerBlock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).regsPerBlock as *const _ as usize },
+        304usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(regsPerBlock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).warpSize as *const _ as usize },
+        308usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(warpSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).memPitch as *const _ as usize },
+        312usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(memPitch)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxThreadsPerBlock as *const _ as usize
+        },
+        320usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxThreadsPerBlock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxThreadsDim as *const _ as usize },
+        324usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxThreadsDim)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxGridSize as *const _ as usize },
+        336usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxGridSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).clockRate as *const _ as usize },
+        348usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(clockRate)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).totalConstMem as *const _ as usize },
+        352usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(totalConstMem)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).major as *const _ as usize },
+        360usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(major)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).minor as *const _ as usize },
+        364usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(minor)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).textureAlignment as *const _ as usize },
+        368usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(textureAlignment)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).texturePitchAlignment as *const _ as usize
+        },
+        376usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(texturePitchAlignment)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).deviceOverlap as *const _ as usize },
+        384usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(deviceOverlap)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).multiProcessorCount as *const _ as usize
+        },
+        388usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(multiProcessorCount)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).kernelExecTimeoutEnabled as *const _ as usize
+        },
+        392usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(kernelExecTimeoutEnabled)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).integrated as *const _ as usize },
+        396usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(integrated)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).canMapHostMemory as *const _ as usize },
+        400usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(canMapHostMemory)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).computeMode as *const _ as usize },
+        404usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(computeMode)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture1D as *const _ as usize },
+        408usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture1D)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture1DMipmap as *const _ as usize
+        },
+        412usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture1DMipmap)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture1DLinear as *const _ as usize
+        },
+        416usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture1DLinear)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture2D as *const _ as usize },
+        420usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture2D)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture2DMipmap as *const _ as usize
+        },
+        428usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture2DMipmap)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture2DLinear as *const _ as usize
+        },
+        436usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture2DLinear)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture2DGather as *const _ as usize
+        },
+        448usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture2DGather)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture3D as *const _ as usize },
+        456usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture3D)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture3DAlt as *const _ as usize },
+        468usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture3DAlt)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTextureCubemap as *const _ as usize
+        },
+        480usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTextureCubemap)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture1DLayered as *const _ as usize
+        },
+        484usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture1DLayered)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTexture2DLayered as *const _ as usize
+        },
+        492usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTexture2DLayered)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxTextureCubemapLayered as *const _ as usize
+        },
+        504usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxTextureCubemapLayered)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxSurface1D as *const _ as usize },
+        512usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxSurface1D)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxSurface2D as *const _ as usize },
+        516usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxSurface2D)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).maxSurface3D as *const _ as usize },
+        524usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxSurface3D)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxSurface1DLayered as *const _ as usize
+        },
+        536usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxSurface1DLayered)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxSurface2DLayered as *const _ as usize
+        },
+        544usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxSurface2DLayered)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxSurfaceCubemap as *const _ as usize
+        },
+        556usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxSurfaceCubemap)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxSurfaceCubemapLayered as *const _ as usize
+        },
+        560usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxSurfaceCubemapLayered)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).surfaceAlignment as *const _ as usize },
+        568usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(surfaceAlignment)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).concurrentKernels as *const _ as usize
+        },
+        576usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(concurrentKernels)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).ECCEnabled as *const _ as usize },
+        580usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(ECCEnabled)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).pciBusID as *const _ as usize },
+        584usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(pciBusID)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).pciDeviceID as *const _ as usize },
+        588usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(pciDeviceID)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).pciDomainID as *const _ as usize },
+        592usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(pciDomainID)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).tccDriver as *const _ as usize },
+        596usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(tccDriver)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).asyncEngineCount as *const _ as usize },
+        600usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(asyncEngineCount)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).unifiedAddressing as *const _ as usize
+        },
+        604usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(unifiedAddressing)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).memoryClockRate as *const _ as usize },
+        608usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(memoryClockRate)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).memoryBusWidth as *const _ as usize },
+        612usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(memoryBusWidth)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).l2CacheSize as *const _ as usize },
+        616usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(l2CacheSize)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).persistingL2CacheMaxSize as *const _ as usize
+        },
+        620usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(persistingL2CacheMaxSize)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxThreadsPerMultiProcessor as *const _
+                as usize
+        },
+        624usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxThreadsPerMultiProcessor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).streamPrioritiesSupported as *const _
+                as usize
+        },
+        628usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(streamPrioritiesSupported)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).globalL1CacheSupported as *const _ as usize
+        },
+        632usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(globalL1CacheSupported)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).localL1CacheSupported as *const _ as usize
+        },
+        636usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(localL1CacheSupported)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).sharedMemPerMultiprocessor as *const _
+                as usize
+        },
+        640usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(sharedMemPerMultiprocessor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).regsPerMultiprocessor as *const _ as usize
+        },
+        648usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(regsPerMultiprocessor)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).managedMemory as *const _ as usize },
+        652usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(managedMemory)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaDeviceProp>())).isMultiGpuBoard as *const _ as usize },
+        656usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(isMultiGpuBoard)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).multiGpuBoardGroupID as *const _ as usize
+        },
+        660usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(multiGpuBoardGroupID)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).hostNativeAtomicSupported as *const _
+                as usize
+        },
+        664usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(hostNativeAtomicSupported)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).singleToDoublePrecisionPerfRatio as *const _
+                as usize
+        },
+        668usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(singleToDoublePrecisionPerfRatio)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).pageableMemoryAccess as *const _ as usize
+        },
+        672usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(pageableMemoryAccess)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).concurrentManagedAccess as *const _ as usize
+        },
+        676usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(concurrentManagedAccess)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).computePreemptionSupported as *const _
+                as usize
+        },
+        680usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(computePreemptionSupported)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).canUseHostPointerForRegisteredMem as *const _
+                as usize
+        },
+        684usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(canUseHostPointerForRegisteredMem)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).cooperativeLaunch as *const _ as usize
+        },
+        688usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(cooperativeLaunch)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).cooperativeMultiDeviceLaunch as *const _
+                as usize
+        },
+        692usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(cooperativeMultiDeviceLaunch)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).sharedMemPerBlockOptin as *const _ as usize
+        },
+        696usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(sharedMemPerBlockOptin)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).pageableMemoryAccessUsesHostPageTables
+                as *const _ as usize
+        },
+        704usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(pageableMemoryAccessUsesHostPageTables)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).directManagedMemAccessFromHost as *const _
+                as usize
+        },
+        708usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(directManagedMemAccessFromHost)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).maxBlocksPerMultiProcessor as *const _
+                as usize
+        },
+        712usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(maxBlocksPerMultiProcessor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).accessPolicyMaxWindowSize as *const _
+                as usize
+        },
+        716usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(accessPolicyMaxWindowSize)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaDeviceProp>())).reservedSharedMemPerBlock as *const _
+                as usize
+        },
+        720usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaDeviceProp),
+            "::",
+            stringify!(reservedSharedMemPerBlock)
+        )
+    );
+}
+impl Default for cudaDeviceProp {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA IPC event handle"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaIpcEventHandle_st {
+    pub reserved: [::libc::c_char; 64usize],
+}
+#[test]
+fn bindgen_test_layout_cudaIpcEventHandle_st() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaIpcEventHandle_st>(),
+        64usize,
+        concat!("Size of: ", stringify!(cudaIpcEventHandle_st))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaIpcEventHandle_st>(),
+        1usize,
+        concat!("Alignment of ", stringify!(cudaIpcEventHandle_st))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaIpcEventHandle_st>())).reserved as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaIpcEventHandle_st),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaIpcEventHandle_st {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA IPC event handle"]
+pub type cudaIpcEventHandle_t = cudaIpcEventHandle_st;
+#[doc = " CUDA IPC memory handle"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaIpcMemHandle_st {
+    pub reserved: [::libc::c_char; 64usize],
+}
+#[test]
+fn bindgen_test_layout_cudaIpcMemHandle_st() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaIpcMemHandle_st>(),
+        64usize,
+        concat!("Size of: ", stringify!(cudaIpcMemHandle_st))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaIpcMemHandle_st>(),
+        1usize,
+        concat!("Alignment of ", stringify!(cudaIpcMemHandle_st))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaIpcMemHandle_st>())).reserved as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaIpcMemHandle_st),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaIpcMemHandle_st {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA IPC memory handle"]
+pub type cudaIpcMemHandle_t = cudaIpcMemHandle_st;
+#[doc = " Handle is an opaque file descriptor"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeOpaqueFd:
+    cudaExternalMemoryHandleType = 1;
+#[doc = " Handle is an opaque shared NT handle"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeOpaqueWin32:
+    cudaExternalMemoryHandleType = 2;
+#[doc = " Handle is an opaque, globally shared handle"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeOpaqueWin32Kmt:
+    cudaExternalMemoryHandleType = 3;
+#[doc = " Handle is a D3D12 heap object"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeD3D12Heap:
+    cudaExternalMemoryHandleType = 4;
+#[doc = " Handle is a D3D12 committed resource"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeD3D12Resource:
+    cudaExternalMemoryHandleType = 5;
+#[doc = "  Handle is a shared NT handle to a D3D11 resource"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeD3D11Resource:
+    cudaExternalMemoryHandleType = 6;
+#[doc = "  Handle is a globally shared handle to a D3D11 resource"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeD3D11ResourceKmt:
+    cudaExternalMemoryHandleType = 7;
+#[doc = "  Handle is an NvSciBuf object"]
+pub const cudaExternalMemoryHandleType_cudaExternalMemoryHandleTypeNvSciBuf:
+    cudaExternalMemoryHandleType = 8;
+#[doc = " External memory handle types"]
+pub type cudaExternalMemoryHandleType = ::libc::c_uint;
+#[doc = " External memory handle descriptor"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct cudaExternalMemoryHandleDesc {
+    #[doc = " Type of the handle"]
+    pub type_: cudaExternalMemoryHandleType,
+    pub handle: cudaExternalMemoryHandleDesc__bindgen_ty_1,
+    #[doc = " Size of the memory allocation"]
+    pub size: ::libc::c_ulonglong,
+    #[doc = " Flags must either be zero or ::cudaExternalMemoryDedicated"]
+    pub flags: ::libc::c_uint,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union cudaExternalMemoryHandleDesc__bindgen_ty_1 {
+    #[doc = " File descriptor referencing the memory object. Valid"]
+    #[doc = " when type is"]
+    #[doc = " ::cudaExternalMemoryHandleTypeOpaqueFd"]
+    pub fd: ::libc::c_int,
+    pub win32: cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1,
+    #[doc = " A handle representing NvSciBuf Object. Valid when type"]
+    #[doc = " is ::cudaExternalMemoryHandleTypeNvSciBuf"]
+    pub nvSciBufObject: *const ::libc::c_void,
+}
+#[doc = " Win32 handle referencing the semaphore object. Valid when"]
+#[doc = " type is one of the following:"]
+#[doc = " - ::cudaExternalMemoryHandleTypeOpaqueWin32"]
+#[doc = " - ::cudaExternalMemoryHandleTypeOpaqueWin32Kmt"]
+#[doc = " - ::cudaExternalMemoryHandleTypeD3D12Heap"]
+#[doc = " - ::cudaExternalMemoryHandleTypeD3D12Resource"]
+#[doc = " - ::cudaExternalMemoryHandleTypeD3D11Resource"]
+#[doc = " - ::cudaExternalMemoryHandleTypeD3D11ResourceKmt"]
+#[doc = " Exactly one of 'handle' and 'name' must be non-NULL. If"]
+#[doc = " type is one of the following:"]
+#[doc = " ::cudaExternalMemoryHandleTypeOpaqueWin32Kmt"]
+#[doc = " ::cudaExternalMemoryHandleTypeD3D11ResourceKmt"]
+#[doc = " then 'name' must be NULL."]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1 {
+    #[doc = " Valid NT handle. Must be NULL if 'name' is non-NULL"]
+    pub handle: *mut ::libc::c_void,
+    #[doc = " Name of a valid memory object."]
+    #[doc = " Must be NULL if 'handle' is non-NULL."]
+    pub name: *const ::libc::c_void,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1>()))
+                .handle as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1>()))
+                .name as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(name)
+        )
+    );
+}
+impl Default for cudaExternalMemoryHandleDesc__bindgen_ty_1__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaExternalMemoryHandleDesc__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalMemoryHandleDesc__bindgen_ty_1>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalMemoryHandleDesc__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc__bindgen_ty_1>())).fd as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1),
+            "::",
+            stringify!(fd)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc__bindgen_ty_1>())).win32 as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1),
+            "::",
+            stringify!(win32)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc__bindgen_ty_1>())).nvSciBufObject
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc__bindgen_ty_1),
+            "::",
+            stringify!(nvSciBufObject)
+        )
+    );
+}
+impl Default for cudaExternalMemoryHandleDesc__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaExternalMemoryHandleDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalMemoryHandleDesc>(),
+        40usize,
+        concat!("Size of: ", stringify!(cudaExternalMemoryHandleDesc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalMemoryHandleDesc>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaExternalMemoryHandleDesc))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc>())).type_ as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc>())).handle as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc>())).size as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc),
+            "::",
+            stringify!(size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryHandleDesc>())).flags as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryHandleDesc),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+impl Default for cudaExternalMemoryHandleDesc {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " External memory buffer descriptor"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalMemoryBufferDesc {
+    #[doc = " Offset into the memory object where the buffer's base is"]
+    pub offset: ::libc::c_ulonglong,
+    #[doc = " Size of the buffer"]
+    pub size: ::libc::c_ulonglong,
+    #[doc = " Flags reserved for future use. Must be zero."]
+    pub flags: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalMemoryBufferDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalMemoryBufferDesc>(),
+        24usize,
+        concat!("Size of: ", stringify!(cudaExternalMemoryBufferDesc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalMemoryBufferDesc>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaExternalMemoryBufferDesc))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryBufferDesc>())).offset as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryBufferDesc),
+            "::",
+            stringify!(offset)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryBufferDesc>())).size as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryBufferDesc),
+            "::",
+            stringify!(size)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryBufferDesc>())).flags as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryBufferDesc),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+#[doc = " External memory mipmap descriptor"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalMemoryMipmappedArrayDesc {
+    #[doc = " Offset into the memory object where the base level of the"]
+    #[doc = " mipmap chain is."]
+    pub offset: ::libc::c_ulonglong,
+    #[doc = " Format of base level of the mipmap chain"]
+    pub formatDesc: cudaChannelFormatDesc,
+    #[doc = " Dimensions of base level of the mipmap chain"]
+    pub extent: cudaExtent,
+    #[doc = " Flags associated with CUDA mipmapped arrays."]
+    #[doc = " See ::cudaMallocMipmappedArray"]
+    pub flags: ::libc::c_uint,
+    #[doc = " Total number of levels in the mipmap chain"]
+    pub numLevels: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalMemoryMipmappedArrayDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalMemoryMipmappedArrayDesc>(),
+        64usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalMemoryMipmappedArrayDesc)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalMemoryMipmappedArrayDesc>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalMemoryMipmappedArrayDesc)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryMipmappedArrayDesc>())).offset as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryMipmappedArrayDesc),
+            "::",
+            stringify!(offset)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryMipmappedArrayDesc>())).formatDesc as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryMipmappedArrayDesc),
+            "::",
+            stringify!(formatDesc)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryMipmappedArrayDesc>())).extent as *const _
+                as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryMipmappedArrayDesc),
+            "::",
+            stringify!(extent)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryMipmappedArrayDesc>())).flags as *const _
+                as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryMipmappedArrayDesc),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalMemoryMipmappedArrayDesc>())).numLevels as *const _
+                as usize
+        },
+        60usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalMemoryMipmappedArrayDesc),
+            "::",
+            stringify!(numLevels)
+        )
+    );
+}
+impl Default for cudaExternalMemoryMipmappedArrayDesc {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " Handle is an opaque file descriptor"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeOpaqueFd:
+    cudaExternalSemaphoreHandleType = 1;
+#[doc = " Handle is an opaque shared NT handle"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeOpaqueWin32:
+    cudaExternalSemaphoreHandleType = 2;
+#[doc = " Handle is an opaque, globally shared handle"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeOpaqueWin32Kmt:
+    cudaExternalSemaphoreHandleType = 3;
+#[doc = " Handle is a shared NT handle referencing a D3D12 fence object"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeD3D12Fence:
+    cudaExternalSemaphoreHandleType = 4;
+#[doc = " Handle is a shared NT handle referencing a D3D11 fence object"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeD3D11Fence:
+    cudaExternalSemaphoreHandleType = 5;
+#[doc = " Opaque handle to NvSciSync Object"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeNvSciSync:
+    cudaExternalSemaphoreHandleType = 6;
+#[doc = " Handle is a shared NT handle referencing a D3D11 keyed mutex object"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeKeyedMutex:
+    cudaExternalSemaphoreHandleType = 7;
+#[doc = " Handle is a shared KMT handle referencing a D3D11 keyed mutex object"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeKeyedMutexKmt:
+    cudaExternalSemaphoreHandleType = 8;
+#[doc = " Handle is an opaque handle file descriptor referencing a timeline semaphore"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeTimelineSemaphoreFd:
+    cudaExternalSemaphoreHandleType = 9;
+#[doc = " Handle is an opaque handle file descriptor referencing a timeline semaphore"]
+pub const cudaExternalSemaphoreHandleType_cudaExternalSemaphoreHandleTypeTimelineSemaphoreWin32:
+    cudaExternalSemaphoreHandleType = 10;
+#[doc = " External semaphore handle types"]
+pub type cudaExternalSemaphoreHandleType = ::libc::c_uint;
+#[doc = " External semaphore handle descriptor"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct cudaExternalSemaphoreHandleDesc {
+    #[doc = " Type of the handle"]
+    pub type_: cudaExternalSemaphoreHandleType,
+    pub handle: cudaExternalSemaphoreHandleDesc__bindgen_ty_1,
+    #[doc = " Flags reserved for the future. Must be zero."]
+    pub flags: ::libc::c_uint,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union cudaExternalSemaphoreHandleDesc__bindgen_ty_1 {
+    #[doc = " File descriptor referencing the semaphore object. Valid when"]
+    #[doc = " type is one of the following:"]
+    #[doc = " - ::cudaExternalSemaphoreHandleTypeOpaqueFd"]
+    #[doc = " - ::cudaExternalSemaphoreHandleTypeTimelineSemaphoreFd"]
+    pub fd: ::libc::c_int,
+    pub win32: cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1,
+    #[doc = " Valid NvSciSyncObj. Must be non NULL"]
+    pub nvSciSyncObj: *const ::libc::c_void,
+}
+#[doc = " Win32 handle referencing the semaphore object. Valid when"]
+#[doc = " type is one of the following:"]
+#[doc = " - ::cudaExternalSemaphoreHandleTypeOpaqueWin32"]
+#[doc = " - ::cudaExternalSemaphoreHandleTypeOpaqueWin32Kmt"]
+#[doc = " - ::cudaExternalSemaphoreHandleTypeD3D12Fence"]
+#[doc = " - ::cudaExternalSemaphoreHandleTypeD3D11Fence"]
+#[doc = " - ::cudaExternalSemaphoreHandleTypeKeyedMutex"]
+#[doc = " - ::cudaExternalSemaphoreHandleTypeTimelineSemaphoreWin32"]
+#[doc = " Exactly one of 'handle' and 'name' must be non-NULL. If"]
+#[doc = " type is one of the following:"]
+#[doc = " ::cudaExternalSemaphoreHandleTypeOpaqueWin32Kmt"]
+#[doc = " ::cudaExternalSemaphoreHandleTypeKeyedMutexKmt"]
+#[doc = " then 'name' must be NULL."]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1 {
+    #[doc = " Valid NT handle. Must be NULL if 'name' is non-NULL"]
+    pub handle: *mut ::libc::c_void,
+    #[doc = " Name of a valid synchronization primitive."]
+    #[doc = " Must be NULL if 'handle' is non-NULL."]
+    pub name: *const ::libc::c_void,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1>()))
+                .handle as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1>()))
+                .name as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(name)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreHandleDesc__bindgen_ty_1__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreHandleDesc__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1>())).fd as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1),
+            "::",
+            stringify!(fd)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1>())).win32
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1),
+            "::",
+            stringify!(win32)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc__bindgen_ty_1>())).nvSciSyncObj
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc__bindgen_ty_1),
+            "::",
+            stringify!(nvSciSyncObj)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreHandleDesc__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreHandleDesc() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreHandleDesc>(),
+        32usize,
+        concat!("Size of: ", stringify!(cudaExternalSemaphoreHandleDesc))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreHandleDesc>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaExternalSemaphoreHandleDesc))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc>())).type_ as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc>())).handle as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreHandleDesc>())).flags as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreHandleDesc),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreHandleDesc {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " External semaphore signal parameters, compatible with driver type"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct cudaExternalSemaphoreSignalParams {
+    pub params: cudaExternalSemaphoreSignalParams__bindgen_ty_1,
+    #[doc = " Only when ::cudaExternalSemaphoreSignalParams is used to"]
+    #[doc = " signal a ::cudaExternalSemaphore_t of type"]
+    #[doc = " ::cudaExternalSemaphoreHandleTypeNvSciSync, the valid flag is"]
+    #[doc = " ::cudaExternalSemaphoreSignalSkipNvSciBufMemSync: which indicates"]
+    #[doc = " that while signaling the ::cudaExternalSemaphore_t, no memory"]
+    #[doc = " synchronization operations should be performed for any external memory"]
+    #[doc = " object imported as ::cudaExternalMemoryHandleTypeNvSciBuf."]
+    #[doc = " For all other types of ::cudaExternalSemaphore_t, flags must be zero."]
+    pub flags: ::libc::c_uint,
+    pub reserved: [::libc::c_uint; 16usize],
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct cudaExternalSemaphoreSignalParams__bindgen_ty_1 {
+    pub fence: cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1,
+    pub nvSciSync: cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2,
+    pub keyedMutex: cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3,
+    pub reserved: [::libc::c_uint; 12usize],
+}
+#[doc = " Parameters for fence objects"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1 {
+    #[doc = " Value of fence to be signaled"]
+    pub value: ::libc::c_ulonglong,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1>(
+            )))
+            .value as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(value)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2 {
+    #[doc = " Pointer to NvSciSyncFence. Valid if ::cudaExternalSemaphoreHandleType"]
+    #[doc = " is of type ::cudaExternalSemaphoreHandleTypeNvSciSync."]
+    pub fence: *mut ::libc::c_void,
+    pub reserved: ::libc::c_ulonglong,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2>(
+            )))
+            .fence as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(fence)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2>(
+            )))
+            .reserved as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_2 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " Parameters for keyed mutex objects"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3 {
+    pub key: ::libc::c_ulonglong,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3>(
+            )))
+            .key as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(key)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreSignalParams__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1>(),
+        72usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreSignalParams__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1>())).fence
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1),
+            "::",
+            stringify!(fence)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1>())).nvSciSync
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1),
+            "::",
+            stringify!(nvSciSync)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1>())).keyedMutex
+                as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1),
+            "::",
+            stringify!(keyedMutex)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams__bindgen_ty_1>())).reserved
+                as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams__bindgen_ty_1),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreSignalParams__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreSignalParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreSignalParams>(),
+        144usize,
+        concat!("Size of: ", stringify!(cudaExternalSemaphoreSignalParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreSignalParams>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreSignalParams)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams>())).params as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams),
+            "::",
+            stringify!(params)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams>())).flags as *const _ as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalParams>())).reserved as *const _
+                as usize
+        },
+        76usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalParams),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreSignalParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " External semaphore wait parameters, compatible with driver type"]
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct cudaExternalSemaphoreWaitParams {
+    pub params: cudaExternalSemaphoreWaitParams__bindgen_ty_1,
+    #[doc = " Only when ::cudaExternalSemaphoreSignalParams is used to"]
+    #[doc = " signal a ::cudaExternalSemaphore_t of type"]
+    #[doc = " ::cudaExternalSemaphoreHandleTypeNvSciSync, the valid flag is"]
+    #[doc = " ::cudaExternalSemaphoreSignalSkipNvSciBufMemSync: which indicates"]
+    #[doc = " that while waiting for the ::cudaExternalSemaphore_t, no memory"]
+    #[doc = " synchronization operations should be performed for any external memory"]
+    #[doc = " object imported as ::cudaExternalMemoryHandleTypeNvSciBuf."]
+    #[doc = " For all other types of ::cudaExternalSemaphore_t, flags must be zero."]
+    pub flags: ::libc::c_uint,
+    pub reserved: [::libc::c_uint; 16usize],
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct cudaExternalSemaphoreWaitParams__bindgen_ty_1 {
+    pub fence: cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1,
+    pub nvSciSync: cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2,
+    pub keyedMutex: cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3,
+    pub reserved: [::libc::c_uint; 10usize],
+}
+#[doc = " Parameters for fence objects"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1 {
+    #[doc = " Value of fence to be waited on"]
+    pub value: ::libc::c_ulonglong,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1>()))
+                .value as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(value)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2 {
+    #[doc = " Pointer to NvSciSyncFence. Valid if ::cudaExternalSemaphoreHandleType"]
+    #[doc = " is of type ::cudaExternalSemaphoreHandleTypeNvSciSync."]
+    pub fence: *mut ::libc::c_void,
+    pub reserved: ::libc::c_ulonglong,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2>()))
+                .fence as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(fence)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2>()))
+                .reserved as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_2 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " Parameters for keyed mutex objects"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3 {
+    #[doc = " Value of key to acquire the mutex with"]
+    pub key: ::libc::c_ulonglong,
+    #[doc = " Timeout in milliseconds to wait to acquire the mutex"]
+    pub timeoutMs: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3>()))
+                .key as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(key)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3>()))
+                .timeoutMs as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(timeoutMs)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreWaitParams__bindgen_ty_1() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1>(),
+        72usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreWaitParams__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1>())).fence
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1),
+            "::",
+            stringify!(fence)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1>())).nvSciSync
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1),
+            "::",
+            stringify!(nvSciSync)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1>())).keyedMutex
+                as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1),
+            "::",
+            stringify!(keyedMutex)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams__bindgen_ty_1>())).reserved
+                as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams__bindgen_ty_1),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreWaitParams__bindgen_ty_1 {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreWaitParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreWaitParams>(),
+        144usize,
+        concat!("Size of: ", stringify!(cudaExternalSemaphoreWaitParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreWaitParams>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaExternalSemaphoreWaitParams))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams>())).params as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams),
+            "::",
+            stringify!(params)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams>())).flags as *const _ as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitParams>())).reserved as *const _
+                as usize
+        },
+        76usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitParams),
+            "::",
+            stringify!(reserved)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreWaitParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA Error types"]
+pub use self::cudaError as cudaError_t;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct CUstream_st {
@@ -82,6 +5976,527 @@ pub struct CUstream_st {
 }
 #[doc = " CUDA stream"]
 pub type cudaStream_t = *mut CUstream_st;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUevent_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA event types"]
+pub type cudaEvent_t = *mut CUevent_st;
+#[doc = " CUDA graphics resource types"]
+pub type cudaGraphicsResource_t = *mut cudaGraphicsResource;
+#[doc = " CUDA output file modes"]
+pub use self::cudaOutputMode as cudaOutputMode_t;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUexternalMemory_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA external memory"]
+pub type cudaExternalMemory_t = *mut CUexternalMemory_st;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUexternalSemaphore_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA external semaphore"]
+pub type cudaExternalSemaphore_t = *mut CUexternalSemaphore_st;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUgraph_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA graph"]
+pub type cudaGraph_t = *mut CUgraph_st;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUgraphNode_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA graph node."]
+pub type cudaGraphNode_t = *mut CUgraphNode_st;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUuserObject_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA user object for graphs"]
+pub type cudaUserObject_t = *mut CUuserObject_st;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUfunc_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA function"]
+pub type cudaFunction_t = *mut CUfunc_st;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUmemPoolHandle_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA memory pool"]
+pub type cudaMemPool_t = *mut CUmemPoolHandle_st;
+#[doc = "< Invalid cooperative group scope"]
+pub const cudaCGScope_cudaCGScopeInvalid: cudaCGScope = 0;
+#[doc = "< Scope represented by a grid_group"]
+pub const cudaCGScope_cudaCGScopeGrid: cudaCGScope = 1;
+#[doc = "< Scope represented by a multi_grid_group"]
+pub const cudaCGScope_cudaCGScopeMultiGrid: cudaCGScope = 2;
+#[doc = " CUDA cooperative group scope"]
+pub type cudaCGScope = ::libc::c_uint;
+#[doc = " CUDA launch parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaLaunchParams {
+    #[doc = "< Device function symbol"]
+    pub func: *mut ::libc::c_void,
+    #[doc = "< Grid dimentions"]
+    pub gridDim: dim3,
+    #[doc = "< Block dimentions"]
+    pub blockDim: dim3,
+    #[doc = "< Arguments"]
+    pub args: *mut *mut ::libc::c_void,
+    #[doc = "< Shared memory"]
+    pub sharedMem: usize,
+    #[doc = "< Stream identifier"]
+    pub stream: cudaStream_t,
+}
+#[test]
+fn bindgen_test_layout_cudaLaunchParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaLaunchParams>(),
+        56usize,
+        concat!("Size of: ", stringify!(cudaLaunchParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaLaunchParams>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaLaunchParams))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaLaunchParams>())).func as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaLaunchParams),
+            "::",
+            stringify!(func)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaLaunchParams>())).gridDim as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaLaunchParams),
+            "::",
+            stringify!(gridDim)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaLaunchParams>())).blockDim as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaLaunchParams),
+            "::",
+            stringify!(blockDim)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaLaunchParams>())).args as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaLaunchParams),
+            "::",
+            stringify!(args)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaLaunchParams>())).sharedMem as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaLaunchParams),
+            "::",
+            stringify!(sharedMem)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaLaunchParams>())).stream as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaLaunchParams),
+            "::",
+            stringify!(stream)
+        )
+    );
+}
+impl Default for cudaLaunchParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " CUDA GPU kernel node parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaKernelNodeParams {
+    #[doc = "< Kernel to launch"]
+    pub func: *mut ::libc::c_void,
+    #[doc = "< Grid dimensions"]
+    pub gridDim: dim3,
+    #[doc = "< Block dimensions"]
+    pub blockDim: dim3,
+    #[doc = "< Dynamic shared-memory size per thread block in bytes"]
+    pub sharedMemBytes: ::libc::c_uint,
+    #[doc = "< Array of pointers to individual kernel arguments"]
+    pub kernelParams: *mut *mut ::libc::c_void,
+    #[doc = "< Pointer to kernel arguments in the \"extra\" format"]
+    pub extra: *mut *mut ::libc::c_void,
+}
+#[test]
+fn bindgen_test_layout_cudaKernelNodeParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaKernelNodeParams>(),
+        56usize,
+        concat!("Size of: ", stringify!(cudaKernelNodeParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaKernelNodeParams>(),
+        8usize,
+        concat!("Alignment of ", stringify!(cudaKernelNodeParams))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaKernelNodeParams>())).func as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeParams),
+            "::",
+            stringify!(func)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaKernelNodeParams>())).gridDim as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeParams),
+            "::",
+            stringify!(gridDim)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaKernelNodeParams>())).blockDim as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeParams),
+            "::",
+            stringify!(blockDim)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaKernelNodeParams>())).sharedMemBytes as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeParams),
+            "::",
+            stringify!(sharedMemBytes)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaKernelNodeParams>())).kernelParams as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeParams),
+            "::",
+            stringify!(kernelParams)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<cudaKernelNodeParams>())).extra as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaKernelNodeParams),
+            "::",
+            stringify!(extra)
+        )
+    );
+}
+impl Default for cudaKernelNodeParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " External semaphore signal node parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalSemaphoreSignalNodeParams {
+    #[doc = "< Array of external semaphore handles."]
+    pub extSemArray: *mut cudaExternalSemaphore_t,
+    #[doc = "< Array of external semaphore signal parameters."]
+    pub paramsArray: *const cudaExternalSemaphoreSignalParams,
+    #[doc = "< Number of handles and parameters supplied in extSemArray and paramsArray."]
+    pub numExtSems: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreSignalNodeParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreSignalNodeParams>(),
+        24usize,
+        concat!(
+            "Size of: ",
+            stringify!(cudaExternalSemaphoreSignalNodeParams)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreSignalNodeParams>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreSignalNodeParams)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalNodeParams>())).extSemArray
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalNodeParams),
+            "::",
+            stringify!(extSemArray)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalNodeParams>())).paramsArray
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalNodeParams),
+            "::",
+            stringify!(paramsArray)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreSignalNodeParams>())).numExtSems as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreSignalNodeParams),
+            "::",
+            stringify!(numExtSems)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreSignalNodeParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = " External semaphore wait node parameters"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
+pub struct cudaExternalSemaphoreWaitNodeParams {
+    #[doc = "< Array of external semaphore handles."]
+    pub extSemArray: *mut cudaExternalSemaphore_t,
+    #[doc = "< Array of external semaphore wait parameters."]
+    pub paramsArray: *const cudaExternalSemaphoreWaitParams,
+    #[doc = "< Number of handles and parameters supplied in extSemArray and paramsArray."]
+    pub numExtSems: ::libc::c_uint,
+}
+#[test]
+fn bindgen_test_layout_cudaExternalSemaphoreWaitNodeParams() {
+    assert_eq!(
+        ::std::mem::size_of::<cudaExternalSemaphoreWaitNodeParams>(),
+        24usize,
+        concat!("Size of: ", stringify!(cudaExternalSemaphoreWaitNodeParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<cudaExternalSemaphoreWaitNodeParams>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(cudaExternalSemaphoreWaitNodeParams)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitNodeParams>())).extSemArray as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitNodeParams),
+            "::",
+            stringify!(extSemArray)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitNodeParams>())).paramsArray as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitNodeParams),
+            "::",
+            stringify!(paramsArray)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<cudaExternalSemaphoreWaitNodeParams>())).numExtSems as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(cudaExternalSemaphoreWaitNodeParams),
+            "::",
+            stringify!(numExtSems)
+        )
+    );
+}
+impl Default for cudaExternalSemaphoreWaitNodeParams {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = "< GPU kernel node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeKernel: cudaGraphNodeType = 0;
+#[doc = "< Memcpy node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeMemcpy: cudaGraphNodeType = 1;
+#[doc = "< Memset node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeMemset: cudaGraphNodeType = 2;
+#[doc = "< Host (executable) node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeHost: cudaGraphNodeType = 3;
+#[doc = "< Node which executes an embedded graph"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeGraph: cudaGraphNodeType = 4;
+#[doc = "< Empty (no-op) node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeEmpty: cudaGraphNodeType = 5;
+#[doc = "< External event wait node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeWaitEvent: cudaGraphNodeType = 6;
+#[doc = "< External event record node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeEventRecord: cudaGraphNodeType = 7;
+#[doc = "< External semaphore signal node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeExtSemaphoreSignal: cudaGraphNodeType = 8;
+#[doc = "< External semaphore wait node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeExtSemaphoreWait: cudaGraphNodeType = 9;
+#[doc = "< Memory allocation node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeMemAlloc: cudaGraphNodeType = 10;
+#[doc = "< Memory free node"]
+pub const cudaGraphNodeType_cudaGraphNodeTypeMemFree: cudaGraphNodeType = 11;
+pub const cudaGraphNodeType_cudaGraphNodeTypeCount: cudaGraphNodeType = 12;
+#[doc = " CUDA Graph node types"]
+pub type cudaGraphNodeType = ::libc::c_uint;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct CUgraphExec_st {
+    _unused: [u8; 0],
+}
+#[doc = " CUDA executable (launchable) graph"]
+pub type cudaGraphExec_t = *mut CUgraphExec_st;
+#[doc = "< The update succeeded"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateSuccess: cudaGraphExecUpdateResult = 0;
+#[doc = "< The update failed for an unexpected reason which is described in the return value of the function"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateError: cudaGraphExecUpdateResult = 1;
+#[doc = "< The update failed because the topology changed"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateErrorTopologyChanged:
+    cudaGraphExecUpdateResult = 2;
+#[doc = "< The update failed because a node type changed"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateErrorNodeTypeChanged:
+    cudaGraphExecUpdateResult = 3;
+#[doc = "< The update failed because the function of a kernel node changed (CUDA driver < 11.2)"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateErrorFunctionChanged:
+    cudaGraphExecUpdateResult = 4;
+#[doc = "< The update failed because the parameters changed in a way that is not supported"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateErrorParametersChanged:
+    cudaGraphExecUpdateResult = 5;
+#[doc = "< The update failed because something about the node is not supported"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateErrorNotSupported:
+    cudaGraphExecUpdateResult = 6;
+#[doc = "< The update failed because the function of a kernel node changed in an unsupported way"]
+pub const cudaGraphExecUpdateResult_cudaGraphExecUpdateErrorUnsupportedFunctionChange:
+    cudaGraphExecUpdateResult = 7;
+#[doc = " CUDA Graph Update error types"]
+pub type cudaGraphExecUpdateResult = ::libc::c_uint;
+#[doc = "< Default search mode for driver symbols."]
+pub const cudaGetDriverEntryPointFlags_cudaEnableDefault: cudaGetDriverEntryPointFlags = 0;
+#[doc = "< Search for legacy versions of driver symbols."]
+pub const cudaGetDriverEntryPointFlags_cudaEnableLegacyStream: cudaGetDriverEntryPointFlags = 1;
+#[doc = "< Search for per-thread versions of driver symbols."]
+pub const cudaGetDriverEntryPointFlags_cudaEnablePerThreadDefaultStream:
+    cudaGetDriverEntryPointFlags = 2;
+#[doc = " Flags to specify search options to be used with ::cudaGetDriverEntryPoint"]
+#[doc = " For more details see ::cuGetProcAddress"]
+pub type cudaGetDriverEntryPointFlags = ::libc::c_uint;
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsVerbose: cudaGraphDebugDotFlags = 1;
+#[doc = " Output all debug data as if every debug flag is enabled"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsKernelNodeParams: cudaGraphDebugDotFlags = 4;
+#[doc = " Adds cudaKernelNodeParams to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsMemcpyNodeParams: cudaGraphDebugDotFlags = 8;
+#[doc = " Adds cudaMemcpy3DParms to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsMemsetNodeParams: cudaGraphDebugDotFlags =
+    16;
+#[doc = " Adds cudaMemsetParams to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsHostNodeParams: cudaGraphDebugDotFlags = 32;
+#[doc = " Adds cudaHostNodeParams to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsEventNodeParams: cudaGraphDebugDotFlags = 64;
+#[doc = " Adds cudaEvent_t handle from record and wait nodes to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsExtSemasSignalNodeParams:
+    cudaGraphDebugDotFlags = 128;
+#[doc = " Adds cudaExternalSemaphoreSignalNodeParams values to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsExtSemasWaitNodeParams:
+    cudaGraphDebugDotFlags = 256;
+#[doc = " Adds cudaExternalSemaphoreWaitNodeParams to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsKernelNodeAttributes:
+    cudaGraphDebugDotFlags = 512;
+#[doc = " Adds cudaKernelNodeAttrID values to output"]
+pub const cudaGraphDebugDotFlags_cudaGraphDebugDotFlagsHandles: cudaGraphDebugDotFlags = 1024;
+#[doc = " CUDA Graph debug write options"]
+pub type cudaGraphDebugDotFlags = ::libc::c_uint;
+#[doc = "< Automatically free memory allocated in a graph before relaunching."]
+pub const cudaGraphInstantiateFlags_cudaGraphInstantiateFlagAutoFreeOnLaunch:
+    cudaGraphInstantiateFlags = 1;
+#[doc = " Flags for instantiating a graph"]
+pub type cudaGraphInstantiateFlags = ::libc::c_uint;
 pub type cuFloatComplex = float2;
 pub type cuDoubleComplex = double2;
 pub type cuComplex = cuFloatComplex;
@@ -122,7 +6537,7 @@ pub type libraryPropertyType_t = ::libc::c_uint;
 pub use self::libraryPropertyType_t as libraryPropertyType;
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasStatus_t {
     CUBLAS_STATUS_SUCCESS = 0,
     CUBLAS_STATUS_NOT_INITIALIZED = 1,
@@ -137,7 +6552,7 @@ pub enum cublasStatus_t {
 }
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasFillMode_t {
     CUBLAS_FILL_MODE_LOWER = 0,
     CUBLAS_FILL_MODE_UPPER = 1,
@@ -145,14 +6560,14 @@ pub enum cublasFillMode_t {
 }
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasDiagType_t {
     CUBLAS_DIAG_NON_UNIT = 0,
     CUBLAS_DIAG_UNIT = 1,
 }
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasSideMode_t {
     CUBLAS_SIDE_LEFT = 0,
     CUBLAS_SIDE_RIGHT = 1,
@@ -162,7 +6577,7 @@ impl cublasOperation_t {
 }
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasOperation_t {
     CUBLAS_OP_N = 0,
     CUBLAS_OP_T = 1,
@@ -171,14 +6586,14 @@ pub enum cublasOperation_t {
 }
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasPointerMode_t {
     CUBLAS_POINTER_MODE_HOST = 0,
     CUBLAS_POINTER_MODE_DEVICE = 1,
 }
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasAtomicsMode_t {
     CUBLAS_ATOMICS_NOT_ALLOWED = 0,
     CUBLAS_ATOMICS_ALLOWED = 1,
@@ -192,7 +6607,7 @@ impl cublasGemmAlgo_t {
 }
 #[repr(i32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasGemmAlgo_t {
     CUBLAS_GEMM_DFALT = -1,
     CUBLAS_GEMM_ALGO0 = 0,
@@ -239,7 +6654,7 @@ pub enum cublasGemmAlgo_t {
 }
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasMath_t {
     CUBLAS_DEFAULT_MATH = 0,
     CUBLAS_TENSOR_OP_MATH = 1,
@@ -247,9 +6662,10 @@ pub enum cublasMath_t {
     CUBLAS_TF32_TENSOR_OP_MATH = 3,
     CUBLAS_MATH_DISALLOW_REDUCED_PRECISION_REDUCTION = 16,
 }
+pub use self::cudaDataType as cublasDataType_t;
 #[repr(u32)]
 #[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub enum cublasComputeType_t {
     CUBLAS_COMPUTE_16F = 64,
     CUBLAS_COMPUTE_16F_PEDANTIC = 65,
