@@ -2,16 +2,13 @@ use num_traits;
 
 pub mod array;
 pub mod compare;
-pub mod dtype;
+pub mod cublas;
 pub mod dim;
+pub mod dtype;
 pub mod ffi;
 
 pub trait Num:
-    num_traits::identities::Zero
-    + num_traits::identities::One
-    + num_traits::NumAssignOps
-    + Copy
-    
+    num_traits::identities::Zero + num_traits::identities::One + num_traits::NumAssignOps + Copy
 {
     fn dtype() -> dtype::DataType;
     fn bites() -> usize;
@@ -43,11 +40,11 @@ pub enum Order {
     /// column priority (C)
     C,
     /// row priority (Fortran array)
-    F
+    F,
 }
 
 impl Default for Order {
-    fn default() -> Self { 
-        Order::C 
+    fn default() -> Self {
+        Order::C
     }
 }

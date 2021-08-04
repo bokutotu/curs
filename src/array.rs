@@ -1,23 +1,22 @@
-//! This file defines the array of curs and the structures 
-//! associated with the attributes that are members of the array. 
+//! This file defines the array of curs and the structures
+//! associated with the attributes that are members of the array.
 
-use crate::{dtype::DataType, dim::Dim, Order, Num};
-use crate::ffi;
 use crate::compare::{
-    impl_equal_float, impl_equal_int,
-    impl_negative_equal_float, impl_negative_equal_int,
-    impl_less_float, impl_less_int,
-    impl_less_equal_float, impl_less_equal_int,
-    impl_grater_float, impl_grater_int,
-    impl_grater_equal_float, impl_grater_equal_int,
+    impl_equal_float, impl_equal_int, impl_grater_equal_float, impl_grater_equal_int,
+    impl_grater_float, impl_grater_int, impl_less_equal_float, impl_less_equal_int,
+    impl_less_float, impl_less_int, impl_negative_equal_float, impl_negative_equal_int,
 };
+use crate::ffi;
+use crate::{dim::Dim, dtype::DataType, Num, Order};
+
+use std::ops::{Add, Div, Mul, Neg};
 
 /// Multi-dimensional array on CUDA device.
 /// # Parameters
 /// * data_ptr <dr>
 /// pointer to CUDA device
 /// * dim <dr>
-/// dimention 
+/// dimention
 /// Dimention of Array
 /// * Order <dr>
 /// Array is Column priority or Row priority
@@ -35,10 +34,10 @@ impl<T: Num> Drop for Array<T> {
     fn drop(&mut self) {
         let cuda_error = ffi::free(self.data_ptr as *mut T);
         match cuda_error {
-            Ok(_) => {},
+            Ok(_) => {}
             _ => {
                 panic!("{:?} Can't Free CUDA Array", cuda_error);
-            },
+            }
         };
     }
 }
@@ -53,14 +52,12 @@ fn malloc_array_on_device<T: Num, D: AsRef<Dim>>(dim: &D) -> ffi::Result<Array<T
 
     let device_ptr = ffi::malloc(n_bytes)?;
 
-    Ok(
-        Array {
-            data_ptr: device_ptr,
-            dim: dim.clone(),
-            order: order,
-            dtype: dtype,
-       }
-    )
+    Ok(Array {
+        data_ptr: device_ptr,
+        dim: dim.clone(),
+        order: order,
+        dtype: dtype,
+    })
 }
 
 /// Fill with the value specified for the device's pointer
@@ -71,14 +68,14 @@ pub fn fill<T: Num>(data_ptr: *mut T, num: T, size: usize) -> ffi::Result<()> {
     }
 
     ffi::memcpy(
-        data_ptr, vec.as_ptr(), 
-        size * std::mem::size_of::<T>(), 
-        cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyHostToDevice
+        data_ptr,
+        vec.as_ptr(),
+        size * std::mem::size_of::<T>(),
+        cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyHostToDevice,
     )
 }
 
 impl<T: Num> Array<T> {
-
     /// Initialize an Array of the given size with zero fill.
     pub fn zeros<D: AsRef<Dim>>(dim: &D) -> ffi::Result<Array<T>> {
         let dim = dim.as_ref();
@@ -112,12 +109,16 @@ impl<T: Num> Array<T> {
 
     /// Converting from Vec to Array
     pub fn from_vec<D: AsRef<Dim>>(vec: Vec<T>, dim: &D) -> ffi::Result<Array<T>> {
-        let array = malloc_array_on_device(&dim.as_ref())?;
+        let dim = dim.as_ref();
+        if vec.len() != dim.size() {
+            panic!("input vec shape and input dimention size is not same");
+        }
+        let array = malloc_array_on_device(&dim)?;
         ffi::memcpy(
             array.data_ptr as *const T as *mut T,
             vec.as_ptr() as *const T,
-            array.size() * std::mem::size_of::<T>(), 
-            cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyHostToDevice
+            array.size() * std::mem::size_of::<T>(),
+            cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyHostToDevice,
         )?;
         Ok(array)
     }
@@ -126,7 +127,7 @@ impl<T: Num> Array<T> {
     pub fn shape(&self) -> Dim {
         self.dim.clone()
     }
-    
+
     /// return number of elements
     pub fn size(&self) -> usize {
         self.dim.size()
@@ -136,11 +137,7 @@ impl<T: Num> Array<T> {
     pub fn as_slice(&self) -> ffi::Result<&[T]> {
         let vec: Vec<T> = self.as_vec()?;
 
-        Ok(
-            unsafe {
-                &*(vec.as_slice() as *const [T])
-            }
-        )
+        Ok(unsafe { &*(vec.as_slice() as *const [T]) })
     }
 
     /// CUDA array to Vec
@@ -154,8 +151,9 @@ impl<T: Num> Array<T> {
         ffi::memcpy(
             vec.as_ptr() as *mut T,
             self.data_ptr,
-            size * std::mem::size_of::<T>(), 
-            cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyDeviceToHost)?;
+            size * std::mem::size_of::<T>(),
+            cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyDeviceToHost,
+        )?;
 
         Ok(vec)
     }
@@ -165,7 +163,7 @@ impl<T: Num> Array<T> {
         let res = match self.dtype {
             DataType::INT16 => impl_equal_int(self, other),
             DataType::FLOAT => impl_equal_float(self, other),
-            _ => todo!()
+            _ => todo!(),
         }?;
         Ok(res)
     }
@@ -175,7 +173,7 @@ impl<T: Num> Array<T> {
         let res = match self.dtype {
             DataType::INT16 => impl_negative_equal_int(self, other),
             DataType::FLOAT => impl_negative_equal_float(self, other),
-            _ => todo!()
+            _ => todo!(),
         }?;
         Ok(res)
     }
@@ -185,7 +183,7 @@ impl<T: Num> Array<T> {
         let res = match self.dtype {
             DataType::INT16 => impl_grater_int(self, other),
             DataType::FLOAT => impl_grater_float(self, other),
-            _ => todo!()
+            _ => todo!(),
         }?;
         Ok(res)
     }
@@ -195,7 +193,7 @@ impl<T: Num> Array<T> {
         let res = match self.dtype {
             DataType::INT16 => impl_grater_equal_int(self, other),
             DataType::FLOAT => impl_grater_equal_float(self, other),
-            _ => todo!()
+            _ => todo!(),
         }?;
         Ok(res)
     }
@@ -205,7 +203,7 @@ impl<T: Num> Array<T> {
         let res = match self.dtype {
             DataType::INT16 => impl_less_int(self, other),
             DataType::FLOAT => impl_less_float(self, other),
-            _ => todo!()
+            _ => todo!(),
         }?;
         Ok(res)
     }
@@ -215,9 +213,45 @@ impl<T: Num> Array<T> {
         let res = match self.dtype {
             DataType::INT16 => impl_less_equal_int(self, other),
             DataType::FLOAT => impl_less_equal_float(self, other),
-            _ => todo!()
+            _ => todo!(),
         }?;
         Ok(res)
     }
+}
 
+impl<T: Num> Clone for Array<T> {
+    fn clone(&self) -> Self {
+        todo!();
+    }
+
+    fn clone_from(&mut self, source: &Self) {
+        todo!();
+    }
+}
+
+impl Add<Array<f32>> for Array<f32> {
+    type Output = Array<f32>;
+    fn add(self, rhs: Array<f32>) -> Self::Output {
+        if self.dim != rhs.dim {
+            panic!(
+                "Addition of Array and Array must have same dim First 
+                Array's Dim is {:?} Second one is {:?}",
+                self.dim, rhs.dim
+            );
+        }
+
+        if self.dtype != rhs.dtype {
+            panic!(
+                "Add of Array and Array must have same dtype
+                first Array dtype is {:?}, second is {:?}",
+                self.dtype, rhs.dtype
+            );
+        }
+
+        if self.order != rhs.order {
+            todo!();
+        }
+
+        todo!();
+    }
 }
