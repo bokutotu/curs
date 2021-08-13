@@ -1,8 +1,6 @@
 extern crate bindgen;
 
 use cuda_find_path::find_cuda;
-use std::env;
-use std::path::PathBuf;
 
 fn main() {
     for path in find_cuda() {
