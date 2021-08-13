@@ -36,7 +36,6 @@ impl Drop for CursState {
     fn drop(&mut self) {
         unsafe { cublasDestroy_v2(self.cublas_handle as cublasHandle_t) };
         unsafe { cudaDeviceReset() };
-        println!("here from drop curs states")
     }
 }
 
