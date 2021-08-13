@@ -10,6 +10,9 @@ use crate::ffi;
 use crate::CursState;
 use crate::{dim::Dim, dtype::DataType, Num, Order};
 
+use std::clone::Clone;
+use std::mem;
+
 /// Multi-dimensional array on CUDA device.
 /// # Parameters
 /// * data_ptr <dr>
@@ -219,4 +222,39 @@ impl<'a, T: Num> Array<'a, T> {
         }?;
         Ok(res)
     }
+}
+
+impl<'a, T: Num> Clone for Array<'a, T> {
+    fn clone(&self) -> Self {
+        let size = self.dim.size() * std::mem::size_of::<T>();
+        let array = malloc_array_on_device(&self.dim, self.state).unwrap();
+        ffi::memcpy(
+            array.data_ptr, 
+            self.data_ptr, 
+            size, 
+            cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyDeviceToDevice,)
+            .unwrap();
+
+        array
+    }
+
+    fn clone_from(&mut self, source: &Self) {
+        *self = source.clone();
+    }
+}
+
+#[test]
+fn test_clone() {
+    let status = CursState::new(0);
+
+    let array_a = Array::<f32>::ones(&vec![10, 10], &status).unwrap();
+    let array_b = array_a.clone();
+
+    let comp_res = array_a.eq(&array_b).unwrap();
+
+    let mut ans_vec = Vec::<f32>::with_capacity(100);
+    for _ in 0..100 {
+        ans_vec.push(1f32);
+    }
+    assert_eq!(comp_res.as_vec().unwrap(), ans_vec);
 }
