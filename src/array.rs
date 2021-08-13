@@ -7,9 +7,8 @@ use crate::compare::{
     impl_less_float, impl_less_int, impl_negative_equal_float, impl_negative_equal_int,
 };
 use crate::ffi;
+use crate::CursState;
 use crate::{dim::Dim, dtype::DataType, Num, Order};
-
-use std::ops::{Add, Div, Mul, Neg};
 
 /// Multi-dimensional array on CUDA device.
 /// # Parameters
@@ -23,15 +22,16 @@ use std::ops::{Add, Div, Mul, Neg};
 /// * dtype <dr>
 /// Data type of Array
 #[derive(Debug)]
-pub struct Array<T: Num> {
+pub struct Array<'a, T: Num> {
     pub data_ptr: *mut T,
     pub dim: Dim,
     pub order: Order,
     pub dtype: DataType,
+    pub state: &'a CursState,
 }
 
-impl<T: Num> Drop for Array<T> {
-    fn drop(&mut self) {
+impl<'a, T: Num> Drop for Array<'a, T> {
+    fn drop(& mut self) {
         let cuda_error = ffi::free(self.data_ptr as *mut T);
         match cuda_error {
             Ok(_) => {}
@@ -43,7 +43,7 @@ impl<T: Num> Drop for Array<T> {
 }
 
 /// Definieren eines Arrays auf dem Grafikprozessor
-fn malloc_array_on_device<T: Num, D: AsRef<Dim>>(dim: &D) -> ffi::Result<Array<T>> {
+fn malloc_array_on_device<'a ,T: Num, D: AsRef<Dim>>(dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
     let dim = dim.as_ref();
     let size = dim.size();
     let n_bytes = size * std::mem::size_of::<T>();
@@ -57,6 +57,7 @@ fn malloc_array_on_device<T: Num, D: AsRef<Dim>>(dim: &D) -> ffi::Result<Array<T
         dim: dim.clone(),
         order: order,
         dtype: dtype,
+        state: state,
     })
 }
 
@@ -75,20 +76,20 @@ pub fn fill<T: Num>(data_ptr: *mut T, num: T, size: usize) -> ffi::Result<()> {
     )
 }
 
-impl<T: Num> Array<T> {
+impl<'a, T: Num> Array<'a, T> {
     /// Initialize an Array of the given size with zero fill.
-    pub fn zeros<D: AsRef<Dim>>(dim: &D) -> ffi::Result<Array<T>> {
+    pub fn zeros<D: AsRef<Dim>>(dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
         let dim = dim.as_ref();
-        let array = malloc_array_on_device(&dim)?;
+        let array = malloc_array_on_device(&dim, state)?;
         fill(array.data_ptr, T::zero(), dim.size())?;
 
         Ok(array)
     }
 
     /// Initializes an Array of the given size with 1 fill
-    pub fn ones<D: AsRef<Dim>>(dim: &D) -> ffi::Result<Array<T>> {
+    pub fn ones<D: AsRef<Dim>>(dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
         let dim = dim.as_ref();
-        let array = malloc_array_on_device(&dim.as_ref())?;
+        let array = malloc_array_on_device(&dim, state)?;
         fill(array.data_ptr, T::one(), dim.size())?;
 
         Ok(array)
@@ -101,19 +102,20 @@ impl<T: Num> Array<T> {
     }
 
     /// Defines an Array filled with the specified values
-    pub fn full<D: AsRef<Dim>>(dim: &D, num: T) -> ffi::Result<Array<T>> {
-        let array = malloc_array_on_device(&dim.as_ref())?;
+    pub fn full<D: AsRef<Dim>>(dim: &D, num: T, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
+        let dim = dim.as_ref();
+        let array = malloc_array_on_device(&dim, state)?;
         fill(array.data_ptr, num, array.dim.size())?;
         Ok(array)
     }
 
     /// Converting from Vec to Array
-    pub fn from_vec<D: AsRef<Dim>>(vec: Vec<T>, dim: &D) -> ffi::Result<Array<T>> {
+    pub fn from_vec<D: AsRef<Dim>>(vec: Vec<T>, dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
         let dim = dim.as_ref();
         if vec.len() != dim.size() {
             panic!("input vec shape and input dimention size is not same");
         }
-        let array = malloc_array_on_device(&dim)?;
+        let array = malloc_array_on_device(&dim, state)?;
         ffi::memcpy(
             array.data_ptr as *const T as *mut T,
             vec.as_ptr() as *const T,
@@ -161,8 +163,8 @@ impl<T: Num> Array<T> {
     /// Comparing Arrays operator like ==
     pub fn eq(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_equal_int(self, other),
-            DataType::FLOAT => impl_equal_float(self, other),
+            DataType::INT16 => impl_equal_int(self, other, self.state),
+            DataType::FLOAT => impl_equal_float(self, other, self.state),
             _ => todo!(),
         }?;
         Ok(res)
@@ -171,8 +173,8 @@ impl<T: Num> Array<T> {
     /// Comparing Arrays operator like !=
     pub fn neq(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_negative_equal_int(self, other),
-            DataType::FLOAT => impl_negative_equal_float(self, other),
+            DataType::INT16 => impl_negative_equal_int(self, other, self.state),
+            DataType::FLOAT => impl_negative_equal_float(self, other, self.state),
             _ => todo!(),
         }?;
         Ok(res)
@@ -181,8 +183,8 @@ impl<T: Num> Array<T> {
     /// Comparing Arrays operator like >
     pub fn greater(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_grater_int(self, other),
-            DataType::FLOAT => impl_grater_float(self, other),
+            DataType::INT16 => impl_grater_int(self, other, self.state),
+            DataType::FLOAT => impl_grater_float(self, other,self.state),
             _ => todo!(),
         }?;
         Ok(res)
@@ -191,8 +193,8 @@ impl<T: Num> Array<T> {
     /// Comparing Arrays operator like >=
     pub fn greater_equal(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_grater_equal_int(self, other),
-            DataType::FLOAT => impl_grater_equal_float(self, other),
+            DataType::INT16 => impl_grater_equal_int(self, other, self.state),
+            DataType::FLOAT => impl_grater_equal_float(self, other, self.state),
             _ => todo!(),
         }?;
         Ok(res)
@@ -201,8 +203,8 @@ impl<T: Num> Array<T> {
     /// Comparing Arrays operator like <
     pub fn less(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_less_int(self, other),
-            DataType::FLOAT => impl_less_float(self, other),
+            DataType::INT16 => impl_less_int(self, other, self.state),
+            DataType::FLOAT => impl_less_float(self, other, self.state),
             _ => todo!(),
         }?;
         Ok(res)
@@ -211,47 +213,10 @@ impl<T: Num> Array<T> {
     /// Comparing Arrays operator like <=
     pub fn less_equal(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_less_equal_int(self, other),
-            DataType::FLOAT => impl_less_equal_float(self, other),
+            DataType::INT16 => impl_less_equal_int(self, other, self.state),
+            DataType::FLOAT => impl_less_equal_float(self, other, self.state),
             _ => todo!(),
         }?;
         Ok(res)
-    }
-}
-
-impl<T: Num> Clone for Array<T> {
-    fn clone(&self) -> Self {
-        todo!();
-    }
-
-    fn clone_from(&mut self, source: &Self) {
-        todo!();
-    }
-}
-
-impl Add<Array<f32>> for Array<f32> {
-    type Output = Array<f32>;
-    fn add(self, rhs: Array<f32>) -> Self::Output {
-        if self.dim != rhs.dim {
-            panic!(
-                "Addition of Array and Array must have same dim First 
-                Array's Dim is {:?} Second one is {:?}",
-                self.dim, rhs.dim
-            );
-        }
-
-        if self.dtype != rhs.dtype {
-            panic!(
-                "Add of Array and Array must have same dtype
-                first Array dtype is {:?}, second is {:?}",
-                self.dtype, rhs.dtype
-            );
-        }
-
-        if self.order != rhs.order {
-            todo!();
-        }
-
-        todo!();
     }
 }

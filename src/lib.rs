@@ -1,11 +1,44 @@
 use num_traits;
+use cublas_sys::{cublasContext, cublasHandle_t, cublasStatus_t, cublasCreate_v2, cublasDestroy_v2};
+use cuda_runtime_sys::{ cudaDeviceReset, };
 
 pub mod array;
 pub mod compare;
-pub mod cublas;
 pub mod dim;
 pub mod dtype;
 pub mod ffi;
+pub mod operator;
+
+/// Structure for checking the status of cublas and cuda
+#[derive(Debug)]
+pub struct CursState {
+    cublas_handle: cublasHandle_t,
+    cublas_state: cublasStatus_t,
+}
+
+impl CursState {
+    pub fn new(dev_id: usize) -> Self {
+        ffi::device_config(dev_id).unwrap();
+
+        let handle:[u8; 0] = [];
+        let mut handle: cublasHandle_t = handle.as_ptr() as *mut cublasContext as cublasHandle_t;
+
+        let state = unsafe {cublasCreate_v2(&mut handle) };
+
+        CursState {
+            cublas_handle: handle,
+            cublas_state: state,
+        }
+    }
+}
+
+impl Drop for CursState {
+    fn drop(&mut self) {
+        unsafe { cublasDestroy_v2(self.cublas_handle as cublasHandle_t) };
+        unsafe { cudaDeviceReset() };
+        println!("here from drop curs states")
+    }
+}
 
 pub trait Num:
     num_traits::identities::Zero + num_traits::identities::One + num_traits::NumAssignOps + Copy

@@ -10,13 +10,15 @@ use kernel::{
 use crate::ffi;
 use crate::Num;
 use crate::array::Array;
+use crate::CursState;
 
 macro_rules! impl_compare_fn {
     ($func_name: ident, $kernel_func: ident) => {
-        pub fn $func_name<T: Num>(
+        pub fn $func_name<'a, T: Num>(
             array_a: &Array<T>,
             array_b: &Array<T>,
-            ) -> ffi::Result<Array<T>> {
+            state: &'a CursState,
+            ) -> ffi::Result<Array<'a, T>> {
 
             if array_a.dim != array_b.dim {
                 panic!("Array dim is not same, Array Dimention are {:?}, {:?}",
@@ -35,7 +37,7 @@ macro_rules! impl_compare_fn {
 
             let size = array_a.size() as ::libc::c_int;
 
-            let res: Array<T> = Array::zeros(&array_a.shape())?;
+            let res: Array<T> = Array::zeros(&array_a.shape(), state)?;
 
             unsafe {
                 $kernel_func(
