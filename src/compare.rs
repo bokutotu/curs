@@ -91,6 +91,5 @@ mod tests {
             ) 
         };
 
-        println!("{:?}", d_a);
     }
 }
