@@ -11,7 +11,6 @@ use crate::CursState;
 use crate::{dim::Dim, dtype::DataType, Num, Order};
 
 use std::clone::Clone;
-use std::mem;
 
 /// Multi-dimensional array on CUDA device.
 /// # Parameters
