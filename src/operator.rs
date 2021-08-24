@@ -4,6 +4,8 @@ use std::ops;
 use cublas_sys::{cublasSaxpy_v2, cublasStatus_t};
 
 use super::array::Array;
+use super::element_wise_operator::{element_wise_devide, element_wise_product};
+use super::Num;
 
 macro_rules! array_operator {
     ($impl_name: ident , $func_name: ident, $type: ty, $alpha: literal, $cublas_func: ident) => {
@@ -45,3 +47,37 @@ macro_rules! array_operator {
 
 array_operator!(Add, add, f32, 1f32, cublasSaxpy_v2);
 array_operator!(Sub, sub, f32, -1f32, cublasSaxpy_v2);
+
+impl<'a, T: Num> ops::Mul<Array<'a, T>> for Array<'a, T> {
+    type Output = Array<'a, T>;
+    fn mul(self, other: Array<'a, T>) -> Self::Output {
+        if self.dim != other.dim {
+            panic!("add operation dimension mismatch");
+        }
+        if self.order != other.order {
+            todo!();
+        }
+        if self.dtype != other.dtype {
+            panic!("data type is not same ");
+        }
+
+        element_wise_product(self, other)
+    }
+}
+
+impl<'a, T: Num> ops::Div<Array<'a, T>> for Array<'a, T> {
+    type Output = Array<'a, T>;
+    fn div(self, other: Array<'a, T>) -> Self::Output {
+        if self.dim != other.dim {
+            panic!("add operation dimension mismatch");
+        }
+        if self.order != other.order {
+            todo!();
+        }
+        if self.dtype != other.dtype {
+            panic!("data type is not same ");
+        }
+
+        element_wise_devide(self, other)
+    }
+}
