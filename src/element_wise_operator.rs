@@ -46,3 +46,23 @@ pub fn element_wise_devide<'a, T: Num>(
     };
     res_array
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::array::Array;
+    use crate::element_wise_operator::*;
+    use crate::CursState;
+
+    #[test]
+    fn test_product() {
+        let state = CursState::new(0);
+        let array_a =
+            Array::<f32>::from_vec(vec![1., 2., 3., 4., 5., 6.], &vec![2, 3], &state).unwrap();
+        let array_b =
+            Array::<f32>::from_vec(vec![7., 8., 9., 10., 11., 12.], &vec![2, 3], &state).unwrap();
+        let res = element_wise_product(array_a, array_b);
+        let res_vec = res.as_vec().unwrap();
+        let ans: Vec<f32> = vec![7., 16., 27., 40., 55., 72.];
+        assert_eq!(ans, res_vec);
+    }
+}
