@@ -1,11 +1,14 @@
+use cublas_sys::{
+    cublasContext, cublasCreate_v2, cublasDestroy_v2, cublasHandle_t, cublasStatus_t,
+};
+use cuda_runtime_sys::cudaDeviceReset;
 use num_traits;
-use cublas_sys::{cublasContext, cublasHandle_t, cublasStatus_t, cublasCreate_v2, cublasDestroy_v2};
-use cuda_runtime_sys::{ cudaDeviceReset, };
 
 pub mod array;
 pub mod compare;
 pub mod dim;
 pub mod dtype;
+pub mod element_wise_operator;
 pub mod ffi;
 pub mod operator;
 
@@ -20,10 +23,10 @@ impl CursState {
     pub fn new(dev_id: usize) -> Self {
         ffi::device_config(dev_id).unwrap();
 
-        let handle:[u8; 0] = [];
+        let handle: [u8; 0] = [];
         let mut handle: cublasHandle_t = handle.as_ptr() as *mut cublasContext as cublasHandle_t;
 
-        let state = unsafe {cublasCreate_v2(&mut handle) };
+        let state = unsafe { cublasCreate_v2(&mut handle) };
 
         CursState {
             cublas_handle: handle,

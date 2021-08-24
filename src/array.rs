@@ -33,7 +33,7 @@ pub struct Array<'a, T: Num> {
 }
 
 impl<'a, T: Num> Drop for Array<'a, T> {
-    fn drop(& mut self) {
+    fn drop(&mut self) {
         let cuda_error = ffi::free(self.data_ptr as *mut T);
         match cuda_error {
             Ok(_) => {}
@@ -45,7 +45,10 @@ impl<'a, T: Num> Drop for Array<'a, T> {
 }
 
 /// Definieren eines Arrays auf dem Grafikprozessor
-fn malloc_array_on_device<'a ,T: Num, D: AsRef<Dim>>(dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
+fn malloc_array_on_device<'a, T: Num, D: AsRef<Dim>>(
+    dim: &D,
+    state: &'a CursState,
+) -> ffi::Result<Array<'a, T>> {
     let dim = dim.as_ref();
     let size = dim.size();
     let n_bytes = size * std::mem::size_of::<T>();
@@ -112,7 +115,11 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Converting from Vec to Array
-    pub fn from_vec<D: AsRef<Dim>>(vec: Vec<T>, dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
+    pub fn from_vec<D: AsRef<Dim>>(
+        vec: Vec<T>,
+        dim: &D,
+        state: &'a CursState,
+    ) -> ffi::Result<Array<'a, T>> {
         let dim = dim.as_ref();
         if vec.len() != dim.size() {
             panic!("input vec shape and input dimention size is not same");
@@ -186,7 +193,7 @@ impl<'a, T: Num> Array<'a, T> {
     pub fn greater(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
             DataType::INT16 => impl_grater_int(self, other, self.state),
-            DataType::FLOAT => impl_grater_float(self, other,self.state),
+            DataType::FLOAT => impl_grater_float(self, other, self.state),
             _ => todo!(),
         }?;
         Ok(res)
@@ -228,11 +235,12 @@ impl<'a, T: Num> Clone for Array<'a, T> {
         let size = self.dim.size() * std::mem::size_of::<T>();
         let array = malloc_array_on_device(&self.dim, self.state).unwrap();
         ffi::memcpy(
-            array.data_ptr, 
-            self.data_ptr, 
-            size, 
-            cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyDeviceToDevice,)
-            .unwrap();
+            array.data_ptr,
+            self.data_ptr,
+            size,
+            cuda_runtime_sys::cudaMemcpyKind::cudaMemcpyDeviceToDevice,
+        )
+        .unwrap();
 
         array
     }
