@@ -5,9 +5,8 @@ use cublas_sys::{cublasSaxpy_v2, cublasStatus_t};
 
 use super::array::Array;
 use super::element_wise_operator::{element_wise_devide, element_wise_product};
-use super::Num;
 
-macro_rules! array_operator {
+macro_rules! array_operator_axpy {
     ($impl_name: ident , $func_name: ident, $type: ty, $alpha: literal, $cublas_func: ident) => {
         impl<'a> ops::$impl_name<Array<'a, $type>> for Array<'a, $type> {
             type Output = Array<'a, $type>;
@@ -45,12 +44,12 @@ macro_rules! array_operator {
     };
 }
 
-array_operator!(Add, add, f32, 1f32, cublasSaxpy_v2);
-array_operator!(Sub, sub, f32, -1f32, cublasSaxpy_v2);
+array_operator_axpy!(Add, add, f32, 1f32, cublasSaxpy_v2);
+array_operator_axpy!(Sub, sub, f32, -1f32, cublasSaxpy_v2);
 
-impl<'a, T: Num> ops::Mul<Array<'a, T>> for Array<'a, T> {
-    type Output = Array<'a, T>;
-    fn mul(self, other: Array<'a, T>) -> Self::Output {
+impl<'a> ops::Mul<Array<'a, f32>> for Array<'a, f32> {
+    type Output = Array<'a, f32>;
+    fn mul(self, other: Array<'a, f32>) -> Self::Output {
         if self.dim != other.dim {
             panic!("add operation dimension mismatch");
         }
@@ -65,9 +64,9 @@ impl<'a, T: Num> ops::Mul<Array<'a, T>> for Array<'a, T> {
     }
 }
 
-impl<'a, T: Num> ops::Div<Array<'a, T>> for Array<'a, T> {
-    type Output = Array<'a, T>;
-    fn div(self, other: Array<'a, T>) -> Self::Output {
+impl<'a> ops::Div<Array<'a, f32>> for Array<'a, f32> {
+    type Output = Array<'a, f32>;
+    fn div(self, other: Array<'a, f32>) -> Self::Output {
         if self.dim != other.dim {
             panic!("add operation dimension mismatch");
         }
@@ -81,3 +80,6 @@ impl<'a, T: Num> ops::Div<Array<'a, T>> for Array<'a, T> {
         element_wise_devide(self, other)
     }
 }
+
+// TODO
+// impl Mul and Div Array<'a, f64> Array<'a, f64>
