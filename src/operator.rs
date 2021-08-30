@@ -1,51 +1,33 @@
 //! Implementing an operator for an Array
 use std::ops;
 
-use cublas_sys::{cublasSaxpy_v2, cublasStatus_t};
-
 use super::array::Array;
+use super::cublas::level1::{daxpy, saxpy};
 use super::element_wise_operator::{element_wise_devide, element_wise_product};
 
-macro_rules! array_operator_axpy {
-    ($impl_name: ident , $func_name: ident, $type: ty, $alpha: literal, $cublas_func: ident) => {
+macro_rules! add_sub_impl {
+    ($impl_name: ident, $func_name: ident, $type: ty, $alpha: literal, $cublas_func: ident) => {
         impl<'a> ops::$impl_name<Array<'a, $type>> for Array<'a, $type> {
             type Output = Array<'a, $type>;
             fn $func_name(self, other: Array<'a, $type>) -> Self::Output {
                 if self.dim != other.dim {
-                    panic!("add operation dimension mismatch");
+                    panic!("dimension mismatch");
                 }
                 if self.order != other.order {
                     todo!();
                 }
-                if self.dtype != other.dtype {
-                    panic!("data type is not same ");
-                }
-
                 let self_clone = self.clone();
-
-                let cublas_status = unsafe {
-                    $cublas_func(
-                        self.state.cublas_handle,
-                        self.dim.size() as i32,
-                        &mut $alpha as *const $type,
-                        other.data_ptr as *const $type,
-                        1,
-                        self_clone.data_ptr as *mut $type,
-                        1,
-                    )
-                };
-
-                if cublas_status != cublasStatus_t::CUBLAS_STATUS_SUCCESS {
-                    panic!("{:?}", cublas_status);
-                }
+                $cublas_func(self.state, $alpha, &other, &self_clone);
                 self_clone
             }
         }
     };
 }
 
-array_operator_axpy!(Add, add, f32, 1f32, cublasSaxpy_v2);
-array_operator_axpy!(Sub, sub, f32, -1f32, cublasSaxpy_v2);
+add_sub_impl!(Add, add, f32, 1f32, saxpy);
+add_sub_impl!(Add, add, f64, 1f64, daxpy);
+add_sub_impl!(Sub, sub, f32, -1f32, saxpy);
+add_sub_impl!(Sub, sub, f64, -1f64, daxpy);
 
 impl<'a> ops::Mul<Array<'a, f32>> for Array<'a, f32> {
     type Output = Array<'a, f32>;

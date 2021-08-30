@@ -6,6 +6,7 @@ use num_traits;
 
 pub mod array;
 pub mod compare;
+pub mod cublas;
 pub mod dim;
 pub mod dtype;
 pub mod element_wise_operator;
@@ -59,13 +60,13 @@ impl Num for f32 {
     }
 }
 
-impl Num for i16 {
+impl Num for f64 {
     fn dtype() -> dtype::DataType {
         dtype::DataType::INT16
     }
 
     fn bites() -> usize {
-        2
+        8
     }
 }
 
