@@ -2,7 +2,7 @@ use curs::array::Array;
 use curs::CursState;
 
 #[test]
-fn test_add() {
+fn test_add_array_array() {
     let status = CursState::new(0);
 
     let mut source_vec_a = Vec::<f32>::with_capacity(1000);
@@ -45,7 +45,7 @@ fn test_sub() {
 }
 
 #[test]
-fn test_mul() {
+fn test_mul_array_array() {
     let status = CursState::new(0);
 
     let mut source_vec_a = Vec::<f32>::with_capacity(100);
@@ -67,7 +67,23 @@ fn test_mul() {
 }
 
 #[test]
-fn test_div() {
+fn test_mul_array_scalar() {
+    let status = CursState::new(0);
+
+    let mut x = Vec::<f32>::with_capacity(100);
+    let y = 10f32;
+    let mut ans = Vec::<f32>::with_capacity(100);
+    for i in 0..100 {
+        x.push(i as f32);
+        ans.push((i * 10) as f32);
+    }
+    let x = Array::from_vec(x, &vec![10, 10], &status).unwrap();
+    let res = x * y;
+    assert_eq!(res.as_vec().unwrap(), ans)
+}
+
+#[test]
+fn test_div_array_array() {
     let status = CursState::new(0);
 
     let mut source_vec_a = Vec::<f32>::with_capacity(100);
@@ -85,5 +101,21 @@ fn test_div() {
 
     let res = source_array_b / source_array_a;
 
+    assert_eq!(res.as_vec().unwrap(), ans);
+}
+
+#[test]
+fn test_div_array_scalar() {
+    let status = CursState::new(0);
+    let mut x = Vec::<f32>::with_capacity(100);
+    let mut ans = Vec::<f32>::with_capacity(100);
+
+    for i in 0..100 {
+        x.push(((i + 1) * 10) as f32);
+        ans.push((i + 1) as f32);
+    }
+
+    let x = Array::from_vec(x, &vec![10, 10], &status).unwrap();
+    let res = x / 10f32;
     assert_eq!(res.as_vec().unwrap(), ans);
 }
