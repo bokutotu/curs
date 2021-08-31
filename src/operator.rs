@@ -3,7 +3,8 @@ use std::ops;
 
 use super::array::Array;
 use super::cublas::level1::{daxpy, saxpy};
-use super::element_wise_operator::{element_wise_devide, element_wise_product};
+use super::kernel::array_scalar_add::{double_array_add_scalar, float_array_add_scalar};
+use super::kernel::element_wise_operator::{element_wise_devide, element_wise_product};
 
 //////////////////////////// Add and Sub ///////////////////////////////
 
@@ -34,6 +35,44 @@ add_sub_impl!(Sub, sub, f64, -1f64, daxpy);
 
 // TODO
 // impl Add and Sub Array<'a, f64> Array<'a, f64>
+// impl Add and Sub Array<'a, f64, f32>  f64, f32
+
+macro_rules! array_scalar_add_sub_impl {
+    ($type: ty, $func: ident) => {
+        impl<'a> ops::Add<$type> for Array<'a, $type> {
+            type Output = Array<'a, $type>;
+            fn add(self, other: $type) -> Self::Output {
+                $func(self, other)
+            }
+        }
+
+        impl<'a> ops::Add<Array<'a, $type>> for $type {
+            type Output = Array<'a, $type>;
+            fn add(self, other: Array<'a, $type>) -> Self::Output {
+                $func(other, self)
+            }
+        }
+
+        impl<'a> ops::Sub<$type> for Array<'a, $type> {
+            type Output = Array<'a, $type>;
+            fn sub(self, other: $type) -> Self::Output {
+                let scalar = -1. * other;
+                $func(self, scalar)
+            }
+        }
+
+        impl<'a> ops::Sub<Array<'a, $type>> for $type {
+            type Output = Array<'a, $type>;
+            fn sub(self, other: Array<'a, $type>) -> Self::Output {
+                let scalar = -1. * self;
+                $func(other, scalar)
+            }
+        }
+    };
+}
+
+array_scalar_add_sub_impl!(f32, float_array_add_scalar);
+array_scalar_add_sub_impl!(f64, double_array_add_scalar);
 
 ////////////////// Mul and Div /////////////////////////
 

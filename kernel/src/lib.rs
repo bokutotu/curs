@@ -102,6 +102,38 @@ extern "C" {
         resArray: *mut ::libc::c_void,
         size: ::libc::c_int,
     );
+
+    pub fn double_element_wise_product(
+        arrayA: *mut ::libc::c_void,
+        arrayB: *mut ::libc::c_void,
+        resArray: *mut ::libc::c_void,
+        size: ::libc::c_int,
+    );
+
+    pub fn double_element_wise_devide(
+        arrayA: *mut ::libc::c_void,
+        arrayB: *mut ::libc::c_void,
+        resArray: *mut ::libc::c_void,
+        size: ::libc::c_int,
+    );
+}
+
+#[allow(dead_code)]
+#[link(name = "array_scalar_add", kind = "static")]
+extern "C" {
+    pub fn floatArrayScalarAdd(
+        array: *mut ::libc::c_void,
+        resArray: *mut ::libc::c_void,
+        scalar: ::libc::c_float,
+        size: ::libc::c_int,
+    );
+
+    pub fn doubleArrayScalarAdd(
+        array: *mut ::libc::c_void,
+        resArray: *mut ::libc::c_void,
+        scalar: ::libc::c_double,
+        size: ::libc::c_int,
+    );
 }
 
 #[cfg(test)]

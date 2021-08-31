@@ -1,12 +1,11 @@
 //! This file defines the array of curs and the structures
 //! associated with the attributes that are members of the array.
 
-use crate::compare::{
-    impl_equal_float, impl_equal_int, impl_grater_equal_float, impl_grater_equal_int,
-    impl_grater_float, impl_grater_int, impl_less_equal_float, impl_less_equal_int,
-    impl_less_float, impl_less_int, impl_negative_equal_float, impl_negative_equal_int,
-};
 use crate::ffi;
+use crate::kernel::compare::{
+    impl_equal_float, impl_grater_equal_float, impl_grater_float, impl_less_equal_float,
+    impl_less_float, impl_negative_equal_float,
+};
 use crate::CursState;
 use crate::{dim::Dim, dtype::DataType, Num, Order};
 
@@ -172,7 +171,6 @@ impl<'a, T: Num> Array<'a, T> {
     /// Comparing Arrays operator like ==
     pub fn eq(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_equal_int(self, other, self.state),
             DataType::FLOAT => impl_equal_float(self, other, self.state),
             _ => todo!(),
         }?;
@@ -182,7 +180,6 @@ impl<'a, T: Num> Array<'a, T> {
     /// Comparing Arrays operator like !=
     pub fn neq(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_negative_equal_int(self, other, self.state),
             DataType::FLOAT => impl_negative_equal_float(self, other, self.state),
             _ => todo!(),
         }?;
@@ -192,7 +189,6 @@ impl<'a, T: Num> Array<'a, T> {
     /// Comparing Arrays operator like >
     pub fn greater(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_grater_int(self, other, self.state),
             DataType::FLOAT => impl_grater_float(self, other, self.state),
             _ => todo!(),
         }?;
@@ -202,7 +198,6 @@ impl<'a, T: Num> Array<'a, T> {
     /// Comparing Arrays operator like >=
     pub fn greater_equal(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_grater_equal_int(self, other, self.state),
             DataType::FLOAT => impl_grater_equal_float(self, other, self.state),
             _ => todo!(),
         }?;
@@ -212,7 +207,6 @@ impl<'a, T: Num> Array<'a, T> {
     /// Comparing Arrays operator like <
     pub fn less(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_less_int(self, other, self.state),
             DataType::FLOAT => impl_less_float(self, other, self.state),
             _ => todo!(),
         }?;
@@ -222,7 +216,6 @@ impl<'a, T: Num> Array<'a, T> {
     /// Comparing Arrays operator like <=
     pub fn less_equal(&self, other: &Self) -> ffi::Result<Array<T>> {
         let res = match self.dtype {
-            DataType::INT16 => impl_less_equal_int(self, other, self.state),
             DataType::FLOAT => impl_less_equal_float(self, other, self.state),
             _ => todo!(),
         }?;

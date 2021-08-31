@@ -50,7 +50,7 @@ pub fn element_wise_devide<'a, T: Num>(
 #[cfg(test)]
 mod tests {
     use crate::array::Array;
-    use crate::element_wise_operator::*;
+    use crate::kernel::element_wise_operator::*;
     use crate::CursState;
 
     #[test]

@@ -36,4 +36,16 @@ extern "C" {
     dim3 gridDim((size + blockDim.x - 1) / blockDim.x);
     element_wise_devide<<< gridDim, blockDim >>> (arrayA, arrayB, resArray, size);
   }
+
+  void double_element_wise_product(double *arrayA, double *arrayB, double *resArray, int size) {
+    dim3 blockDim(BLOCKDIM);
+    dim3 gridDim((size + blockDim.x - 1) / blockDim.x);
+    element_wise_product<<< gridDim, blockDim>>> (arrayA, arrayB, resArray, size);
+  }
+
+  void double_element_wise_devide(double *arrayA, double *arrayB, double *resArray, int size) {
+    dim3 blockDim(BLOCKDIM);
+    dim3 gridDim((size + blockDim.x - 1) / blockDim.x);
+    element_wise_devide<<< gridDim, blockDim >>> (arrayA, arrayB, resArray, size);
+  }
 }

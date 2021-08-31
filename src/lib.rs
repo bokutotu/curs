@@ -5,12 +5,11 @@ use cuda_runtime_sys::cudaDeviceReset;
 use num_traits;
 
 pub mod array;
-pub mod compare;
 pub mod cublas;
 pub mod dim;
 pub mod dtype;
-pub mod element_wise_operator;
 pub mod ffi;
+pub mod kernel;
 pub mod operator;
 
 /// Structure for checking the status of cublas and cuda
@@ -62,7 +61,7 @@ impl Num for f32 {
 
 impl Num for f64 {
     fn dtype() -> dtype::DataType {
-        dtype::DataType::INT16
+        dtype::DataType::DOUBLE
     }
 
     fn bites() -> usize {
