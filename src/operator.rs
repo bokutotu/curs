@@ -21,7 +21,7 @@ macro_rules! add_sub_impl {
                 if self.order != other.order {
                     todo!();
                 }
-                $cublas_func(self.state, $alpha, &other, &self);
+                $cublas_func($alpha, &other, &self);
                 self
             }
         }
@@ -84,7 +84,7 @@ macro_rules! mul_axpy {
             #[inline]
             fn mul(self, other: $type) -> Self::Output {
                 let res = Array::zeros(&self.dim, self.state).unwrap();
-                $cublas_func(self.state, other, &self, &res);
+                $cublas_func(other, &self, &res);
                 res
             }
         }
