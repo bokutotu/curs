@@ -2,9 +2,9 @@
 
 pub const CUBLAS_VER_MAJOR: u32 = 11;
 pub const CUBLAS_VER_MINOR: u32 = 5;
-pub const CUBLAS_VER_PATCH: u32 = 2;
-pub const CUBLAS_VER_BUILD: u32 = 43;
-pub const CUBLAS_VERSION: u32 = 11502;
+pub const CUBLAS_VER_PATCH: u32 = 4;
+pub const CUBLAS_VER_BUILD: u32 = 8;
+pub const CUBLAS_VERSION: u32 = 11504;
 #[repr(C)]
 #[repr(align(8))]
 #[derive(Debug, Default, Copy, Clone, PartialOrd, PartialEq)]
@@ -593,6 +593,13 @@ pub const cudaError_cudaErrorTimeout: cudaError = 909;
 #[doc = " This error indicates that the graph update was not performed because it included"]
 #[doc = " changes which violated constraints specific to instantiated graph update."]
 pub const cudaError_cudaErrorGraphExecUpdateFailure: cudaError = 910;
+#[doc = " This indicates that an async error has occurred in a device outside of CUDA."]
+#[doc = " If CUDA was waiting for an external device's signal before consuming shared data,"]
+#[doc = " the external device signaled an error indicating that the data is not valid for"]
+#[doc = " consumption. This leaves the process in an inconsistent state and any further CUDA"]
+#[doc = " work will return the same error. To continue using CUDA, the process must be"]
+#[doc = " terminated and relaunched."]
+pub const cudaError_cudaErrorExternalDevice: cudaError = 911;
 #[doc = " This indicates that an unknown internal error has occurred."]
 pub const cudaError_cudaErrorUnknown: cudaError = 999;
 #[doc = " Any unhandled CUDA driver error is added to this value and returned via"]
