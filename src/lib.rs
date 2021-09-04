@@ -6,9 +6,9 @@ use num_traits;
 
 pub mod array;
 pub mod cublas;
+pub mod cuda_runtime;
 pub mod dim;
 pub mod dtype;
-pub mod ffi;
 pub mod kernel;
 pub mod operator;
 
@@ -21,7 +21,7 @@ pub struct CursState {
 
 impl CursState {
     pub fn new(dev_id: usize) -> Self {
-        ffi::device_config(dev_id).unwrap();
+        cuda_runtime::device_config(dev_id).unwrap();
 
         let handle: [u8; 0] = [];
         let mut handle: cublasHandle_t = handle.as_ptr() as *mut cublasContext as cublasHandle_t;

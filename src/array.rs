@@ -1,7 +1,7 @@
 //! This file defines the array of curs and the structures
 //! associated with the attributes that are members of the array.
 
-use crate::ffi;
+use crate::cuda_runtime;
 use crate::kernel::compare::{
     impl_equal_float, impl_grater_equal_float, impl_grater_float, impl_less_equal_float,
     impl_less_float, impl_negative_equal_float,
@@ -33,7 +33,7 @@ pub struct Array<'a, T: Num> {
 
 impl<'a, T: Num> Drop for Array<'a, T> {
     fn drop(&mut self) {
-        let cuda_error = ffi::free(self.data_ptr as *mut T);
+        let cuda_error = cuda_runtime::free(self.data_ptr as *mut T);
         match cuda_error {
             Ok(_) => {}
             _ => {
@@ -47,14 +47,14 @@ impl<'a, T: Num> Drop for Array<'a, T> {
 fn malloc_array_on_device<'a, T: Num, D: AsRef<Dim>>(
     dim: &D,
     state: &'a CursState,
-) -> ffi::Result<Array<'a, T>> {
+) -> cuda_runtime::Result<Array<'a, T>> {
     let dim = dim.as_ref();
     let size = dim.size();
     let n_bytes = size * std::mem::size_of::<T>();
     let order = Order::default();
     let dtype = T::dtype();
 
-    let device_ptr = ffi::malloc(n_bytes)?;
+    let device_ptr = cuda_runtime::malloc(n_bytes)?;
 
     Ok(Array {
         data_ptr: device_ptr,
@@ -66,13 +66,13 @@ fn malloc_array_on_device<'a, T: Num, D: AsRef<Dim>>(
 }
 
 /// Fill with the value specified for the device's pointer
-pub fn fill<T: Num>(data_ptr: *mut T, num: T, size: usize) -> ffi::Result<()> {
+pub fn fill<T: Num>(data_ptr: *mut T, num: T, size: usize) -> cuda_runtime::Result<()> {
     let mut vec: Vec<T> = Vec::with_capacity(size);
     for _ in 0..size {
         vec.push(num);
     }
 
-    ffi::memcpy(
+    cuda_runtime::memcpy(
         data_ptr,
         vec.as_ptr(),
         size * std::mem::size_of::<T>(),
@@ -82,7 +82,10 @@ pub fn fill<T: Num>(data_ptr: *mut T, num: T, size: usize) -> ffi::Result<()> {
 
 impl<'a, T: Num> Array<'a, T> {
     /// Initialize an Array of the given size with zero fill.
-    pub fn zeros<D: AsRef<Dim>>(dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
+    pub fn zeros<D: AsRef<Dim>>(
+        dim: &D,
+        state: &'a CursState,
+    ) -> cuda_runtime::Result<Array<'a, T>> {
         let dim = dim.as_ref();
         let array = malloc_array_on_device(&dim, state)?;
         fill(array.data_ptr, T::zero(), dim.size())?;
@@ -91,7 +94,10 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Initializes an Array of the given size with 1 fill
-    pub fn ones<D: AsRef<Dim>>(dim: &D, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
+    pub fn ones<D: AsRef<Dim>>(
+        dim: &D,
+        state: &'a CursState,
+    ) -> cuda_runtime::Result<Array<'a, T>> {
         let dim = dim.as_ref();
         let array = malloc_array_on_device(&dim, state)?;
         fill(array.data_ptr, T::one(), dim.size())?;
@@ -100,13 +106,17 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Fill an Array with the given values
-    pub fn fill(&self, num: T) -> ffi::Result<()> {
+    pub fn fill(&self, num: T) -> cuda_runtime::Result<()> {
         fill(self.data_ptr, num, self.dim.size())?;
         Ok(())
     }
 
     /// Defines an Array filled with the specified values
-    pub fn full<D: AsRef<Dim>>(dim: &D, num: T, state: &'a CursState) -> ffi::Result<Array<'a, T>> {
+    pub fn full<D: AsRef<Dim>>(
+        dim: &D,
+        num: T,
+        state: &'a CursState,
+    ) -> cuda_runtime::Result<Array<'a, T>> {
         let dim = dim.as_ref();
         let array = malloc_array_on_device(&dim, state)?;
         fill(array.data_ptr, num, array.dim.size())?;
@@ -118,13 +128,13 @@ impl<'a, T: Num> Array<'a, T> {
         vec: Vec<T>,
         dim: &D,
         state: &'a CursState,
-    ) -> ffi::Result<Array<'a, T>> {
+    ) -> cuda_runtime::Result<Array<'a, T>> {
         let dim = dim.as_ref();
         if vec.len() != dim.size() {
             panic!("input vec shape and input dimention size is not same");
         }
         let array = malloc_array_on_device(&dim, state)?;
-        ffi::memcpy(
+        cuda_runtime::memcpy(
             array.data_ptr as *const T as *mut T,
             vec.as_ptr() as *const T,
             array.size() * std::mem::size_of::<T>(),
@@ -144,21 +154,21 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// CUDA array to Slice
-    pub fn as_slice(&self) -> ffi::Result<&[T]> {
+    pub fn as_slice(&self) -> cuda_runtime::Result<&[T]> {
         let vec: Vec<T> = self.as_vec()?;
 
         Ok(unsafe { &*(vec.as_slice() as *const [T]) })
     }
 
     /// CUDA array to Vec
-    pub fn as_vec(&self) -> ffi::Result<Vec<T>> {
+    pub fn as_vec(&self) -> cuda_runtime::Result<Vec<T>> {
         let size = self.size();
         let mut vec: Vec<T> = Vec::with_capacity(size);
         for _ in 0..size {
             vec.push(T::zero());
         }
 
-        ffi::memcpy(
+        cuda_runtime::memcpy(
             vec.as_ptr() as *mut T,
             self.data_ptr,
             size * std::mem::size_of::<T>(),
@@ -169,7 +179,7 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Comparing Arrays operator like ==
-    pub fn eq(&self, other: &Self) -> ffi::Result<Array<T>> {
+    pub fn eq(&self, other: &Self) -> cuda_runtime::Result<Array<T>> {
         let res = match self.dtype {
             DataType::FLOAT => impl_equal_float(self, other, self.state),
             _ => todo!(),
@@ -178,7 +188,7 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Comparing Arrays operator like !=
-    pub fn neq(&self, other: &Self) -> ffi::Result<Array<T>> {
+    pub fn neq(&self, other: &Self) -> cuda_runtime::Result<Array<T>> {
         let res = match self.dtype {
             DataType::FLOAT => impl_negative_equal_float(self, other, self.state),
             _ => todo!(),
@@ -187,7 +197,7 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Comparing Arrays operator like >
-    pub fn greater(&self, other: &Self) -> ffi::Result<Array<T>> {
+    pub fn greater(&self, other: &Self) -> cuda_runtime::Result<Array<T>> {
         let res = match self.dtype {
             DataType::FLOAT => impl_grater_float(self, other, self.state),
             _ => todo!(),
@@ -196,7 +206,7 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Comparing Arrays operator like >=
-    pub fn greater_equal(&self, other: &Self) -> ffi::Result<Array<T>> {
+    pub fn greater_equal(&self, other: &Self) -> cuda_runtime::Result<Array<T>> {
         let res = match self.dtype {
             DataType::FLOAT => impl_grater_equal_float(self, other, self.state),
             _ => todo!(),
@@ -205,7 +215,7 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Comparing Arrays operator like <
-    pub fn less(&self, other: &Self) -> ffi::Result<Array<T>> {
+    pub fn less(&self, other: &Self) -> cuda_runtime::Result<Array<T>> {
         let res = match self.dtype {
             DataType::FLOAT => impl_less_float(self, other, self.state),
             _ => todo!(),
@@ -214,7 +224,7 @@ impl<'a, T: Num> Array<'a, T> {
     }
 
     /// Comparing Arrays operator like <=
-    pub fn less_equal(&self, other: &Self) -> ffi::Result<Array<T>> {
+    pub fn less_equal(&self, other: &Self) -> cuda_runtime::Result<Array<T>> {
         let res = match self.dtype {
             DataType::FLOAT => impl_less_equal_float(self, other, self.state),
             _ => todo!(),
@@ -227,7 +237,7 @@ impl<'a, T: Num> Clone for Array<'a, T> {
     fn clone(&self) -> Self {
         let size = self.dim.size() * std::mem::size_of::<T>();
         let array = malloc_array_on_device(&self.dim, self.state).unwrap();
-        ffi::memcpy(
+        cuda_runtime::memcpy(
             array.data_ptr,
             self.data_ptr,
             size,

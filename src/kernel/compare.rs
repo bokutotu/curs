@@ -3,7 +3,7 @@ use kernel::{
 };
 
 use crate::array::Array;
-use crate::ffi;
+use crate::cuda_runtime;
 use crate::CursState;
 use crate::Num;
 
@@ -13,7 +13,7 @@ macro_rules! impl_compare_fn {
             array_a: &Array<T>,
             array_b: &Array<T>,
             state: &'a CursState,
-        ) -> ffi::Result<Array<'a, T>> {
+        ) -> cuda_runtime::Result<Array<'a, T>> {
             if array_a.dim != array_b.dim {
                 panic!(
                     "Array dim is not same, Array Dimention are {:?}, {:?}",
