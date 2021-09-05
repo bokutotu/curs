@@ -9,6 +9,7 @@ pub mod cublas;
 pub mod cuda_runtime;
 pub mod dim;
 pub mod dtype;
+pub mod error;
 pub mod kernel;
 pub mod operator;
 

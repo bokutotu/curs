@@ -12,3 +12,4 @@ cuda-runtime-sys = {path = "./cuda-runtime-sys"}
 cudnn-sys = {path = "./cudnn-sys"}
 kernel = { path = "./kernel" }
 num-traits = "*"
+thiserror = "1.0"
