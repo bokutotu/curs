@@ -13,11 +13,12 @@ impl Dim {
 
     /// Calculate the number of elements when Dim is given.
     pub fn size(&self) -> usize {
-        let mut size = 1;
-        for item in &self.dimention { 
-            size = size * item;
-        }
-        size
+        self.dimention.iter().fold(1, |x, y| x * y) as usize
+        // let mut size = 1;
+        // for item in &self.dimention {
+        //     size = size * item;
+        // }
+        // size
     }
 }
 
@@ -29,15 +30,12 @@ impl AsRef<Dim> for Dim {
 
 impl AsRef<Dim> for Vec<usize> {
     fn as_ref(&self) -> &Dim {
-        Dim::new(self)        
+        Dim::new(self)
     }
 }
 
 impl AsRef<Dim> for [usize] {
     fn as_ref(&self) -> &Dim {
-        unsafe {
-            &*(self as *const [usize]
-                as *const Vec<usize> as *const Dim)
-        }
+        unsafe { &*(self as *const [usize] as *const Vec<usize> as *const Dim) }
     }
 }
