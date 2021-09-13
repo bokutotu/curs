@@ -7,7 +7,7 @@ pub struct Dim {
 
 impl Dim {
     /// Define the new dimensions
-    fn new<V: AsRef<Vec<usize>> + ?Sized>(dim: &V) -> &Dim {
+    pub fn new<V: AsRef<Vec<usize>> + ?Sized>(dim: &V) -> &Dim {
         unsafe { &*(dim.as_ref() as *const Vec<usize> as *const Dim) }
     }
 
