@@ -94,6 +94,17 @@ mod tests {
     use crate::array::Array;
     use crate::kernel::transpose::float_transpose;
     use crate::CursState;
+    // use kernel::toy_func;
+
+    // #[test]
+    // fn test_toy_func_is_work() {
+    //     let vec = vec![1, 10, 100, 1000];
+    //     unsafe {
+    //         toy_func(vec.as_ptr(), vec.len() as i32);
+    //     }
+    //     assert_eq!(1, 10);
+    // }
+
     #[test]
     fn test_transpose() {
         let state = CursState::new(0);
