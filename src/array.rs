@@ -44,7 +44,7 @@ impl<'a, T: Num> Drop for Array<'a, T> {
 }
 
 /// Definieren eines Arrays auf dem Grafikprozessor
-fn malloc_array_on_device<'a, T: Num, D: AsRef<Dim>>(
+pub fn malloc_array_on_device<'a, T: Num, D: AsRef<Dim>>(
     dim: &D,
     state: &'a CursState,
 ) -> cuda_runtime::Result<Array<'a, T>> {

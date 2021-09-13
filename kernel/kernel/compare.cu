@@ -4,8 +4,8 @@
  * @author HIKARU KONDO
  * @date 2021/07/19
  */
-#include <stdio.h>
-#include "cuda.h"
+
+#include "compare.cuh"
 
 #define BLOCKDIM 256
 
@@ -52,44 +52,15 @@ COMPARE(lessEqual, <=)
       dim3 gridDim((size + blockDim.x - 1) / blockDim.x);                                \
       KERNEL <<< gridDim, blockDim >>> (compareArrayA, compareArrayB, resArray, size);   \
     }                                                                                    
-IMLP_COMPARE_FN(_equalFloat, equal, float)
-IMLP_COMPARE_FN(_equalInt, equal, int)
-IMLP_COMPARE_FN(_negativeEqualFloat, negativeEqual, float)
-IMLP_COMPARE_FN(_negativeEqualInt, negativeEqual, int)
-IMLP_COMPARE_FN(_lessFloat, less, float)
-IMLP_COMPARE_FN(_lessInt, less, int)
-IMLP_COMPARE_FN(_greaterFloat, greater, float)
-IMLP_COMPARE_FN(_greaterInt, greater, int)
-IMLP_COMPARE_FN(_lessEqualFloat, lessEqual, float)
-IMLP_COMPARE_FN(_lessEqualInt, lessEqual, int)
-IMLP_COMPARE_FN(_greaterEqualFloat, greaterEqual, float)
-IMLP_COMPARE_FN(_greaterEqualInt, greaterEqual, int)
-
-/** 
- * C inter face
- */
-extern "C" {
-  void equalFloat(float *compareArrayA, float *compareArrayB, float *resArray, int size) {
-    _equalFloat(compareArrayA, compareArrayB, resArray, size);
-  }
-
-  void equalInt(int *compareArrayA, int *compareArrayB, int *resArray, int size) {
-    _equalInt(compareArrayA, compareArrayB, resArray, size);
-  }
-  
-  void negativeEqualFloat(float *compareArrayA, float *compareArrayB, float *resArray, int size) {
-    _negativeEqualFloat(compareArrayA, compareArrayB, resArray, size);
-  }
-  
-  void negativeEqualInt(int *compareArrayA, int *compareArrayB, int *resArray, int size) {
-    _negativeEqualInt(compareArrayA, compareArrayB, resArray, size);
-  }
-
-  void lessFloat(float *compareArrayA, float *compareArrayB, float *resArray, int size) {
-    _lessFloat(compareArrayA, compareArrayB, resArray, size);
-  }
-
-  void lessInt(int *compareArrayA, int *compareArrayB, int *resArray, int size) {
-    _lessInt(compareArrayA, compareArrayB, resArray, size);
-  }
-}
+IMLP_COMPARE_FN(equalFloat, equal, float)
+IMLP_COMPARE_FN(equalInt, equal, int)
+IMLP_COMPARE_FN(negativeEqualFloat, negativeEqual, float)
+IMLP_COMPARE_FN(negativeEqualInt, negativeEqual, int)
+IMLP_COMPARE_FN(lessFloat, less, float)
+IMLP_COMPARE_FN(lessInt, less, int)
+IMLP_COMPARE_FN(greaterFloat, greater, float)
+IMLP_COMPARE_FN(greaterInt, greater, int)
+IMLP_COMPARE_FN(lessEqualFloat, lessEqual, float)
+IMLP_COMPARE_FN(lessEqualInt, lessEqual, int)
+IMLP_COMPARE_FN(greaterEqualFloat, greaterEqual, float)
+IMLP_COMPARE_FN(greaterEqualInt, greaterEqual, int)

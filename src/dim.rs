@@ -14,11 +14,15 @@ impl Dim {
     /// Calculate the number of elements when Dim is given.
     pub fn size(&self) -> usize {
         self.dimention.iter().fold(1, |x, y| x * y) as usize
-        // let mut size = 1;
-        // for item in &self.dimention {
-        //     size = size * item;
-        // }
-        // size
+    }
+
+    /// return how many dimention
+    pub fn len(&self) -> usize {
+        self.dimention.len()
+    }
+
+    pub fn get_raw(&self) -> Vec<usize> {
+        self.dimention.clone()
     }
 }
 

@@ -16,9 +16,9 @@ pub fn element_wise_product<'a, T: Num>(
     }
     unsafe {
         float_element_wise_product(
-            array_a.data_ptr as *mut ::libc::c_void,
-            array_b.data_ptr as *mut ::libc::c_void,
-            res_array.data_ptr as *mut ::libc::c_void,
+            array_a.data_ptr as *mut f32,
+            array_b.data_ptr as *mut f32,
+            res_array.data_ptr as *mut f32,
             array_a.dim.size() as ::libc::c_int,
         )
     };
@@ -38,9 +38,9 @@ pub fn element_wise_devide<'a, T: Num>(
     }
     unsafe {
         float_element_wise_devide(
-            array_a.data_ptr as *mut ::libc::c_void,
-            array_b.data_ptr as *mut ::libc::c_void,
-            res_array.data_ptr as *mut ::libc::c_void,
+            array_a.data_ptr as *mut f32,
+            array_b.data_ptr as *mut f32,
+            res_array.data_ptr as *mut f32,
             array_a.dim.size() as ::libc::c_int,
         )
     };

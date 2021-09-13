@@ -7,8 +7,8 @@ pub fn float_array_add_scalar<'a>(x: Array<'a, f32>, y: f32) -> Array<'a, f32> {
     let res = Array::zeros(&x.shape(), x.state).unwrap();
     unsafe {
         floatArrayScalarAdd(
-            x.data_ptr as *mut ::libc::c_void,
-            res.data_ptr as *mut ::libc::c_void,
+            x.data_ptr as *mut f32,
+            res.data_ptr as *mut f32,
             y as ::libc::c_float,
             size,
         )
@@ -21,8 +21,8 @@ pub fn double_array_add_scalar<'a>(x: Array<'a, f64>, y: f64) -> Array<'a, f64> 
     let res = Array::zeros(&x.shape(), x.state).unwrap();
     unsafe {
         doubleArrayScalarAdd(
-            x.data_ptr as *mut ::libc::c_void,
-            res.data_ptr as *mut ::libc::c_void,
+            x.data_ptr as *mut f64,
+            res.data_ptr as *mut f64,
             y as ::libc::c_double,
             size,
         )

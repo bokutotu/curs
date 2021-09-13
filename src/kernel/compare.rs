@@ -38,9 +38,9 @@ macro_rules! impl_compare_fn {
 
             unsafe {
                 $kernel_func(
-                    array_a.data_ptr as *mut ::libc::c_void,
-                    array_b.data_ptr as *mut ::libc::c_void,
-                    res.data_ptr as *mut ::libc::c_void,
+                    array_a.data_ptr as *mut f32,
+                    array_b.data_ptr as *mut f32,
+                    res.data_ptr as *mut f32,
                     size,
                 );
             }
@@ -90,13 +90,6 @@ mod tests {
             )
         };
 
-        unsafe {
-            equalFloat(
-                d_a as *mut ::libc::c_void,
-                d_b as *mut ::libc::c_void,
-                res as *mut ::libc::c_void,
-                1024,
-            )
-        };
+        unsafe { equalFloat(d_a as *mut f32, d_b as *mut f32, res as *mut f32, 1024) };
     }
 }

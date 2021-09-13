@@ -11,6 +11,7 @@ libc = "*"
 [build-dependencies]
 cc = "*"
 cuda-find-path = {path = "../cuda-find-path"}
+bindgen="*"
 
 [dev-dependencies]
 cuda-runtime-sys = {path = "../cuda-runtime-sys"}
