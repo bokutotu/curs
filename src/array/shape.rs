@@ -17,15 +17,17 @@ impl<'a, T: Num> Array<'a, T> {
         let order = self.order.clone();
         let ptr = self.data_ptr;
         let dtype = self.dtype.clone();
+        let state = self.state;
+        let size = self.dim.size();
 
-        std::mem::forget(self.data_ptr);
+        std::mem::forget(self);
 
         Array {
             data_ptr: ptr,
-            dim: Dim::new(&vec![self.dim.size()]).clone(),
+            dim: Dim::new(&vec![size]).clone(),
             order: order,
             dtype: dtype,
-            state: self.state,
+            state: state,
         }
     }
 
@@ -36,14 +38,41 @@ impl<'a, T: Num> Array<'a, T> {
             panic!("Number of elements is not same");
         }
 
-        std::mem::forget(self.data_ptr);
+        let order = self.order.clone();
+        let ptr = self.data_ptr;
+        let dtype = self.dtype.clone();
+        let state = self.state;
+
+        std::mem::forget(self);
 
         Array {
-            data_ptr: self.data_ptr,
+            data_ptr: ptr,
             dim: new_dim.clone(),
-            order: self.order.clone(),
-            dtype: self.dtype.clone(),
-            state: self.state,
+            order: order.clone(),
+            dtype: dtype.clone(),
+            state: state,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::array::Array;
+    use crate::CursState;
+
+    #[test]
+    fn test_flatten() {
+        let status = CursState::new(0);
+        let x = Array::<f32>::zeros(&vec![100, 100], &status).unwrap();
+        let x = x.flatten();
+        println!("{:?}", x);
+    }
+
+    #[test]
+    fn test_reshape() {
+        let status = CursState::new(0);
+        let x = Array::<f32>::zeros(&vec![100, 100], &status).unwrap();
+        let x = x.reshape(&vec![10, 10, 100]);
+        println!("{:?}", x);
     }
 }
