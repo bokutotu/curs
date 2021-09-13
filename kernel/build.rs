@@ -32,9 +32,10 @@ fn main() {
         // .flag("arch=compute_62,code=sm_62") // for (Jetson TX2).
         .flag("-gencode")
         .flag("arch=compute_75,code=sm_75") // for (RTX 2080Ti).
-        .files(&cuda_files)
+        .files(cuda_files)
         .include("kernel/")
         .compile("libkernel.a");
+    println!("cargo:rustc-link-lib=kernel");
 
     for path in find_cuda() {
         println!("cargo:rustc-link-search=native={}", path.display());
